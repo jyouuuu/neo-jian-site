@@ -120,7 +120,9 @@
     },
     celebrate(r) {
       const b = this.el.getBoundingClientRect();
-      burst(b.left + b.width / 2, b.top + b.height / 3, r[3], this.streak >= 15);
+      const x = b.left + b.width / 2, y = b.top + b.height / 3;
+      burst(x, y, r[3], this.streak >= 15);
+      flames(x, y, this.streak >= 15);
       SFX() && (this.streak >= 15 ? SFX().chord() : SFX().pop());
     },
     render(r, rankedUp) {
@@ -140,6 +142,46 @@
       }
     },
   };
+
+  /* rank-up flames — upward-fanning embers. Same WAAPI transform-only
+     animation as burst (compositor-cheap), same liveSparks cap, same
+     reduced-motion guard — it can never pile up and lag the page. */
+  const FLAME_COLORS = ["#ff9e1f", "#ffcc5b", "#ff5e3a", "#ff2ea6"];
+  function flames(x, y, big) {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const n = big ? 22 : 13;
+    for (let k = 0; k < n; k++) {
+      if (liveSparks > MAX_SPARKS) return;
+      const s = document.createElement("div");
+      s.className = "spark";
+      const size = 5 + Math.random() * (big ? 12 : 8);
+      const c = Math.random() < 0.2 ? "#ffffff" : FLAME_COLORS[(Math.random() * FLAME_COLORS.length) | 0];
+      s.style.setProperty("--c", c);
+      s.style.background = c;
+      s.style.boxShadow = `0 0 8px ${c}`;
+      s.style.width = s.style.height = size + "px";
+      s.style.left = x + "px";
+      s.style.top = y + "px";
+      if (Math.random() < 0.5) s.style.borderRadius = "50%";
+      document.body.appendChild(s);
+      liveSparks++;
+
+      const ang = -Math.PI / 2 + (Math.random() - 0.5) * 1.5; // upward fan
+      const dist = (big ? 130 : 80) + Math.random() * (big ? 150 : 90);
+      const dx = Math.cos(ang) * dist + (Math.random() - 0.5) * 30;
+      const dy = Math.sin(ang) * dist;
+      const dur = 500 + Math.random() * (big ? 700 : 450);
+
+      const anim = s.animate(
+        [
+          { transform: "translate(-50%,-50%) scale(1)", opacity: 1 },
+          { transform: `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px)) scale(0.1)`, opacity: 0 },
+        ],
+        { duration: dur, easing: "cubic-bezier(0.1, 0.8, 0.3, 1)" }
+      );
+      anim.onfinish = () => { s.remove(); liveSparks--; };
+    }
+  }
 
   /* ------------------------------------------------ lightbox ------------- */
   const lb = {
