@@ -159,6 +159,11 @@ img { display: block; }
 .nav-btn--sound[aria-pressed="true"] { background: var(--green); color: #062a12; }
 .nav-btn--sound[aria-pressed="false"] { opacity: 0.85; }
 .nav-btn--comms { background: var(--lime); color: var(--ink); }
+.nav-btn--shop { background: #ff8c1a; color: var(--ink); }
+.nav-btn--shop:hover { background: #ffa940; color: var(--ink); }
+.nav-btn--patreon { background: #ff424d; }
+.nav-btn--patreon:hover { background: #ff5a64; }
+.nav-btn--patreon img { background: #fff; border-radius: 50%; padding: 2px; height: 26px; }
 
 /* banner — framed like a poster plate */
 .banner {
