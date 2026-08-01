@@ -4,8 +4,9 @@ build_fanart.py — collect fanart from Justin's fanart folder, optimize it,
 and emit the carousel manifest.
 
   source : C:/Users/Justin/Pictures/0000000000000_JIAN_FANART (root + 1 level)
-  output : assets/fanart/<slug>.webp   (max edge 1400, q82)
-           data/fanart.js              (window.JIAN_FANART)
+  output : assets/fanart/<slug>.webp         (max edge 1400, q82 — full, for enlarge)
+           assets/fanart/thumbs/<slug>.webp  (max edge 280, q70 — carousel)
+           data/fanart.js                    (window.JIAN_FANART)
 
 CREDITS COME FROM FILENAMES. Rename a source file and re-run to fix a credit.
 Skips videos, PSDs, "- Copy" files and exact stem duplicates.
@@ -19,7 +20,11 @@ from PIL import Image
 SRC = r"C:/Users/Justin/Pictures/0000000000000_JIAN_FANART"
 ROOT = r"C:/Users/Justin/Desktop/neo-jian-site"
 OUT = os.path.join(ROOT, "assets", "fanart")
+THUMBS = os.path.join(OUT, "thumbs")
 DATA = os.path.join(ROOT, "data")
+
+# carousel shows frames at 124px CSS height; 280 covers 2x retina with headroom
+THUMB_EDGE = 280
 
 EXTS = (".png", ".jpg", ".jpeg", ".webp", ".gif")
 Image.MAX_IMAGE_PIXELS = 80_000_000
@@ -69,6 +74,7 @@ def slugify(s):
 
 def main():
     os.makedirs(OUT, exist_ok=True)
+    os.makedirs(THUMBS, exist_ok=True)
     os.makedirs(DATA, exist_ok=True)
     items = []
     seen_stems = set()
@@ -97,16 +103,25 @@ def main():
         slug = slugify(stem)
         out_name = f"{slug}.webp"
         out_path = os.path.join(OUT, out_name)
+        thumb_path = os.path.join(THUMBS, out_name)
         try:
             with Image.open(src) as im:
                 im = im.convert("RGB")
                 if max(im.size) > 1400:
                     im.thumbnail((1400, 1400), Image.LANCZOS)
                 im.save(out_path, "WEBP", quality=82, method=6)
+                th = im.copy()
+                if max(th.size) > THUMB_EDGE:
+                    th.thumbnail((THUMB_EDGE, THUMB_EDGE), Image.LANCZOS)
+                th.save(thumb_path, "WEBP", quality=70, method=6)
+                tw, thh = th.size
         except Exception as e:  # noqa: BLE001
             print(f"  !! {fn}: {e}")
             continue
-        items.append({"img": f"assets/fanart/{out_name}", "by": stem,
+        items.append({"img": f"assets/fanart/{out_name}",
+                      "thumb": f"assets/fanart/thumbs/{out_name}",
+                      "w": tw, "h": thh,
+                      "by": stem,
                       "sug": 1 if stem.lower() in SUGGESTIVE_STEMS else 0})
 
     with open(os.path.join(DATA, "fanart.js"), "w", encoding="utf-8") as f:

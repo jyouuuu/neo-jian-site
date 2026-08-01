@@ -75,11 +75,12 @@
         b.setAttribute("aria-label", `enlarge fanart by ${p.by}`);
         b._piece = p; // click resolution happens in the drag handlers (pointer capture steals real clicks)
         const img = document.createElement("img");
-        img.src = p.img;
+        img.src = p.thumb || p.img;
         img.alt = "";
-        img.loading = "lazy";
+        // width/height attributes reserve the frame's layout space before the
+        // thumb arrives — no reflow, no carousel stutter as images stream in
+        if (p.w && p.h) { img.width = p.w; img.height = p.h; }
         img.decoding = "async";
-        img.addEventListener("load", measure);
         b.appendChild(img);
         return b;
       };
