@@ -945,6 +945,76 @@ html.sfw [data-sug="1"] { display: none !important; }
 .update-item--link:hover { background: var(--grey-soft); color: var(--ink); }
 .update-item--link u { color: var(--ink); text-decoration-color: var(--pink); }
 
+/* --------------------------------------------------------------------------
+   HERO — the sticker club ad (photo bg + shout panel)
+   -------------------------------------------------------------------------- */
+.hero {
+  position: relative;
+  border: 3px solid var(--ink);
+  box-shadow: 8px 8px 0 var(--shadow);
+  margin-bottom: 26px;
+  min-height: 380px;
+  background: url("../img/hero_stickers.webp") center 42% / cover no-repeat;
+  overflow: hidden;
+}
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, rgba(15, 15, 18, 0.88) 0%, rgba(15, 15, 18, 0.72) 34%, rgba(15, 15, 18, 0.05) 62%);
+}
+.hero__panel {
+  position: relative;
+  z-index: 2;
+  max-width: 480px;
+  padding: 30px 26px;
+  color: #fff;
+}
+.hero__flag {
+  display: inline-block;
+  font-family: var(--font-pixel);
+  font-size: 13px;
+  letter-spacing: 2px;
+  color: var(--ink);
+  background: var(--lime);
+  border: 2px solid var(--ink);
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.55);
+  padding: 3px 9px;
+  transform: rotate(-2deg);
+}
+.hero__title {
+  font-family: var(--font-shout);
+  font-size: clamp(40px, 6vw, 64px);
+  line-height: 0.95;
+  letter-spacing: 1px;
+  margin: 12px 0 8px;
+  text-shadow: 5px 5px 0 rgba(0, 0, 0, 0.55);
+}
+.hero__title span { color: var(--pink); }
+.hero__offer {
+  font-family: var(--font-pixel);
+  font-size: 14px;
+  letter-spacing: 1px;
+  margin: 0 0 18px;
+  color: #f0eee4;
+}
+.hero__offer b { color: var(--yellow); }
+.hero__cta { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.hero__price {
+  font-family: var(--font-shout);
+  font-size: 30px;
+  color: var(--yellow);
+  text-shadow: 3px 3px 0 rgba(0, 0, 0, 0.55);
+}
+
+/* latest X post */
+.x-box .winbox__body { min-height: 200px; }
+.x-fallback {
+  font-family: var(--font-pixel);
+  font-size: 14px;
+  color: var(--ink-dim);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .marquee__track, .sfx-toast, .burst { animation: none; }
   .tile, .nav-btn, .btn, .chip { transition-duration: 0.01s; }
