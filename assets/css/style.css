@@ -540,74 +540,69 @@ img { display: block; }
 .lb-btn--close { top: 14px; right: 14px; transform: none; font-size: 17px; background: var(--ink); color: #fff; }
 .lb-btn--close:hover { transform: scale(1.12) rotate(90deg); background: var(--pink); }
 
-/* combo counter — ticks every piece you view, streak for rapid toggling */
-.lb-combo {
+/* combo meter — DMC-style rank (D→SSS) for pieces viewed/swept past.
+   Lives on the left screen edge, above the lightbox, unmissable. */
+.combo {
   position: fixed;
-  top: 14px;
-  left: 14px;
-  z-index: 501;
+  left: 22px;
+  top: 50%;
+  transform: translateY(-50%) rotate(-3deg);
+  z-index: 502;
   font-family: var(--font-shout);
-  letter-spacing: 1px;
-  transform: rotate(-2deg);
   pointer-events: none;
   user-select: none;
+  opacity: 0;
+  transition: opacity 0.25s;
 }
-.lb-combo__row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+.combo.is-live { opacity: 1; }
+.combo__rank {
+  font-size: clamp(84px, 12vw, 140px);
+  line-height: 0.9;
+  letter-spacing: 2px;
+  color: var(--rankc, #f4f1e8);
+  -webkit-text-stroke: 3px var(--ink);
+  paint-order: stroke fill;
+  text-shadow: 6px 6px 0 var(--shadow), 0 0 14px var(--rankc, #f4f1e8);
+  transition: color 0.2s;
+}
+.combo__rank.is-rankup { animation: combo-rankup 0.55s var(--spring); }
+@keyframes combo-rankup {
+  0% { transform: scale(0.4) rotate(-30deg); }
+  55% { transform: scale(1.35) rotate(8deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+.combo.is-pumped .combo__rank { animation: combo-pump 0.26s var(--spring); }
+@keyframes combo-pump {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.12) rotate(2deg); }
+  100% { transform: scale(1); }
+}
+.combo.is-pumped .combo__rank.is-rankup { animation: combo-rankup 0.55s var(--spring); }
+.combo__word {
+  margin-top: 4px;
+  font-size: clamp(20px, 2.6vw, 32px);
+  letter-spacing: 3px;
+  color: #fff;
+  -webkit-text-stroke: 1.4px var(--ink);
+  text-shadow: 3px 3px 0 var(--shadow), 0 0 18px var(--rankc, transparent);
+}
+.combo__row { display: flex; gap: 10px; margin-top: 12px; }
+.combo__mult,
+.combo__hits {
+  font-size: 16px;
+  letter-spacing: 1px;
   color: var(--ink);
   background: var(--yellow);
   border: 3px solid var(--ink);
   box-shadow: 4px 4px 0 var(--shadow);
-  padding: 6px 14px;
-  font-size: 15px;
-  transition: transform 0.18s var(--spring);
+  padding: 5px 14px;
 }
-.lb-combo.is-pumped .lb-combo__row { animation: lb-pump 0.28s var(--spring); }
-@keyframes lb-pump {
-  0% { transform: scale(1); }
-  40% { transform: scale(1.14) rotate(1.5deg); }
-  100% { transform: scale(1); }
-}
-.lb-combo__star { color: #a03a00; }
-.lb-combo__mult {
-  background: var(--ink);
-  color: var(--yellow);
-  padding: 1px 8px;
-  font-size: 14px;
-  transition: background 0.2s, color 0.2s, transform 0.18s var(--spring);
-}
-.lb-combo.is-pumped .lb-combo__mult { background: var(--pink); color: #fff; transform: scale(1.15); }
-.lb-combo.is-blazing .lb-combo__row {
-  background: var(--pink);
-  color: #fff;
-  box-shadow: 4px 4px 0 var(--shadow), 0 0 18px var(--pink);
-}
-.lb-combo.is-blazing .lb-combo__star { color: var(--yellow); }
-.lb-combo__hype {
-  margin-top: 8px;
-  font-size: 26px;
-  color: #fff;
-  -webkit-text-stroke: 1.5px var(--ink);
-  text-shadow: 3px 3px 0 var(--shadow), 0 0 16px var(--pink);
-  opacity: 0;
-  transform: scale(0.6) rotate(-4deg);
-  pointer-events: none;
-}
-.lb-combo__hype.is-showing { animation: lb-hype 1.6s var(--spring) forwards; }
-@keyframes lb-hype {
-  0% { opacity: 0; transform: scale(0.6) rotate(-4deg); }
-  15% { opacity: 1; transform: scale(1.15) rotate(2deg); }
-  30% { transform: scale(1) rotate(-2deg); }
-  75% { opacity: 1; }
-  100% { opacity: 0; transform: scale(1.05) rotate(-2deg) translateY(-8px); }
-}
+.combo__mult { background: var(--ink); color: var(--yellow); }
 @media (max-width: 640px) {
-  .lb-combo { top: 10px; left: 10px; }
-  .lb-combo__row { font-size: 12px; padding: 4px 10px; }
-  .lb-combo__mult { font-size: 12px; }
-  .lb-combo__hype { font-size: 19px; }
+  .combo { left: 10px; }
+  .combo__rank { font-size: 64px; -webkit-text-stroke: 2px var(--ink); text-shadow: 4px 4px 0 var(--shadow), 0 0 18px var(--rankc, #f4f1e8); }
+  .combo__word { font-size: 17px; letter-spacing: 2px; }
+  .combo__mult, .combo__hits { font-size: 12px; padding: 3px 10px; }
 }
 
 /* --------------------------------------------------------------------------

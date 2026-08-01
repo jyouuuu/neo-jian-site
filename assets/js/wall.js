@@ -52,62 +52,92 @@
     }
   }
 
-  /* ------------------------------------------------ combo counter -------- */
-  // the fun bit: every piece you view in the lightbox ticks a lifetime
-  // VIEWED counter; views chained within COMBO_WINDOW ms build a streak
-  // with escalating hype words. Streak resets when the lightbox closes.
+  /* ------------------------------------------------ combo meter (DMC) ---- */
+  // Every piece you view — clicked, arrowed past in the lightbox, or swept
+  // over on the wall itself — builds a streak ranked DMC-style, D → SSS.
+  // The streak dies after WINDOW ms idle. Lifetime VIEWED persists.
   const combo = {
     total: parseInt(localStorage.getItem("jian_wall_views") || "0", 10) || 0,
-    streak: 0,
-    lastAt: 0,
-    WINDOW: 4000,
-    HYPES: [[100, "WALL MASTER ★"], [50, "UNSTOPPABLE!"], [25, "RADIANT!"], [15, "STYLISH!"], [8, "NICE!"], [4, "OKAY!"]],
-    el: null, hits: null, mult: null, hype: null, hypeT: null,
-    init(host) {
-      this.el = host.querySelector(".lb-combo");
-      this.hits = host.querySelector(".lb-combo__hits");
-      this.mult = host.querySelector(".lb-combo__mult");
-      this.hype = host.querySelector(".lb-combo__hype");
-      this.render();
+    streak: 0, lastAt: 0, idleT: null, lastHover: 0, tileCool: {}, cur: null,
+    WINDOW: 4000, HOVER_GAP: 160, TILE_COOL: 1500,
+    RANKS: [ // min streak, letter, shout, color — Devil May Cry ladder
+      [30, "SSS", "SSSTYLISH!", "#ff2ea6"],
+      [20, "SS", "SHOWTIME!", "#ed64f5"],
+      [15, "S", "SWEET!", "#fb38cc"],
+      [10, "A", "ALRIGHT!", "#ff9e1f"],
+      [6, "B", "BLAST!", "#4bff88"],
+      [3, "C", "CRAZY!", "#66f7ff"],
+      [1, "D", "DOPE", "#f4f1e8"],
+    ],
+    el: null, rankEl: null, wordEl: null, multEl: null, hitsEl: null,
+    rank() { return this.RANKS.find((r) => this.streak >= r[0]); },
+    build() {
+      if (this.el) return;
+      const el = document.createElement("div");
+      el.className = "combo";
+      el.setAttribute("aria-hidden", "true");
+      el.innerHTML = `
+        <div class="combo__rank">D</div>
+        <div class="combo__word"></div>
+        <div class="combo__row">
+          <span class="combo__mult">x0</span>
+          <span class="combo__hits"></span>
+        </div>`;
+      document.body.appendChild(el);
+      this.el = el;
+      this.rankEl = el.querySelector(".combo__rank");
+      this.wordEl = el.querySelector(".combo__word");
+      this.multEl = el.querySelector(".combo__mult");
+      this.hitsEl = el.querySelector(".combo__hits");
     },
     hit() {
-      if (!this.el) return;
+      this.build();
       const now = performance.now();
       this.streak = now - this.lastAt <= this.WINDOW ? this.streak + 1 : 1;
       this.lastAt = now;
       this.total++;
       localStorage.setItem("jian_wall_views", String(this.total));
-      this.render();
-      // pump the chip
+      const r = this.rank();
+      const rankedUp = this.cur !== null && r[1] !== this.cur;
+      this.cur = r[1];
+      this.render(r, rankedUp);
+      clearTimeout(this.idleT);
+      this.idleT = setTimeout(() => this.die(), this.WINDOW);
+      if (rankedUp) this.celebrate(r);
+    },
+    hover(i) { // wall sweep — throttled, per-tile cooldown
+      const now = performance.now();
+      if (now - this.lastHover < this.HOVER_GAP) return;
+      if (this.tileCool[i] && now - this.tileCool[i] < this.TILE_COOL) return;
+      this.lastHover = now;
+      this.tileCool[i] = now;
+      this.hit();
+    },
+    die() {
+      this.streak = 0;
+      this.cur = null;
+      if (this.el) this.el.classList.remove("is-live");
+    },
+    celebrate(r) {
+      const b = this.el.getBoundingClientRect();
+      burst(b.left + b.width / 2, b.top + b.height / 3, r[3], this.streak >= 15);
+      SFX() && (this.streak >= 15 ? SFX().chord() : SFX().pop());
+    },
+    render(r, rankedUp) {
+      this.el.classList.add("is-live");
+      this.rankEl.textContent = r[1];
+      this.rankEl.style.setProperty("--rankc", r[3]);
+      this.wordEl.textContent = r[2];
+      this.multEl.textContent = `x${this.streak}`;
+      this.hitsEl.textContent = `${this.total} VIEWED`;
       this.el.classList.remove("is-pumped");
       void this.el.offsetWidth;
       this.el.classList.add("is-pumped");
-      this.el.classList.toggle("is-blazing", this.streak >= 15);
-      // milestone hype word + sparks
-      const mark = this.HYPES.find(([n]) => n === this.streak);
-      if (mark) {
-        this.hype.textContent = mark[1];
-        this.hype.classList.remove("is-showing");
-        void this.hype.offsetWidth;
-        this.hype.classList.add("is-showing");
-        clearTimeout(this.hypeT);
-        this.hypeT = setTimeout(() => this.hype.classList.remove("is-showing"), 1600);
-        const r = this.el.getBoundingClientRect();
-        burst(r.left + r.width / 2, r.top + r.height / 2, null, this.streak >= 25);
-        SFX() && (this.streak >= 25 ? SFX().chord() : SFX().pop());
+      if (rankedUp) {
+        this.rankEl.classList.remove("is-rankup");
+        void this.rankEl.offsetWidth;
+        this.rankEl.classList.add("is-rankup");
       }
-    },
-    reset() {
-      this.streak = 0;
-      this.lastAt = 0;
-      if (this.el) {
-        this.el.classList.remove("is-blazing");
-        this.render();
-      }
-    },
-    render() {
-      this.hits.textContent = `${this.total} VIEWED`;
-      this.mult.textContent = `x${Math.max(1, this.streak)}`;
     },
   };
 
@@ -125,20 +155,11 @@
         </div>
         <button class="lb-btn lb-btn--prev" aria-label="Previous">&lt;</button>
         <button class="lb-btn lb-btn--next" aria-label="Next">&gt;</button>
-        <button class="lb-btn lb-btn--close" aria-label="Close">X</button>
-        <div class="lb-combo" aria-hidden="true">
-          <div class="lb-combo__row">
-            <span class="lb-combo__star">★</span>
-            <span class="lb-combo__hits">0 VIEWED</span>
-            <span class="lb-combo__mult">x1</span>
-          </div>
-          <div class="lb-combo__hype"></div>
-        </div>`;
+        <button class="lb-btn lb-btn--close" aria-label="Close">X</button>`;
       document.body.appendChild(el);
       this.el = el;
       this.img = el.querySelector(".lightbox__img");
       this.cap = el.querySelector(".lightbox__cap");
-      combo.init(el);
       el.addEventListener("click", (e) => { if (e.target === el) this.close(); });
       el.querySelector(".lb-btn--close").addEventListener("click", () => this.close());
       el.querySelector(".lb-btn--prev").addEventListener("click", () => this.step(-1));
@@ -181,7 +202,6 @@
       this.el.classList.remove("is-open");
       document.body.style.overflow = "";
       SFX() && SFX().unpop();
-      combo.reset();
       if (history.replaceState) history.replaceState(null, "", location.pathname);
     },
   };
@@ -220,6 +240,7 @@
     b.addEventListener("pointerenter", (e) => {
       if (e.pointerType === "touch") return;
       pop(b, i, e.clientX, e.clientY, false);
+      combo.hover(i); // casual sweeps count toward the streak too
     });
     b.addEventListener("pointerdown", () => { SFX() && SFX().thock(); });
     b.addEventListener("click", () => {
