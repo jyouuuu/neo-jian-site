@@ -126,7 +126,7 @@ def parse_post(folder):
 def rss(posts):
     items = []
     for p in posts:
-        link = f"{SITE}/blog.html#{p['id']}"
+        link = f"{SITE}/blog#{p['id']}"
         desc = html.escape(p["excerpt"])
         dt = datetime.datetime.strptime(p["date"], "%Y-%m-%d")
         pub = dt.strftime("%a, %d %b %Y 09:00:00 +0000")
@@ -143,7 +143,7 @@ def rss(posts):
         '<?xml version="1.0" encoding="UTF-8" ?>\n'
         '<rss version="2.0">\n  <channel>\n'
         "    <title>jiansketch.com</title>\n"
-        f"    <link>{SITE}/blog.html</link>\n"
+        f"    <link>{SITE}/blog</link>\n"
         "    <description>fast food for your eyes — the jiansketch blog</description>\n"
         "    <language>en-us</language>\n"
         + "\n".join(items)

@@ -280,7 +280,7 @@
         });
       });
 
-      // deep link: art.html#p=2024/37 opens that piece
+      // deep link: art#p=2024/37 opens that piece
       if (location.hash.startsWith("#p=")) {
         const key = location.hash.slice(3);
         const idx = data.findIndex((p) => p.y + "/" + p.n === key);
@@ -299,7 +299,7 @@
     pieces.forEach((p, i) => {
       const a = document.createElement("a");
       a.className = "tile";
-      a.href = `art.html#p=${p.y}/${p.n}`;
+      a.href = `art#p=${p.y}/${p.n}`;
       a.style.setProperty("--glow", GLOWS[i % GLOWS.length]);
       a.style.setProperty("--tilt", (Math.random() * 5 - 2.5).toFixed(2) + "deg");
       const img = document.createElement("img");

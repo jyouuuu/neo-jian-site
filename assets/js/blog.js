@@ -1,7 +1,7 @@
 /* ==========================================================================
    jiansketch BLOG — renders posts from data/posts.js.
-   blog.html: full feed with year sections + #post-id anchors.
-   home.html: 3 newest in UPDATES.EXE + the NOW line.
+   blog: full feed with year sections + #post-id anchors.
+   home: 3 newest in UPDATES.EXE + the NOW line.
    ========================================================================== */
 (function () {
   "use strict";
@@ -70,14 +70,14 @@
       posts.slice(0, 3).forEach((p) => {
         const a = document.createElement("a");
         a.className = "update-item update-item--link";
-        a.href = `blog.html#${p.id}`;
+        a.href = `blog#${p.id}`;
         const ex = p.excerpt.length > 110 ? p.excerpt.slice(0, 110).trimEnd() + "…" : p.excerpt;
         a.innerHTML = `<b>${p.date}</b> — <u>${esc(p.title)}</u><br><span>${esc(ex)}</span>`;
         homeBox.appendChild(a);
       });
       const more = document.createElement("a");
       more.className = "update-item update-item--link";
-      more.href = "blog.html";
+      more.href = "blog";
       more.innerHTML = `<b>READ THE BLOG →</b>`;
       homeBox.appendChild(more);
     }

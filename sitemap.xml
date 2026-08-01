@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://jiansketch.com/</loc></url>
-  <url><loc>https://jiansketch.com/home.html</loc></url>
-  <url><loc>https://jiansketch.com/art.html</loc></url>
-  <url><loc>https://jiansketch.com/blog.html</loc></url>
-  <url><loc>https://jiansketch.com/free.html</loc></url>
-  <url><loc>https://jiansketch.com/about.html</loc></url>
+  <url><loc>https://jiansketch.com/home</loc></url>
+  <url><loc>https://jiansketch.com/art</loc></url>
+  <url><loc>https://jiansketch.com/blog</loc></url>
+  <url><loc>https://jiansketch.com/free</loc></url>
+  <url><loc>https://jiansketch.com/about</loc></url>
   <url><loc>https://jiansketch.com/feed.xml</loc></url>
 </urlset>
