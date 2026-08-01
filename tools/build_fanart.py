@@ -49,6 +49,7 @@ SKIP_STEMS = {
     # reference photos / screenshots / non-art (per Justin, July 2026)
     "drawpega48", "finger-by-partykathat", "gwm1imobkaaep7s", "sketchy",
     "facebook", "facebook_002", "creep", "nokl", "noklji", "noklmonke", "jess",
+    "ethos", "ethos_alt",
 }
 
 # stems matched by prefix (case-insensitive) — phone photos, app screenshots,
