@@ -952,6 +952,15 @@ html.sfw [data-sug="1"] { display: none !important; }
   display: block;
   background: #fff;
 }
+.guestbook-soon { text-align: center; padding: 44px 16px; }
+.guestbook-soon__big {
+  font-family: var(--font-shout);
+  font-size: 30px;
+  letter-spacing: 2px;
+  color: var(--ink);
+  margin: 0 0 8px;
+}
+.guestbook-soon__sub { font-family: var(--font-pixel); font-size: 13px; color: var(--ink-dim); margin: 0; }
 
 @media (prefers-reduced-motion: reduce) {
   .marquee__track, .sfx-toast, .burst { animation: none; }

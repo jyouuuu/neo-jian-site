@@ -46,6 +46,19 @@ variants, promos and anything NSFW out of the wall set. Keep that rule when
 adding. `tools/contact_sheets.py 2026` builds labeled review grids into
 %TEMP%\jian_review if you want to eyeball a batch before publishing.
 
+## Writing a blog post
+
+1. Make a folder `posts/YYYY-MM-DD-my-title/`.
+2. Write `post.txt` inside it: **first line = title**, rest = body. Blank line
+   = new paragraph. A line reading `@img filename.png` embeds an image inline;
+   leftover images append after the body in filename order.
+3. Drop the images next to `post.txt`, then run `python tools/build_posts.py`.
+   It optimizes images into `assets/posts/`, regenerates `data/posts.js` and
+   `feed.xml` (the RSS feed). Commit and push — done.
+4. `posts/NOW.txt` is one line, shown in the NOW ★ box on home.
+
+The home UPDATES.EXE box shows your 3 newest posts automatically.
+
 ## Deploy (GitHub Pages)
 
 1. Create a repo, e.g. `jiansketch/jiansketch.github.io` (or any repo and use
