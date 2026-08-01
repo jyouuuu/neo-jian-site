@@ -954,7 +954,7 @@ html.sfw [data-sug="1"] { display: none !important; }
   box-shadow: 8px 8px 0 var(--shadow);
   margin-bottom: 26px;
   min-height: 380px;
-  background: url("../img/hero_stickers.webp") center 42% / cover no-repeat;
+  background: url("../img/hero_stickers.webp") center 20% / cover no-repeat;
   overflow: hidden;
 }
 .hero::before {
