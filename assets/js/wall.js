@@ -52,6 +52,65 @@
     }
   }
 
+  /* ------------------------------------------------ combo counter -------- */
+  // the fun bit: every piece you view in the lightbox ticks a lifetime
+  // VIEWED counter; views chained within COMBO_WINDOW ms build a streak
+  // with escalating hype words. Streak resets when the lightbox closes.
+  const combo = {
+    total: parseInt(localStorage.getItem("jian_wall_views") || "0", 10) || 0,
+    streak: 0,
+    lastAt: 0,
+    WINDOW: 4000,
+    HYPES: [[100, "WALL MASTER ★"], [50, "UNSTOPPABLE!"], [25, "RADIANT!"], [15, "STYLISH!"], [8, "NICE!"], [4, "OKAY!"]],
+    el: null, hits: null, mult: null, hype: null, hypeT: null,
+    init(host) {
+      this.el = host.querySelector(".lb-combo");
+      this.hits = host.querySelector(".lb-combo__hits");
+      this.mult = host.querySelector(".lb-combo__mult");
+      this.hype = host.querySelector(".lb-combo__hype");
+      this.render();
+    },
+    hit() {
+      if (!this.el) return;
+      const now = performance.now();
+      this.streak = now - this.lastAt <= this.WINDOW ? this.streak + 1 : 1;
+      this.lastAt = now;
+      this.total++;
+      localStorage.setItem("jian_wall_views", String(this.total));
+      this.render();
+      // pump the chip
+      this.el.classList.remove("is-pumped");
+      void this.el.offsetWidth;
+      this.el.classList.add("is-pumped");
+      this.el.classList.toggle("is-blazing", this.streak >= 15);
+      // milestone hype word + sparks
+      const mark = this.HYPES.find(([n]) => n === this.streak);
+      if (mark) {
+        this.hype.textContent = mark[1];
+        this.hype.classList.remove("is-showing");
+        void this.hype.offsetWidth;
+        this.hype.classList.add("is-showing");
+        clearTimeout(this.hypeT);
+        this.hypeT = setTimeout(() => this.hype.classList.remove("is-showing"), 1600);
+        const r = this.el.getBoundingClientRect();
+        burst(r.left + r.width / 2, r.top + r.height / 2, null, this.streak >= 25);
+        SFX() && (this.streak >= 25 ? SFX().chord() : SFX().pop());
+      }
+    },
+    reset() {
+      this.streak = 0;
+      this.lastAt = 0;
+      if (this.el) {
+        this.el.classList.remove("is-blazing");
+        this.render();
+      }
+    },
+    render() {
+      this.hits.textContent = `${this.total} VIEWED`;
+      this.mult.textContent = `x${Math.max(1, this.streak)}`;
+    },
+  };
+
   /* ------------------------------------------------ lightbox ------------- */
   const lb = {
     el: null, img: null, cap: null, list: [], idx: 0,
@@ -66,11 +125,20 @@
         </div>
         <button class="lb-btn lb-btn--prev" aria-label="Previous">&lt;</button>
         <button class="lb-btn lb-btn--next" aria-label="Next">&gt;</button>
-        <button class="lb-btn lb-btn--close" aria-label="Close">X</button>`;
+        <button class="lb-btn lb-btn--close" aria-label="Close">X</button>
+        <div class="lb-combo" aria-hidden="true">
+          <div class="lb-combo__row">
+            <span class="lb-combo__star">★</span>
+            <span class="lb-combo__hits">0 VIEWED</span>
+            <span class="lb-combo__mult">x1</span>
+          </div>
+          <div class="lb-combo__hype"></div>
+        </div>`;
       document.body.appendChild(el);
       this.el = el;
       this.img = el.querySelector(".lightbox__img");
       this.cap = el.querySelector(".lightbox__cap");
+      combo.init(el);
       el.addEventListener("click", (e) => { if (e.target === el) this.close(); });
       el.querySelector(".lb-btn--close").addEventListener("click", () => this.close());
       el.querySelector(".lb-btn--prev").addEventListener("click", () => this.step(-1));
@@ -96,6 +164,7 @@
       this.img.src = p.f;
       this.img.alt = `jiansketch ${p.y} #${p.n}`;
       this.cap.innerHTML = `<b>${p.y}</b> &nbsp;·&nbsp; piece #${p.n} &nbsp;·&nbsp; ${this.idx + 1}/${this.list.length}`;
+      combo.hit();
       [1, -1].forEach((d) => {
         const q = this.list[(this.idx + d + this.list.length) % this.list.length];
         if (q) new Image().src = q.f;
@@ -112,6 +181,7 @@
       this.el.classList.remove("is-open");
       document.body.style.overflow = "";
       SFX() && SFX().unpop();
+      combo.reset();
       if (history.replaceState) history.replaceState(null, "", location.pathname);
     },
   };
