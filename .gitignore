@@ -1,0 +1,7 @@
+# local source downloads from neocities — never commit (art/ holds the optimized web set)
+raw/
+# font TTF sources (only the subsetted woff2 in assets/fonts/ ships)
+tools/fonts_src/
+# python tooling venv
+tools/.venv/
+__pycache__/
