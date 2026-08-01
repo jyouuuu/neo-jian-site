@@ -1015,6 +1015,43 @@ html.sfw [data-sug="1"] { display: none !important; }
   color: var(--ink-dim);
 }
 
+/* latest X post — self-hosted card (data from tools/update_x.py) */
+.x-card { display: flex; gap: 14px; align-items: flex-start; }
+.x-card__avatar {
+  width: 64px;
+  height: 64px;
+  border: 3px solid var(--ink);
+  box-shadow: 3px 3px 0 var(--shadow);
+  flex: 0 0 auto;
+}
+.x-card__meta { flex: 1; min-width: 0; }
+.x-card__head { font-family: var(--font-ui); font-weight: 700; font-size: 15px; color: var(--ink); }
+.x-card__at { color: var(--pink); }
+.x-card__date { color: var(--ink-dim); font-weight: 500; font-size: 13px; }
+.x-card__text { font-size: 15px; margin: 6px 0; color: var(--ink); }
+.x-card__media {
+  max-width: min(460px, 100%);
+  border: 3px solid var(--ink);
+  box-shadow: 5px 5px 0 var(--shadow);
+  display: block;
+  margin: 8px 0;
+}
+.x-card__link {
+  display: inline-block;
+  font-family: var(--font-shout);
+  font-size: 14px;
+  letter-spacing: 1px;
+  color: var(--ink);
+  background: #1d9bf0;
+  color: #fff;
+  border: 3px solid var(--ink);
+  box-shadow: 3px 3px 0 var(--shadow);
+  padding: 5px 14px;
+  margin-top: 6px;
+  transition: transform 0.16s var(--spring), box-shadow 0.16s var(--spring);
+}
+.x-card__link:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--shadow); color: #fff; }
+
 @media (prefers-reduced-motion: reduce) {
   .marquee__track, .sfx-toast, .burst { animation: none; }
   .tile, .nav-btn, .btn, .chip { transition-duration: 0.01s; }
