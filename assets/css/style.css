@@ -920,9 +920,20 @@ html.sfw [data-sug="1"] { display: none !important; }
 .post__title a { color: var(--ink); }
 .post__title a:hover { color: var(--pink); }
 .post__p { margin: 0 0 10px; font-size: 15px; color: var(--ink); }
-.post__imglink { display: block; margin: 10px 0; border: 3px solid var(--ink); box-shadow: 5px 5px 0 var(--shadow); transition: transform 0.18s var(--spring); }
-.post__imglink:hover { transform: scale(1.01) rotate(-0.3deg); }
-.post__imglink img { width: 100%; display: block; }
+.post__imglink {
+  display: table;
+  margin: 12px auto;
+  border: 3px solid var(--ink);
+  box-shadow: 5px 5px 0 var(--shadow);
+  transition: transform 0.18s var(--spring);
+}
+.post__imglink:hover { transform: scale(1.02) rotate(-0.3deg); }
+.post__imglink img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  max-height: 540px;
+}
 .post.is-flash { animation: postFlash 1.6s ease-out; }
 @keyframes postFlash {
   0%, 60% { box-shadow: 0 0 0 4px var(--pink), 8px 8px 0 var(--shadow); }
