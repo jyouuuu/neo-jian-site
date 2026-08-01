@@ -624,12 +624,76 @@ img { display: block; }
 .sfx-toast.is-in { transform: translate(-50%, 0); }
 @keyframes toastWiggle { 0%, 100% { margin-left: 0; } 50% { margin-left: 6px; } }
 
+/* --------------------------------------------------------------------------
+   MOBILE (≤700px) — hamburger nav, compact hero, big tap targets
+   -------------------------------------------------------------------------- */
+.nav-btn--menu { display: none; }
+
 @media (max-width: 700px) {
-  .banner { height: 120px; }
-  .tooth__tab { font-size: 20px; }
-  .nav-btn { font-size: 14px; height: 40px; }
-  .wall-year { -webkit-text-stroke-width: 1.8px; }
+  body { overflow-x: clip; }
+
+  /* nav collapses to MENU + the two toggles; tap MENU to expand */
+  .navbar { gap: 6px; padding: 6px 0 8px; }
+  .nav-btn { font-size: 14px; height: 42px; }
+  .nav-btn--menu { display: flex; flex: 1 1 auto; }
+  .navbar .nav-btn:not(.nav-btn--menu):not(.nav-btn--sound):not(.nav-btn--sug) { display: none; }
+  .navbar.is-open { display: grid; grid-template-columns: 1fr 1fr; }
+  .navbar.is-open .nav-btn:not(.nav-btn--menu):not(.nav-btn--sound):not(.nav-btn--sug) { display: flex; }
+  .navbar.is-open .nav-btn--menu { grid-column: 1 / -1; }
+  .nav-btn--img img { height: 26px; }
+
+  /* brand row: smaller logo, no banner gif (it duplicates the marquee vibe) */
+  .brand { gap: 10px; padding-bottom: 8px; }
+  .brand__logo-img { width: 150px; }
+  .brand__tag { font-size: 11px; }
+  .brand__banner { display: none; }
+
+  /* hero */
+  .hero { min-height: 300px; margin-bottom: 18px; }
+  .hero__panel { padding: 20px 16px; }
+  .hero__title { font-size: clamp(34px, 11vw, 52px); }
+  .hero__offer { font-size: 12px; }
+  .hero__price { font-size: 24px; }
+
+  /* sections + text */
+  .container { padding: 12px; }
+  .tooth__tab { font-size: 18px; }
+  .tooth--sub .tooth__tab { font-size: 15px; }
+  .sub { font-size: 13px; }
+  .wall-year { font-size: clamp(30px, 10vw, 44px); -webkit-text-stroke-width: 1.5px; }
+  .post__title { font-size: 20px; }
+  .winbox__bar { font-size: 12px; }
+
+  /* tap targets */
+  .chip { font-size: 13px; padding: 8px 13px; }
+  .grid-ctl { margin-left: 0; width: 100%; }
+  .btn { font-size: 15px; padding: 10px 18px; }
+
+  /* reel */
+  .reel { padding: 26px 0; }
+  .reel__item { height: 100px; }
+  .reel__arrow { width: 38px; height: 38px; font-size: 16px; }
+
+  /* lightbox controls hug the edges */
+  .lb-btn { width: 44px; height: 44px; font-size: 19px; }
+  .lb-btn--prev { left: 6px; }
+  .lb-btn--next { right: 6px; }
+  .lb-btn--close { top: 8px; right: 8px; }
+
+  /* gate */
+  .splash__word { -webkit-text-stroke-width: 2px; }
+  .splash__warn-big { font-size: clamp(30px, 10vw, 74px); }
+  .splash__ok { font-size: 18px; padding: 12px 24px; }
+
+  /* misc */
   .burst { display: none; }
+  .banner { height: 120px; }
+  .x-card__media { max-width: 100%; }
+  .footer__bar { font-size: 11px; }
+  .footer__sig { width: 54px; }
+  .about-face { float: none; display: block; margin: 0 auto 14px; }
+  .navbar .nav-btn--sug, .navbar .nav-btn--sound { font-size: 10px; padding: 0 6px; flex: 0 1 auto; }
+  .sfx-toast { font-size: 12px; max-width: 88vw; padding: 8px 14px; text-align: center; }
 }
 
 /* --------------------------------------------------------------------------

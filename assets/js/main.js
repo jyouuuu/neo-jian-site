@@ -39,6 +39,23 @@
     });
     applySug();
 
+    // mobile hamburger nav
+    const menuBtn = document.querySelector(".nav-btn--menu");
+    const navbar = document.querySelector(".navbar");
+    if (menuBtn && navbar) {
+      menuBtn.addEventListener("click", () => {
+        const open = navbar.classList.toggle("is-open");
+        menuBtn.textContent = open ? "CLOSE ✕" : "MENU ☰";
+        SFX.tick();
+      });
+      navbar.querySelectorAll("a.nav-btn").forEach((a) => {
+        a.addEventListener("click", () => {
+          navbar.classList.remove("is-open");
+          menuBtn.textContent = "MENU ☰";
+        });
+      });
+    }
+
     // sound toggle button(s)
     document.querySelectorAll(".nav-btn--sound").forEach((btn) => {
       btn.setAttribute("aria-pressed", SFX.isEnabled() ? "true" : "false");
