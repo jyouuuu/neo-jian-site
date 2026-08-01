@@ -1063,6 +1063,35 @@ html.sfw [data-sug="1"] { display: none !important; }
 }
 .x-card__link:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--shadow); color: #fff; }
 
+/* dead-link buttons — big red cross through them */
+.btn--dead {
+  position: relative;
+  pointer-events: none;
+  cursor: not-allowed;
+  color: var(--ink-dim) !important;
+  overflow: hidden;
+  filter: saturate(0.4);
+}
+.btn--dead::before, .btn--dead::after {
+  content: "";
+  position: absolute;
+  top: calc(50% - 3px);
+  left: -12%;
+  width: 124%;
+  height: 6px;
+  background: var(--red);
+  border: 1.5px solid var(--ink);
+}
+.btn--dead::before { transform: rotate(15deg); }
+.btn--dead::after { transform: rotate(-15deg); }
+.dead-note {
+  font-family: var(--font-pixel);
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: var(--red);
+  margin: 2px 0 0;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .marquee__track, .sfx-toast, .burst { animation: none; }
   .tile, .nav-btn, .btn, .chip { transition-duration: 0.01s; }
