@@ -67,15 +67,12 @@
       });
     });
 
-    // dark mode toggle (persisted; default follows OS, applied pre-paint in <head>)
+    // dark mode sun/moon switch (persisted; default follows OS, pre-paint in <head>)
     const darkBtns = document.querySelectorAll(".nav-btn--dark");
     const setDark = (on, save) => {
       document.documentElement.classList.toggle("dark", on);
       if (save) localStorage.setItem("jian_dark", on ? "on" : "off");
-      darkBtns.forEach((b) => {
-        b.textContent = on ? "DARK: ON" : "DARK: OFF";
-        b.setAttribute("aria-pressed", on ? "true" : "false");
-      });
+      darkBtns.forEach((b) => b.setAttribute("aria-checked", on ? "true" : "false"));
     };
     darkBtns.forEach((b) => b.addEventListener("click", () => {
       setDark(!document.documentElement.classList.contains("dark"), true);
