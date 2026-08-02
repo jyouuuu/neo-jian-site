@@ -1255,3 +1255,37 @@ html.sfw [data-sug="1"] { display: none !important; }
   .marquee__track, .sfx-toast, .burst { animation: none; }
   .tile, .nav-btn, .btn, .chip { transition-duration: 0.01s; }
 }
+
+/* --------------------------------------------------------------------------
+   DARK MODE — the whole site is token-driven, so this is mostly a var flip.
+   Toggled by .nav-btn--dark (main.js), persisted as jian_dark, applied
+   pre-paint by an inline script in each page's <head>. Default follows
+   prefers-color-scheme.
+   -------------------------------------------------------------------------- */
+html.dark {
+  --paper: #16161b;
+  --panel: #1f1f27;
+  --ink: #eceadf;
+  --ink-dim: #9b9b92;
+  --grey: #34343d;
+  --grey-hover: #484852;
+  --grey-soft: #26262e;
+  --shadow: #050507;
+}
+html.dark body {
+  background:
+    radial-gradient(circle, rgba(236, 234, 223, 0.05) 1px, transparent 1.3px) 0 0 / 9px 9px,
+    var(--paper);
+}
+html.dark a { color: var(--cyan); }
+html.dark a:hover { color: var(--pink); }
+html.dark .marquee { background: #0a0a0d; }
+/* the black logo art needs its cream sticker plate when the paper goes dark */
+html.dark .brand__logo-img {
+  background: #f4f1e8;
+  border: 3px solid var(--ink);
+  box-shadow: 4px 4px 0 var(--shadow);
+  padding: 6px 10px;
+  filter: none;
+}
+html.dark .splash__warn { background: var(--panel); }

@@ -67,6 +67,22 @@
       });
     });
 
+    // dark mode toggle (persisted; default follows OS, applied pre-paint in <head>)
+    const darkBtns = document.querySelectorAll(".nav-btn--dark");
+    const setDark = (on, save) => {
+      document.documentElement.classList.toggle("dark", on);
+      if (save) localStorage.setItem("jian_dark", on ? "on" : "off");
+      darkBtns.forEach((b) => {
+        b.textContent = on ? "DARK: ON" : "DARK: OFF";
+        b.setAttribute("aria-pressed", on ? "true" : "false");
+      });
+    };
+    darkBtns.forEach((b) => b.addEventListener("click", () => {
+      setDark(!document.documentElement.classList.contains("dark"), true);
+      SFX.tick();
+    }));
+    setDark(document.documentElement.classList.contains("dark"), false);
+
     // quiet ticks on chunky UI
     document.querySelectorAll(".nav-btn:not(.nav-btn--sound), .chip, .home-link, .btn").forEach((el) => {
       el.addEventListener("pointerenter", (e) => {

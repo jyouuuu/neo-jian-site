@@ -99,20 +99,19 @@
       this.glowEl.setAttribute("aria-hidden", "true");
       document.body.appendChild(this.glowEl);
     },
-    hit(quiet) {
+    hit() {
       this.build();
       const now = performance.now();
       this.streak = now - this.lastAt <= this.WINDOW ? this.streak + 1 : 1;
       this.lastAt = now;
       this.total++;
       localStorage.setItem("jian_wall_views", String(this.total));
-      // personal best — fanfare the moment you pass it (once per run)
+      // personal best — flash the chip the moment you pass it (once per run)
       if (this.streak > this.best) {
         const prevBest = this.best;
         this.best = this.streak;
         localStorage.setItem("jian_wall_best", String(this.best));
         if (prevBest >= 4 && this.streak === prevBest + 1) {
-          SFX() && SFX().record();
           this.bestEl.classList.remove("is-new");
           void this.bestEl.offsetWidth;
           this.bestEl.classList.add("is-new");
@@ -123,7 +122,6 @@
       const rankedUp = this.cur !== null && r[1] !== this.cur;
       this.cur = r[1];
       this.render(r, ri, rankedUp);
-      SFX() && SFX().rung(this.streak, quiet ? 0.3 : 0.8);
       clearTimeout(this.idleT);
       this.idleT = setTimeout(() => this.die(), this.WINDOW);
       clearTimeout(this.warnT); // blink warning ~1.1s before the streak dies
@@ -136,10 +134,9 @@
       if (this.tileCool[i] && now - this.tileCool[i] < this.TILE_COOL) return;
       this.lastHover = now;
       this.tileCool[i] = now;
-      this.hit(true); // plink already sings on sweeps — rung stays quiet
+      this.hit();
     },
     die() {
-      SFX() && SFX().comboEnd(this.streak);
       this.streak = 0;
       this.cur = null;
       clearTimeout(this.warnT);
@@ -153,7 +150,7 @@
       const x = b.left + b.width / 2, y = b.top + b.height / 3;
       burst(x, y, r[3], this.streak >= 15);
       flames(x, y, this.streak >= 15);
-      SFX() && SFX().rankup(ri);
+      SFX() && (this.streak >= 15 ? SFX().chord() : SFX().pop());
     },
     render(r, ri, rankedUp) {
       this.el.classList.add("is-live");
