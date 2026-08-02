@@ -733,28 +733,6 @@ img { display: block; }
 .footer__top { color: var(--ink); font-weight: 800; display: inline-block; margin-top: 10px; font-family: var(--font-pixel); font-size: 13px; }
 .footer__top:hover { color: var(--pink); }
 
-/* sound toast */
-.sfx-toast {
-  position: fixed;
-  left: 50%;
-  bottom: 22px;
-  transform: translate(-50%, 90px);
-  z-index: 600;
-  font-family: var(--font-shout);
-  font-size: 15px;
-  letter-spacing: 1px;
-  color: var(--ink);
-  background: var(--yellow);
-  border: 3px solid var(--ink);
-  box-shadow: 5px 5px 0 var(--shadow);
-  padding: 10px 20px;
-  transition: transform 0.4s var(--spring);
-  pointer-events: none;
-  animation: toastWiggle 1.6s ease-in-out infinite;
-}
-.sfx-toast.is-in { transform: translate(-50%, 0); }
-@keyframes toastWiggle { 0%, 100% { margin-left: 0; } 50% { margin-left: 6px; } }
-
 /* --------------------------------------------------------------------------
    MOBILE (≤700px) — hamburger nav, compact hero, big tap targets
    -------------------------------------------------------------------------- */
@@ -824,7 +802,6 @@ img { display: block; }
   .footer__sig { width: 54px; }
   .about-face { float: none; display: block; margin: 0 auto 14px; }
   .navbar .nav-btn--sug, .navbar .nav-btn--sound { font-size: 10px; padding: 0 6px; flex: 0 1 auto; }
-  .sfx-toast { font-size: 12px; max-width: 88vw; padding: 8px 14px; text-align: center; }
 }
 
 /* --------------------------------------------------------------------------
@@ -1357,7 +1334,7 @@ html.sfw [data-sug="1"] { display: none !important; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .marquee__track, .sfx-toast, .burst { animation: none; }
+  .marquee__track, .burst { animation: none; }
   .tile, .nav-btn, .btn, .chip { transition-duration: 0.01s; }
 }
 
@@ -1404,7 +1381,6 @@ html.dark .chip.is-on,
 html.dark .link-list a:hover,
 html.dark .lightbox__cap,
 html.dark .combo__hits,
-html.dark .sfx-toast,
 html.dark .reel__arrow,
 html.dark .reelbox__cap,
 html.dark .now-line { color: #0d0722; }

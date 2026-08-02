@@ -87,22 +87,5 @@
         SFX.tick();
       });
     });
-
-    // "click for sound" toast — sticks around until audio is actually unlocked.
-    // (skipped on the splash gate: the OK button there IS the first click)
-    if (SFX.isEnabled() && !SFX.isUnlocked() && !document.body.classList.contains("splash")) {
-      const toast = document.createElement("div");
-      toast.className = "sfx-toast";
-      toast.textContent = "SOUND IS ARMED — click anywhere once, the wall sings";
-      document.body.appendChild(toast);
-      setTimeout(() => toast.classList.add("is-in"), 500);
-      document.addEventListener("jian:sfx-unlocked", () => {
-        toast.textContent = "SOUND ON ✓";
-        setTimeout(() => {
-          toast.classList.remove("is-in");
-          setTimeout(() => toast.remove(), 500);
-        }, 1200);
-      }, { once: true });
-    }
   });
 })();
