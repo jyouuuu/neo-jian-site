@@ -57,6 +57,11 @@
     /* ------------------------------------------------ build -------------- */
     function build() {
       const items = data.filter((p) => !(isSFW() && p.sug));
+      // shuffle every build — a fresh mix each visit instead of folder order
+      for (let i = items.length - 1; i > 0; i--) {
+        const j = (Math.random() * (i + 1)) | 0;
+        [items[i], items[j]] = [items[j], items[i]];
+      }
       offset = 0; half = 0; vel = 0;
       host.innerHTML = `
         <div class="reel">
