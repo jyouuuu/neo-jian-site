@@ -1331,7 +1331,7 @@ html.dark {
   --paper: #100c1a;          /* deep violet-black */
   --panel: #1a1428;          /* violet panel */
   --ink: #f1ecff;            /* soft lavender white */
-  --ink-dim: #a394cc;
+  --ink-dim: #b0a0d8;
   --grey: #2c2344;           /* muted violet chrome */
   --grey-hover: #3d3058;
   --grey-soft: #211a33;
@@ -1355,3 +1355,19 @@ html.dark .tooth__tab .accent { color: #fff; }
 html.dark .tooth__bar { background: var(--yellow); }
 html.dark .tooth--sub .tooth__tab { background: var(--grey); color: var(--ink); }
 html.dark .tooth--sub .tooth__bar { background: var(--grey); }
+/* contrast pass: ultraviolet surfaces take near-black type (the flipped
+   lavender ink was unreadable on purple), and purple-on-dark text brightens */
+html.dark .btn,
+html.dark .nav-btn.is-here,
+html.dark .chip.is-on,
+html.dark .link-list a:hover,
+html.dark .lightbox__cap,
+html.dark .combo__hits,
+html.dark .sfx-toast,
+html.dark .reel__arrow,
+html.dark .reelbox__cap,
+html.dark .now-line { color: #0d0722; }
+html.dark .lightbox__cap b { color: #fff; }
+html.dark .hero__price,
+html.dark .hero__offer b,
+html.dark .footer__bar a:hover { color: #a78bff; }
