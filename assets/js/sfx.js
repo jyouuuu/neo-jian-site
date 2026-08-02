@@ -137,6 +137,36 @@
     // party strum
     party() { [0, 3, 7, 10, 12, 15, 19, 24].forEach((st, k) => setTimeout(() => pop(st, { vol: 0.7 }), k * 42)); },
     chord() { [12, 19, 24, 27].forEach((st) => tone(st, { vol: 0.4, dur: 0.9 })); },
+    // combo rung — every hit climbs the ladder, octave up per wrap, so a
+    // rising combo literally plays an ascending melody
+    rung(streak, vol) {
+      const i = (((streak - 1) % SCALE.length) + SCALE.length) % SCALE.length;
+      const oct = Math.floor((streak - 1) / SCALE.length) * 12;
+      pop(SCALE[i] + oct, { vol: vol == null ? 0.8 : vol, dur: 0.13 });
+    },
+    // rank-up sting — the arpeggio grows with the rank (0=D … 6=SSS)
+    rankup(ri) {
+      const arps = [
+        [12, 19],
+        [12, 19, 24],
+        [12, 19, 24, 28],
+        [12, 16, 19, 24, 28],
+        [12, 16, 19, 24, 28, 31],
+        [12, 16, 19, 24, 28, 31, 36],
+        [12, 16, 19, 24, 28, 31, 36, 43],
+      ];
+      arps[Math.max(0, Math.min(ri, arps.length - 1))].forEach((st, k) =>
+        setTimeout(() => pop(st, { vol: 0.75, dur: 0.18 }), k * 55));
+      if (ri >= 4) setTimeout(() => api.chord(), 320); // S and up get the pad
+    },
+    // fat streak decayed — the power-down slide
+    comboEnd(streak) {
+      if (streak < 6) return;
+      pop(19, { vol: 0.5, dur: 0.35, drop: 0.12 });
+      setTimeout(() => pop(12, { vol: 0.3, dur: 0.3, drop: 0.1 }), 90);
+    },
+    // new personal best — the little fanfare
+    record() { [24, 28, 31, 36, 43].forEach((st, k) => setTimeout(() => pop(st, { vol: 0.8, dur: 0.22 }), k * 70)); },
     unlock() {
       const ctx = ensureCtx();
       if (ctx && ctx.state === "running" && !SFX.unlocked) {

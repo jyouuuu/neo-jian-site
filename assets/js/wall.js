@@ -55,10 +55,13 @@
   /* ------------------------------------------------ combo meter (DMC) ---- */
   // Every piece you view — clicked, arrowed past in the lightbox, or swept
   // over on the wall itself — builds a streak ranked DMC-style, D → SSS.
-  // The streak dies after WINDOW ms idle. Lifetime VIEWED persists.
+  // The streak dies after WINDOW ms idle (with a blink warning first).
+  // Lifetime VIEWED + personal BEST persist in localStorage. The screen
+  // edges glow the rank color, hotter as you climb.
   const combo = {
     total: parseInt(localStorage.getItem("jian_wall_views") || "0", 10) || 0,
-    streak: 0, lastAt: 0, idleT: null, lastHover: 0, tileCool: {}, cur: null,
+    best: parseInt(localStorage.getItem("jian_wall_best") || "0", 10) || 0,
+    streak: 0, lastAt: 0, idleT: null, warnT: null, lastHover: 0, tileCool: {}, cur: null,
     WINDOW: 4000, HOVER_GAP: 160, TILE_COOL: 1500,
     RANKS: [ // min streak, letter, shout, color — Devil May Cry ladder
       [30, "SSS", "SSSTYLISH!", "#ff2ea6"],
@@ -69,7 +72,7 @@
       [3, "C", "CRAZY!", "#66f7ff"],
       [1, "D", "DOPE", "#f4f1e8"],
     ],
-    el: null, rankEl: null, wordEl: null, multEl: null, hitsEl: null,
+    el: null, rankEl: null, wordEl: null, multEl: null, hitsEl: null, bestEl: null, glowEl: null,
     rank() { return this.RANKS.find((r) => this.streak >= r[0]); },
     build() {
       if (this.el) return;
@@ -80,8 +83,9 @@
         <div class="combo__rank">D</div>
         <div class="combo__word"></div>
         <div class="combo__row">
-          <span class="combo__mult">x0</span>
+          <span class="combo__best">BEST x0</span>
           <span class="combo__hits"></span>
+          <span class="combo__mult">x0</span>
         </div>`;
       document.body.appendChild(el);
       this.el = el;
@@ -89,21 +93,42 @@
       this.wordEl = el.querySelector(".combo__word");
       this.multEl = el.querySelector(".combo__mult");
       this.hitsEl = el.querySelector(".combo__hits");
+      this.bestEl = el.querySelector(".combo__best");
+      this.glowEl = document.createElement("div");
+      this.glowEl.className = "combo-glow";
+      this.glowEl.setAttribute("aria-hidden", "true");
+      document.body.appendChild(this.glowEl);
     },
-    hit() {
+    hit(quiet) {
       this.build();
       const now = performance.now();
       this.streak = now - this.lastAt <= this.WINDOW ? this.streak + 1 : 1;
       this.lastAt = now;
       this.total++;
       localStorage.setItem("jian_wall_views", String(this.total));
+      // personal best — fanfare the moment you pass it (once per run)
+      if (this.streak > this.best) {
+        const prevBest = this.best;
+        this.best = this.streak;
+        localStorage.setItem("jian_wall_best", String(this.best));
+        if (prevBest >= 4 && this.streak === prevBest + 1) {
+          SFX() && SFX().record();
+          this.bestEl.classList.remove("is-new");
+          void this.bestEl.offsetWidth;
+          this.bestEl.classList.add("is-new");
+        }
+      }
       const r = this.rank();
+      const ri = this.RANKS.indexOf(r);
       const rankedUp = this.cur !== null && r[1] !== this.cur;
       this.cur = r[1];
-      this.render(r, rankedUp);
+      this.render(r, ri, rankedUp);
+      SFX() && SFX().rung(this.streak, quiet ? 0.3 : 0.8);
       clearTimeout(this.idleT);
       this.idleT = setTimeout(() => this.die(), this.WINDOW);
-      if (rankedUp) this.celebrate(r);
+      clearTimeout(this.warnT); // blink warning ~1.1s before the streak dies
+      this.warnT = setTimeout(() => { if (this.el) this.el.classList.add("is-fading"); }, this.WINDOW - 1100);
+      if (rankedUp) this.celebrate(r, ri);
     },
     hover(i) { // wall sweep — throttled, per-tile cooldown
       const now = performance.now();
@@ -111,27 +136,37 @@
       if (this.tileCool[i] && now - this.tileCool[i] < this.TILE_COOL) return;
       this.lastHover = now;
       this.tileCool[i] = now;
-      this.hit();
+      this.hit(true); // plink already sings on sweeps — rung stays quiet
     },
     die() {
+      SFX() && SFX().comboEnd(this.streak);
       this.streak = 0;
       this.cur = null;
-      if (this.el) this.el.classList.remove("is-live");
+      clearTimeout(this.warnT);
+      if (this.el) {
+        this.el.classList.remove("is-live", "is-fading");
+        this.glowEl.style.opacity = "0";
+      }
     },
-    celebrate(r) {
+    celebrate(r, ri) {
       const b = this.el.getBoundingClientRect();
       const x = b.left + b.width / 2, y = b.top + b.height / 3;
       burst(x, y, r[3], this.streak >= 15);
       flames(x, y, this.streak >= 15);
-      SFX() && (this.streak >= 15 ? SFX().chord() : SFX().pop());
+      SFX() && SFX().rankup(ri);
     },
-    render(r, rankedUp) {
+    render(r, ri, rankedUp) {
       this.el.classList.add("is-live");
+      this.el.classList.remove("is-fading");
       this.rankEl.textContent = r[1];
       this.rankEl.style.setProperty("--rankc", r[3]);
       this.wordEl.textContent = r[2];
       this.multEl.textContent = `x${this.streak}`;
       this.hitsEl.textContent = `${this.total} VIEWED`;
+      this.bestEl.textContent = `BEST x${this.best}`;
+      // screen-edge glow heats up with the rank (D≈0 → SSS≈0.5)
+      this.glowEl.style.setProperty("--rankc", r[3]);
+      this.glowEl.style.opacity = String(Math.min(0.5, (6 - ri) / 6 * 0.55));
       this.el.classList.remove("is-pumped");
       void this.el.offsetWidth;
       this.el.classList.add("is-pumped");

@@ -599,6 +599,30 @@ img { display: block; }
   padding: 5px 14px;
 }
 .combo__mult { background: var(--ink); color: var(--yellow); }
+.combo__best { background: var(--grey, #e8e4da); color: var(--ink-dim); }
+.combo__best.is-new {
+  animation: combo-best 1s var(--spring);
+  background: var(--pink);
+  color: #fff;
+}
+@keyframes combo-best {
+  0% { transform: scale(1); }
+  30% { transform: scale(1.35) rotate(-4deg); background: var(--pink); color: #fff; }
+  100% { transform: scale(1); }
+}
+/* decay warning — blink before the streak dies */
+.combo.is-fading { animation: combo-blink 0.44s steps(2, jump-none) infinite; }
+@keyframes combo-blink { 50% { opacity: 0.35; } }
+/* rank-colored screen-edge glow, hotter as you climb */
+.combo-glow {
+  position: fixed;
+  inset: 0;
+  z-index: 503;
+  pointer-events: none;
+  box-shadow: inset 0 0 130px 24px var(--rankc, transparent);
+  opacity: 0;
+  transition: opacity 0.45s;
+}
 @media (max-width: 640px) {
   .combo { right: 14px; }
   .combo__rank { font-size: 64px; -webkit-text-stroke: 2px var(--ink); text-shadow: 4px 4px 0 var(--shadow), 0 0 18px var(--rankc, #f4f1e8); }
