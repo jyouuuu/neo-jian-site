@@ -1371,3 +1371,13 @@ html.dark .lightbox__cap b { color: #fff; }
 html.dark .hero__price,
 html.dark .hero__offer b,
 html.dark .footer__bar a:hover { color: #a78bff; }
+/* accent recolor: the loud lime/orange/green clashed with ultraviolet —
+   orange SHOP goes hot pink (site's core pair), lime + "safe" greens go cyan */
+html.dark .nav-btn--shop { background: var(--pink); color: #fff; }
+html.dark .nav-btn--shop:hover { background: #ff5cbc; color: #fff; }
+html.dark .nav-btn--comms,
+html.dark .comms-btn,
+html.dark .hero__flag { background: var(--cyan); color: #0d0722; }
+html.dark .comms-btn { color: #0d0722 !important; }
+html.dark .nav-btn--sound[aria-pressed="true"],
+html.dark .nav-btn--sug[aria-pressed="false"] { background: var(--cyan); color: #06272c; }
