@@ -1321,40 +1321,37 @@ html.sfw [data-sug="1"] { display: none !important; }
 }
 
 /* --------------------------------------------------------------------------
-   DARK MODE — "MIDNIGHT JIAN": pink × black × white (ZZZ card energy).
-   Warm near-black paper, soft-white ink, and every yellow accent slot flips
-   to hot pink so the whole night scheme runs pink/black/white.
+   DARK MODE — "ULTRAVIOLET": deep violet paper, purple strips, soft
+   lavender ink (picked by Justin from a 4-scheme preview, Aug 2026).
    Toggled by the sun/moon switch (main.js), persisted as jian_dark, applied
    pre-paint by an inline script in each page's <head>. Default follows
    prefers-color-scheme.
    -------------------------------------------------------------------------- */
 html.dark {
-  --paper: #0f0b0e;          /* warm black, hint of magenta */
-  --panel: #1b141a;          /* pink-black panel */
-  --ink: #fff6f9;            /* soft white */
-  --ink-dim: #b09aa8;
-  --grey: #372831;           /* muted plum chrome */
-  --grey-hover: #4d3a46;
-  --grey-soft: #251c22;
-  --yellow: #ff2ea6;         /* accent chips go hot pink at night */
+  --paper: #100c1a;          /* deep violet-black */
+  --panel: #1a1428;          /* violet panel */
+  --ink: #f1ecff;            /* soft lavender white */
+  --ink-dim: #a394cc;
+  --grey: #2c2344;           /* muted violet chrome */
+  --grey-hover: #3d3058;
+  --grey-soft: #211a33;
+  --yellow: #7b5cff;         /* accent chips go ultraviolet at night */
   --shadow: #000000;
 }
 html.dark body {
   background:
-    radial-gradient(circle, rgba(255, 246, 249, 0.05) 1px, transparent 1.3px) 0 0 / 9px 9px,
+    radial-gradient(circle, rgba(255, 255, 255, 0.045) 1px, transparent 1.3px) 0 0 / 9px 9px,
     var(--paper);
 }
-html.dark a { color: #ff7dc4; }
+html.dark a { color: #a78bff; }
 html.dark a:hover { color: #fff; }
-html.dark .marquee { background: #000; }
 html.dark .splash__warn { background: var(--panel); }
-/* v2 — pull the reference card's energy in: PINK strips with black type,
-   white outlines on black. Pink is the lead, not an accent. */
-html.dark .marquee { background: var(--pink); color: #14060d; }
+/* strips lead with the ultraviolet, black type, white highlights */
+html.dark .marquee { background: var(--yellow); color: #0d0722; }
 html.dark .marquee b { color: #fff; }
 html.dark .marquee:hover .marquee__track { color: #fff; }
-html.dark .tooth__tab { background: var(--pink); color: #14060d; }
+html.dark .tooth__tab { background: var(--yellow); color: #0d0722; }
 html.dark .tooth__tab .accent { color: #fff; }
-html.dark .tooth__bar { background: var(--pink); }
+html.dark .tooth__bar { background: var(--yellow); }
 html.dark .tooth--sub .tooth__tab { background: var(--grey); color: var(--ink); }
 html.dark .tooth--sub .tooth__bar { background: var(--grey); }
