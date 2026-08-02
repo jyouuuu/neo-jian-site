@@ -29,6 +29,7 @@ Image.MAX_IMAGE_PIXELS = 80_000_000
 
 # July 2026 review — not explicit, but suggestive (bikini/pinup/cleavage-heavy).
 # Hidden when the visitor flips the SUGGESTIVE toggle off. Keys: "<year>/<stem>".
+# Aug 2026 — Justin's WALL REVIEW pass: everything he marked _suggestive.
 SUGGESTIVE = {
     "2025/brazil", "2025/doki", "2025/sqqq", "2025/squi2", "2025/venom2",
     "2025/burn", "2025/bunny_magic", "2025/kikuri", "2025/book", "2025/blud",
@@ -36,6 +37,10 @@ SUGGESTIVE = {
     "2025/oc", "2025/SGSTICKER", "2025/SQUIRREL_STICKER", "2025/magiksquirrel",
     "2024/12", "2024/38", "2024/75", "2024/76", "2024/84", "2024/96",
     "2024/101", "2024/104", "2024/118",
+    # WALL REVIEW marks (Aug 2026)
+    "2024/128", "2024/17", "2024/63", "2024/9", "2024/91",
+    "2025/gift", "2025/grill", "2025/meiow", "2025/skully_ly_001",
+    "2025/sqauirbvc", "2025/vale", "2025/witches_final", "2025/ws_sketch",
 }
 
 
