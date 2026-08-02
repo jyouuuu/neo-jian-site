@@ -1356,3 +1356,15 @@ html.dark .brand__logo-img {
   filter: none;
 }
 html.dark .splash__warn { background: var(--panel); }
+/* v2 — pull the reference card's energy in: PINK strips with black type,
+   white outlines on black. Pink is the lead, not an accent. */
+html.dark .marquee { background: var(--pink); color: #14060d; }
+html.dark .marquee b { color: #fff; }
+html.dark .marquee:hover .marquee__track { color: #fff; }
+html.dark .tooth__tab { background: var(--pink); color: #14060d; }
+html.dark .tooth__tab .accent { color: #fff; }
+html.dark .tooth__bar { background: var(--pink); }
+html.dark .tooth--sub .tooth__tab { background: var(--grey); color: var(--ink); }
+html.dark .tooth--sub .tooth__bar { background: var(--grey); }
+/* banner pixel art inverts to white-on-black instead of a white glare box */
+html.dark .brand__banner { filter: invert(1); }
