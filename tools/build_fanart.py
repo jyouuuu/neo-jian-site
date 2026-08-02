@@ -55,6 +55,8 @@ SKIP_STEMS = {
     "drawpega48", "finger-by-partykathat", "gwm1imobkaaep7s", "sketchy",
     "facebook", "facebook_002", "creep", "nokl", "noklji", "noklmonke", "jess",
     "ethos", "ethos_alt",
+    # not fanart (per Justin, Aug 2026) — hash-named misfile
+    "185ec62e1195a26e80572c4e2cbff8f25a5c9074_full",
 }
 
 # stems matched by prefix (case-insensitive) — phone photos, app screenshots,
