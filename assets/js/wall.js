@@ -337,7 +337,7 @@
     const api = {
       tiles,
       visiblePieces() {
-        return tiles.filter((t) => t.el.style.display !== "none" && t.el.closest(".wall").style.display !== "none").map((t) => t.piece);
+        return tiles.filter((t) => t.el.style.display !== "none" && t.el.offsetParent !== null).map((t) => t.piece);
       },
       filter(year) {
         let shown = 0;
@@ -360,7 +360,7 @@
         });
       },
       party() {
-        const vis = tiles.filter((t) => t.el.style.display !== "none" && t.el.closest(".wall").style.display !== "none");
+        const vis = tiles.filter((t) => t.el.style.display !== "none" && t.el.offsetParent !== null);
         SFX() && SFX().party();
         vis.forEach((t, k) => {
           const r = t.el.getBoundingClientRect();
@@ -379,17 +379,47 @@
       const divider = document.createElement("div");
       divider.className = "wall-year";
       divider.innerHTML = `${year === "PROJ" ? "PROJECTS" : year} <span>${group.length} pieces</span>`;
+      container.appendChild(divider);
+
+      // PROJ is two projects, each with its own sub-header + grid
+      const PROJ_META = {
+        grunge: ["GRUNGE", "original game + series"],
+        tt: ["TROPICAL TAKEOVER", "SVA thesis · 2024"],
+      };
+      const addTiles = (list, grid) => {
+        list.forEach((p) => {
+          const t = makeTile(p, idx, api);
+          tiles.push({ el: t, piece: p, year });
+          grid.appendChild(t);
+          idx++;
+        });
+      };
+
+      if (year === "PROJ") {
+        const wrap = document.createElement("div");
+        ["grunge", "tt"].forEach((pk) => {
+          const sub = group.filter((p) => p.p === pk);
+          if (!sub.length) return;
+          const meta = PROJ_META[pk];
+          const subDiv = document.createElement("div");
+          subDiv.className = "wall-year wall-year--sub";
+          subDiv.innerHTML = `${meta[0]} <span>${meta[1]} · ${sub.length} pieces</span>`;
+          const grid = document.createElement("div");
+          grid.className = "wall";
+          wrap.appendChild(subDiv);
+          wrap.appendChild(grid);
+          addTiles(sub, grid);
+        });
+        container.appendChild(wrap);
+        sections[year] = { divider, grid: wrap, count: group.length };
+        return;
+      }
+
       const grid = document.createElement("div");
       grid.className = "wall";
-      container.appendChild(divider);
       container.appendChild(grid);
       sections[year] = { divider, grid, count: group.length };
-      group.forEach((p) => {
-        const t = makeTile(p, idx, api);
-        tiles.push({ el: t, piece: p, year });
-        grid.appendChild(t);
-        idx++;
-      });
+      addTiles(group, grid);
     });
 
     container.appendChild(empty);

@@ -398,6 +398,8 @@ img { display: block; }
   margin: 26px 0 10px;
 }
 .wall-year::after { content: ""; flex: 1; border-top: 3px solid var(--ink); transform: translateY(-8px); }
+.wall-year--sub { font-size: clamp(24px, 3.4vw, 38px); margin-top: 8px; }
+.wall-year--sub span { font-size: 11px; }
 .wall-year span {
   font-family: var(--font-pixel);
   font-size: 13px;

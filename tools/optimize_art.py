@@ -88,13 +88,19 @@ def process(year, fname):
         print(f"  !! {label}: {e}", file=sys.stderr)
         return None
 
-    return {"t": thumb_rel, "f": full_rel, "y": out_year(year), "n": stem, "w": w, "h": h,
-            "sug": 1 if f"{out_year(year)}/{stem}" in SUGGESTIVE else 0}
+    rec = {"t": thumb_rel, "f": full_rel, "y": out_year(year), "n": stem, "w": w, "h": h,
+           "sug": 1 if f"{out_year(year)}/{stem}" in SUGGESTIVE else 0}
+    if year in ("grunge", "tt"):
+        rec["p"] = year  # which project — wall.js splits PROJ into sub-grids
+    return rec
 
 
 def sort_key(p):
-    # newest era first; numeric stems descending, named stems alphabetical
+    # newest era first; numeric stems descending, named stems alphabetical.
+    # PROJ sorts grunge first, then tt, each in source order (numbered stems).
     year_order = {"2026": 0, "2025": 1, "2024": 2, "2023": 3, "2022": 4, "2021": 5, "2020": 6, "PROJ": 7}
+    if p["y"] == "PROJ":
+        return (7, {"grunge": 0, "tt": 1}.get(p.get("p"), 2), p["n"])
     try:
         num = -int(p["n"])
         name = ""
