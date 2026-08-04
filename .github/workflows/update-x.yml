@@ -1,9 +1,9 @@
 name: update-x-post
 
-# Refreshes data/xpost.js (latest post on @jiansketch) daily.
-# No secrets needed — reads the public syndication timeline.
-# X 429-blocks GitHub's runner IPs some days, so: three tries a day,
-# and the script exits green (keeping the last post) when blocked.
+# Refreshes data/xpost.js (latest @jiansketch post) daily. No secrets needed —
+# reads X's public syndication timeline AND the Bluesky public API; newest wins.
+# X's feed is months-stale and 429-blocks runner IPs, so Bluesky usually
+# carries it; if every source is down the script keeps the last post, exits green.
 on:
   schedule:
     - cron: "37 1,13,19 * * *" # 01:37 / 13:37 / 19:37 UTC

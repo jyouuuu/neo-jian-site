@@ -1,6 +1,7 @@
 /* ==========================================================================
-   LIVE FROM X.EXE — renders the latest X post from data/xpost.js
-   (self-hosted card, refreshed by tools/update_x.py — no X widget required)
+   LIVE FROM X.EXE / BSKY.EXE — renders the latest post from data/xpost.js
+   (self-hosted card, refreshed by tools/update_x.py from X or Bluesky,
+   whichever has the newer post — no widgets required)
    ========================================================================== */
 (function () {
   "use strict";
@@ -14,6 +15,16 @@
     const host = document.getElementById("xPost");
     const p = window.JIAN_XPOST;
     if (!host || !p) return;
+
+    // the post can come from X or Bluesky (whichever is newer) — rebrand
+    // the window chrome to match the source
+    const isBsky = p.net === "bsky";
+    const box = host.closest(".winbox");
+    const bar = box && box.querySelector(".winbox__bar");
+    if (bar && isBsky) {
+      bar.style.background = "#0085ff";
+      bar.childNodes[0].nodeValue = "LIVE FROM BSKY.EXE ";
+    }
 
     const card = document.createElement("div");
     card.className = "x-card";
@@ -34,7 +45,7 @@
 
     const text = document.createElement("p");
     text.className = "x-card__text";
-    text.textContent = p.text || "(posted an image)";
+    text.textContent = p.text || "(new post — no caption)";
     meta.appendChild(text);
 
     if (p.media) {
@@ -56,7 +67,7 @@
     link.href = p.link;
     link.target = "_blank";
     link.rel = "noopener";
-    link.textContent = "VIEW ON X →";
+    link.textContent = isBsky ? "VIEW ON BLUESKY →" : "VIEW ON X →";
     meta.appendChild(link);
 
     card.appendChild(meta);
