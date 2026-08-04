@@ -2,9 +2,11 @@ name: update-x-post
 
 # Refreshes data/xpost.js (latest post on @jiansketch) daily.
 # No secrets needed — reads the public syndication timeline.
+# X 429-blocks GitHub's runner IPs some days, so: three tries a day,
+# and the script exits green (keeping the last post) when blocked.
 on:
   schedule:
-    - cron: "37 13 * * *" # daily, 13:37 UTC
+    - cron: "37 1,13,19 * * *" # 01:37 / 13:37 / 19:37 UTC
   workflow_dispatch: # manual run from the Actions tab
 
 permissions:

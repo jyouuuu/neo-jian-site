@@ -55,7 +55,16 @@ def main():
     if "--from-file" in sys.argv:
         blob = open(sys.argv[sys.argv.index("--from-file") + 1], encoding="utf-8", errors="replace").read()
     else:
-        blob = fetch(TIMELINE).decode("utf-8", errors="replace")
+        try:
+            blob = fetch(TIMELINE).decode("utf-8", errors="replace")
+        except (urllib.error.HTTPError, urllib.error.URLError) as e:
+            # X rate-limits GitHub's runner IPs some days (daily 429s since
+            # Aug 1 2026). If the card already has data, keep the last known
+            # post and exit green — a stale card beats a failed workflow.
+            if os.path.exists(os.path.join(ROOT, "data", "xpost.js")):
+                print(f"timeline fetch blocked ({e}); keeping existing data/xpost.js")
+                return
+            raise
 
     # only tweets whose permalink belongs to the account (skips retweets/others)
     my_ids = set(re.findall(rf'"permalink":"/{USER}/status/(\d+)"', blob))
