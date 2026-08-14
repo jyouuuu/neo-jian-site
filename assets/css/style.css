@@ -1467,6 +1467,41 @@ html.dark .nav-btn--sug[aria-pressed="false"] { background: var(--cyan); color: 
 
 .cta-zone { text-align: center; margin: 28px 0 8px; }
 
+/* (Aug 14 2026, Justin: "if the image is pressed it will also function as the
+   order this and send them down the page to the fill out section.")
+   The art is the biggest target on a card, so it orders too. An ORDER tag
+   slides up over it on hover so it doesn't read as a dead picture. */
+.price-card__shot {
+  display: block;
+  position: relative;
+  line-height: 0;
+  overflow: hidden;         /* keeps the tag tucked under the art until hover */
+  cursor: pointer;
+}
+.price-card__tag {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 9px 0;
+  font-family: var(--font-shout);
+  font-size: 16px;
+  letter-spacing: 2px;
+  line-height: 1;
+  text-align: center;
+  color: #fff;
+  background: var(--pink);
+  border-top: 3px solid var(--ink);
+  transform: translateY(101%);
+  transition: transform 0.2s var(--spring);
+}
+.price-card__shot:hover .price-card__tag,
+.price-card__shot:focus-visible .price-card__tag { transform: translateY(0); }
+/* the pop card's bar is already pink — a pink tag on top of it reads as one
+   pink slab, so invert it there the same way the order button inverts */
+.price-card--pop .price-card__tag { background: var(--yellow); color: var(--ink); }
+.price-card__shot:focus-visible { outline: 4px solid var(--pink); outline-offset: -4px; }
+
 .price-card__order {
   margin: auto 14px 14px;   /* auto pins it to the bottom of uneven cards */
   display: block;
