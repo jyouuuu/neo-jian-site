@@ -16,10 +16,11 @@
      in the one script every page already loads, so there's a single place to
      change it and no chance of a page being missed.
      ------------------------------------------------------------------------ */
-  var CF_ANALYTICS_TOKEN = "";
+  var CF_ANALYTICS_TOKEN = "c05dec2a237c4359bc4b9c231bdff6d5";
   if (CF_ANALYTICS_TOKEN) {
     var beacon = document.createElement("script");
-    beacon.defer = true;
+    beacon.type = "module"; /* what Cloudflare's own snippet ships as — modules
+                               defer by default, so it never blocks the page */
     beacon.src = "https://static.cloudflareinsights.com/beacon.min.js";
     beacon.setAttribute("data-cf-beacon", JSON.stringify({ token: CF_ANALYTICS_TOKEN }));
     document.head.appendChild(beacon);
