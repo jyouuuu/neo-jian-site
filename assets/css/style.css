@@ -1467,7 +1467,201 @@ html.dark .nav-btn--sug[aria-pressed="false"] { background: var(--cyan); color: 
 
 .cta-zone { text-align: center; margin: 28px 0 8px; }
 
+.price-card__order {
+  margin: auto 14px 14px;   /* auto pins it to the bottom of uneven cards */
+  display: block;
+  text-align: center;
+  font-size: 15px;
+  padding: 8px 14px;
+  background: var(--yellow);
+}
+.price-card__order:hover { background: var(--pink); color: #fff; }
+.price-card--pop .price-card__order { background: var(--pink); color: #fff; }
+.price-card--pop .price-card__order:hover { background: var(--yellow); color: var(--ink); }
+
 @media (max-width: 640px) {
   .price-card .price { font-size: 26px; }
   .price-card h3 { font-size: 19px; }
+}
+
+/* --------------------------------------------------------------------------
+   ORDER.EXE — the on-site order form (Aug 2026). Every control wears the
+   same sticker mechanic as the buttons: ink border, hard offset shadow.
+   -------------------------------------------------------------------------- */
+.order-form { display: block; }
+/* the JS shows/hides rows with .hidden — a class-level display: would
+   otherwise out-specify the browser's own [hidden] rule and they'd never go */
+.order-form [hidden], #order-fields[hidden], #order-actions[hidden] { display: none !important; }
+.order-form.is-flash { animation: orderFlash 0.9s var(--spring); }
+@keyframes orderFlash {
+  0%, 100% { box-shadow: 6px 6px 0 var(--shadow); }
+  30% { box-shadow: 6px 6px 0 var(--pink), 0 0 0 5px var(--pink); }
+}
+
+.fgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 16px; }
+@media (max-width: 720px) { .fgrid { grid-template-columns: 1fr; } }
+.fgrid .f-wide { grid-column: 1 / -1; }
+
+.f-row { display: block; margin-bottom: 14px; }
+.f-row:last-child { margin-bottom: 0; }
+.f-label {
+  display: block;
+  font-family: var(--font-shout);
+  font-size: 15px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin-bottom: 5px;
+}
+.f-label .req { color: var(--pink); }
+.f-hint { display: block; font-size: 12.5px; color: var(--ink-dim); margin: 4px 0 0; letter-spacing: 0.3px; }
+
+.order-form input[type="text"],
+.order-form input[type="email"],
+.order-form input[type="url"],
+.order-form select,
+.order-form textarea {
+  width: 100%;
+  font-family: var(--font-ui);
+  font-weight: 500;
+  font-size: 15px;
+  color: var(--ink);
+  background: var(--paper);
+  border: 3px solid var(--ink);
+  box-shadow: 4px 4px 0 var(--shadow);
+  padding: 9px 11px;
+  transition: box-shadow 0.16s var(--spring), transform 0.16s var(--spring), background 0.12s;
+}
+.order-form textarea { min-height: 96px; resize: vertical; line-height: 1.5; }
+.order-form select {
+  appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, var(--ink) 50%),
+    linear-gradient(135deg, var(--ink) 50%, transparent 50%);
+  background-position: right 16px top 50%, right 10px top 50%;
+  background-size: 6px 6px, 6px 6px;
+  background-repeat: no-repeat;
+  padding-right: 32px;
+  cursor: pointer;
+}
+.order-form input:focus,
+.order-form select:focus,
+.order-form textarea:focus {
+  outline: none;
+  background: var(--panel);
+  box-shadow: 6px 7px 0 var(--pink);
+  transform: translate(-2px, -3px);
+}
+.order-form input:invalid:not(:placeholder-shown) { box-shadow: 4px 4px 0 var(--red); }
+
+/* checkbox + radio — chunky sticker ticks */
+.tick {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  font-size: 14.5px;
+  color: var(--ink);
+  padding: 7px 9px;
+  border: 3px solid var(--ink);
+  background: var(--paper);
+  box-shadow: 3px 3px 0 var(--shadow);
+  cursor: pointer;
+  margin-bottom: 8px;
+  transition: transform 0.14s var(--spring), box-shadow 0.14s var(--spring), background 0.12s;
+}
+.tick:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--shadow); }
+.tick input { width: 18px; height: 18px; margin: 2px 0 0; accent-color: var(--pink); flex: none; cursor: pointer; }
+.tick:has(input:checked) { background: var(--yellow); }
+.tick__price {
+  margin-left: auto;
+  font-family: var(--font-shout);
+  font-size: 16px;
+  white-space: nowrap;
+  padding-left: 10px;
+  font-variant-numeric: tabular-nums;
+}
+.tick__price--free { color: var(--green); }
+.tick small { display: block; color: var(--ink-dim); font-size: 12.5px; }
+.tick:has(input:checked) small { color: rgba(25, 25, 25, 0.7); }
+
+/* the running receipt */
+.receipt { font-family: var(--font-pixel); font-size: 13.5px; letter-spacing: 0.5px; }
+.receipt__row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 5px 0;
+  border-bottom: 2px dotted var(--grey);
+  color: var(--ink-dim);
+}
+.receipt__row:last-child { border-bottom: none; }
+.receipt__row b { margin-left: auto; color: var(--ink); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.receipt__row b.is-free { color: var(--green); }
+.receipt__row b.is-ask { color: var(--pink); }
+
+.order-total {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 4px solid var(--ink);
+}
+.order-total__label { font-family: var(--font-shout); font-size: 19px; letter-spacing: 1px; }
+.order-total__value {
+  margin-left: auto;
+  font-family: var(--font-shout);
+  font-size: 40px;
+  line-height: 1;
+  color: var(--pink);
+  font-variant-numeric: tabular-nums;
+}
+.order-total__note { font-size: 12.5px; color: var(--ink-dim); margin: 8px 0 0; letter-spacing: 0.3px; }
+
+.order-status {
+  border: 3px solid var(--ink);
+  box-shadow: 4px 4px 0 var(--shadow);
+  padding: 11px 13px;
+  margin-top: 14px;
+  font-size: 14.5px;
+  line-height: 1.5;
+}
+.order-status.is-ok { background: var(--green); color: #06280f; }
+.order-status.is-ok a { color: #06280f; text-decoration: underline; }
+.order-status.is-bad { background: var(--red); color: #fff; }
+.order-status.is-bad a { color: #fff; text-decoration: underline; }
+.order-status.is-warn { background: var(--yellow); color: var(--ink); }
+.order-status.is-warn a { color: var(--ink); text-decoration: underline; }
+.order-status.is-busy { background: var(--grey-soft); color: var(--ink-dim); }
+
+.order-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 16px; }
+.order-actions .sub { margin: 0; }
+.btn--send { background: var(--pink); color: #fff; font-size: 20px; padding: 12px 28px; }
+.btn--send:hover { background: var(--yellow); color: var(--ink); }
+.btn--send:disabled { background: var(--grey); color: var(--ink-dim); cursor: wait; transform: none; box-shadow: 4px 4px 0 var(--shadow); }
+
+.hp { position: absolute; left: -9999px; opacity: 0; height: 0; overflow: hidden; }
+
+/* dark mode pass — inputs sit on the violet panel, ticks go ultraviolet */
+html.dark .order-form input[type="text"],
+html.dark .order-form input[type="email"],
+html.dark .order-form select,
+html.dark .order-form textarea,
+html.dark .tick { background: var(--grey-soft); color: var(--ink); }
+html.dark .order-form input:focus,
+html.dark .order-form select:focus,
+html.dark .order-form textarea:focus { background: var(--panel); }
+html.dark .tick:has(input:checked) { background: var(--yellow); color: #0d0722; }
+html.dark .tick:has(input:checked) small { color: rgba(13, 7, 34, 0.72); }
+html.dark .order-total__value { color: var(--cyan); }
+html.dark .order-status.is-warn { color: #0d0722; }
+html.dark .order-status.is-warn a { color: #0d0722; }
+html.dark .btn--send { background: var(--cyan); color: #0d0722; }
+html.dark .btn--send:hover { background: var(--pink); color: #fff; }
+html.dark .price-card__order:hover { background: var(--pink); color: #fff; }
+html.dark .price-card--pop .price-card__order { color: #fff; }
+html.dark .price-card--pop .price-card__order:hover { background: var(--cyan); color: #0d0722; }
+
+@media (max-width: 640px) {
+  .order-total__value { font-size: 32px; }
+  .btn--send { width: 100%; text-align: center; }
 }

@@ -80,6 +80,7 @@
             <span class="price">$55</span>
           </div>
           <p>Simple chibi design, ready for print. Flat color, bold outline. Transparent PNG plus a print-ready 300dpi file — send it straight to a sticker printer. (You get the artwork, not physical stickers.)</p>
+          <a class="btn price-card__order" href="#order" data-order-tier="sticker">ORDER THIS →</a>
         </div>
 
         <div class="box price-card">
@@ -89,6 +90,7 @@
             <span class="price">$65</span>
           </div>
           <p>Bust up. You get circle and square crops, a transparent version and three background colors, already sized for X, Discord and Twitch.</p>
+          <a class="btn price-card__order" href="#order" data-order-tier="icon">ORDER THIS →</a>
         </div>
 
         <div class="box price-card price-card--pop">
@@ -98,6 +100,7 @@
             <span class="price">$75</span>
           </div>
           <p><b>3 emotes $75 · 5 emotes $120.</b> Reaction faces, delivered at 112 / 56 / 28px for Twitch and Discord. Best value on the page.</p>
+          <a class="btn price-card__order" href="#order" data-order-tier="emote3">ORDER THIS →</a>
         </div>
 
         <div class="box price-card">
@@ -107,6 +110,7 @@
             <span class="price">$120</span>
           </div>
           <p>No outlines anywhere — every edge built from color meeting color. Softer, flatter, quicker than a rendered piece, which is why it costs less. Waist up; head to toe is +$50.</p>
+          <a class="btn price-card__order" href="#order" data-order-tier="lineless">ORDER THIS →</a>
         </div>
 
         <div class="box price-card">
@@ -116,6 +120,7 @@
             <span class="price">$145</span>
           </div>
           <p>Waist up, fully rendered. Simple background included — flat color, gradient or pattern.</p>
+          <a class="btn price-card__order" href="#order" data-order-tier="halfbody">ORDER THIS →</a>
         </div>
 
         <div class="box price-card">
@@ -125,6 +130,7 @@
             <span class="price">$195</span>
           </div>
           <p>Head to toe, fully rendered, every shoe and buckle drawn. Simple background included.</p>
+          <a class="btn price-card__order" href="#order" data-order-tier="fullbody">ORDER THIS →</a>
         </div>
 
       </div>
@@ -147,7 +153,7 @@
             <tr><td>NSFW</td><td class="addon-v addon-v--ask">DM to ask</td></tr>
           </table>
           <hr class="hr-dotted" />
-          <p class="sub" style="margin:0">Extra characters scale with the tier: +$45 on an icon, +$137 on a fullbody.</p>
+          <p class="sub" style="margin:0">Extra characters scale with the tier: +$46 on an icon, +$137 on a fullbody.</p>
         </div>
 
         <div class="box">
@@ -209,10 +215,195 @@
         </div>
       </div>
 
-      <!-- ===================== CTA ===================== -->
+      <!-- ===================== THE ORDER FORM =====================
+           (Aug 2026, Justin: "i want clients to order directly from my
+           website by pressing the buttons ... we can have both.")
+           Static site, so the send is relayed by Web3Forms — see
+           assets/js/order.js for the one key that has to be pasted in.
+           =========================================================== -->
+      <div class="tooth tooth--sub" id="order">
+        <div class="tooth__tab">START YOUR ORDER</div>
+        <div class="tooth__bar"></div>
+      </div>
+
+      <form class="winbox order-form" id="order-form" novalidate>
+        <div class="winbox__bar">ORDER.EXE — NEW ORDER <span class="dots">•••</span></div>
+        <div class="winbox__body">
+
+          <div id="order-fields">
+            <p class="sub" style="margin:0 0 14px">
+              Fill this in and it comes straight to my inbox — no Google account, no sign-in.
+              The price updates as you pick, so you know the number before I do.
+            </p>
+
+            <!-- ---------- what ---------- -->
+            <div class="fgrid">
+              <div class="f-row">
+                <label class="f-label" for="f-tier">What do you want<span class="req">*</span></label>
+                <select id="f-tier" required>
+                  <option value="sticker">Sticker design — $55</option>
+                  <option value="icon">Icon / PFP — $65</option>
+                  <option value="emote3">Emote pack, 3 emotes — $75</option>
+                  <option value="emote5">Emote pack, 5 emotes — $120</option>
+                  <option value="lineless">Lineless — $120</option>
+                  <option value="halfbody" selected>Halfbody — $145</option>
+                  <option value="fullbody">Fullbody — $195</option>
+                  <option value="animicon">Animated icon — $115</option>
+                  <option value="sheet">Character design sheet — $495</option>
+                  <option value="keyart">Key art / poster / album cover — from $650</option>
+                  <option value="other">Something else — tell me below</option>
+                </select>
+              </div>
+
+              <div class="f-row">
+                <label class="f-label" for="f-chars">How many characters</label>
+                <select id="f-chars">
+                  <option value="0">Just the one</option>
+                  <option value="1">2 characters (+70%)</option>
+                  <option value="2">3 characters (+140%)</option>
+                  <option value="3">4 characters (+210%)</option>
+                </select>
+                <span class="f-hint">Each extra character is +70% of the tier price.</span>
+              </div>
+            </div>
+
+            <div class="f-row" data-only="lineless" hidden>
+              <label class="tick">
+                <input type="checkbox" id="f-lineless-full" />
+                <span>Head to toe instead of waist up <small>lineless only</small></span>
+                <span class="tick__price">+$50</span>
+              </label>
+            </div>
+
+            <!-- ---------- background ---------- -->
+            <div class="f-row">
+              <span class="f-label">Background</span>
+              <label class="tick">
+                <input type="radio" name="bg" value="simple" checked />
+                <span>Simple <small>flat color, gradient or pattern</small></span>
+                <span class="tick__price tick__price--free">FREE</span>
+              </label>
+              <label class="tick">
+                <input type="radio" name="bg" value="detailed" />
+                <span>Detailed background</span>
+                <span class="tick__price">+$85</span>
+              </label>
+              <label class="tick">
+                <input type="radio" name="bg" value="scene" />
+                <span>Full painted scene</span>
+                <span class="tick__price">+$170</span>
+              </label>
+            </div>
+
+            <!-- ---------- add-ons ---------- -->
+            <div class="f-row">
+              <span class="f-label">Add-ons</span>
+              <label class="tick">
+                <input type="checkbox" id="f-alt-outfit" />
+                <span>Alt outfit or colorway</span>
+                <span class="tick__price">+$45</span>
+              </label>
+              <label class="tick">
+                <input type="checkbox" id="f-props" />
+                <span>Props, weapons, mech detail</span>
+                <span class="tick__price">+$30</span>
+              </label>
+              <label class="tick">
+                <input type="checkbox" id="f-commercial" />
+                <span>Commercial use <small>anything used to sell, promote or ship a product</small></span>
+                <span class="tick__price">base × 2.5</span>
+              </label>
+              <label class="tick">
+                <input type="checkbox" id="f-nsfw" />
+                <span>This one's NSFW <small>I'll message you before anything is booked</small></span>
+                <span class="tick__price">ASK</span>
+              </label>
+            </div>
+
+            <div class="f-row" data-only="commercial" hidden>
+              <label class="f-label" for="f-commercial-what">What's it for</label>
+              <input type="text" id="f-commercial-what" placeholder="album cover, 500 print run, game store page…" />
+            </div>
+
+            <!-- ---------- the brief ---------- -->
+            <div class="f-row">
+              <label class="f-label" for="f-brief">Describe it<span class="req">*</span></label>
+              <textarea id="f-brief" required placeholder="Who's in it, what they're doing, the mood, the pose, the palette. The more you give me the closer the first pass lands."></textarea>
+            </div>
+
+            <div class="f-row">
+              <label class="f-label" for="f-refs">Reference links<span class="req">*</span></label>
+              <textarea id="f-refs" required placeholder="imgur, toyhou.se, Google Drive, a Pinterest board — anything I can open. Paste as many as you like, one per line." style="min-height:76px"></textarea>
+              <span class="f-hint">No AI-generated images as the reference, please — it's on the list above.</span>
+            </div>
+
+            <!-- ---------- who ---------- -->
+            <div class="fgrid">
+              <div class="f-row">
+                <label class="f-label" for="f-name">Your name or handle<span class="req">*</span></label>
+                <input type="text" id="f-name" required placeholder="@yourhandle" />
+              </div>
+              <div class="f-row">
+                <label class="f-label" for="f-email">Your email<span class="req">*</span></label>
+                <input type="email" id="f-email" required placeholder="you@email.com" />
+                <span class="f-hint">This is where I reply.</span>
+              </div>
+              <div class="f-row">
+                <label class="f-label" for="f-pref">Best way to reach you</label>
+                <select id="f-pref">
+                  <option>Email</option>
+                  <option>X / Twitter DM</option>
+                  <option>Instagram DM</option>
+                  <option>Bluesky DM</option>
+                </select>
+              </div>
+              <div class="f-row">
+                <label class="f-label" for="f-paypal">PayPal email<span class="req">*</span></label>
+                <input type="email" id="f-paypal" required placeholder="for the invoice" />
+                <span class="f-hint">Same as above is fine — I need it to send the invoice.</span>
+              </div>
+              <div class="f-row">
+                <label class="f-label" for="f-deadline">Need it by a date?</label>
+                <input type="text" id="f-deadline" placeholder="optional — birthday, stream launch, con" />
+              </div>
+              <div class="f-row">
+                <span class="f-label">Can I post the finished piece?</span>
+                <label class="tick"><input type="radio" name="post" value="Yes" checked /> <span>Yes, post it</span></label>
+                <label class="tick"><input type="radio" name="post" value="No — keep it private" /> <span>No, keep it private</span></label>
+              </div>
+            </div>
+
+            <!-- bots only -->
+            <label class="hp" aria-hidden="true" tabindex="-1">
+              Leave this empty <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" />
+            </label>
+          </div>
+
+          <!-- ---------- the running total ---------- -->
+          <div id="order-total-wrap">
+            <hr class="hr-dotted" />
+            <div class="receipt" id="order-receipt"></div>
+            <div class="order-total">
+              <span class="order-total__label">ESTIMATE</span>
+              <span class="order-total__value" id="order-total">$145</span>
+            </div>
+            <p class="order-total__note" id="order-total-note"></p>
+          </div>
+
+          <div class="order-actions" id="order-actions">
+            <button class="btn btn--send" type="submit" id="order-send">SEND MY ORDER →</button>
+            <p class="sub">
+              Or use the <a href="https://docs.google.com/forms/d/e/1FAIpQLSd_TVxQN-CVny4EXwiGT_ZRrNbWeU30MzIs_uunjqlF-aWA8Q/viewform" target="_blank" rel="noopener">Google Form</a>
+              — same questions, same queue.
+            </p>
+          </div>
+
+          <div class="order-status" id="order-status" role="status" aria-live="polite" hidden></div>
+        </div>
+      </form>
+
       <div class="cta-zone">
-        <a class="comms-btn" href="https://docs.google.com/forms/d/e/1FAIpQLSd_TVxQN-CVny4EXwiGT_ZRrNbWeU30MzIs_uunjqlF-aWA8Q/viewform" target="_blank" rel="noopener">START AN ORDER →</a>
-        <p class="sub" style="margin:10px 0 0">Questions first? DM <a href="https://x.com/jiansketch" target="_blank" rel="noopener">@jiansketch</a> on X.</p>
+        <p class="sub" style="margin:0">Questions first? DM <a href="https://x.com/jiansketch" target="_blank" rel="noopener">@jiansketch</a> on X.</p>
       </div>
 
     </div>
@@ -242,5 +433,6 @@
 
   <script src="assets/js/sfx.js"></script>
   <script src="assets/js/main.js"></script>
+  <script src="assets/js/order.js"></script>
 </body>
 </html>
