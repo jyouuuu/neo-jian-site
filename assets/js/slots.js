@@ -79,6 +79,12 @@
     document.querySelectorAll("[data-slots-headline]").forEach(function (h) {
       h.textContent = FULL ? "★ FULL" : "★ OPEN";
     });
+    document.querySelectorAll("[data-slots-flag]").forEach(function (f) {
+      f.textContent = FULL
+        ? "COMMISSIONS FULL ★ NEXT BATCH " + NEXT_BATCH
+        : "COMMISSIONS OPEN ★ " + LEFT + " OF " + TOTAL + " SLOTS LEFT";
+      f.classList.toggle("is-full", FULL);
+    });
     document.querySelectorAll("[data-slots-line]").forEach(function (n) {
       n.textContent = FULL
         ? "this month is taken — the next batch opens " + NEXT_BATCH + ". get on the waitlist."

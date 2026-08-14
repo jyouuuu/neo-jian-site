@@ -1471,7 +1471,86 @@ html.dark .nav-btn--sug[aria-pressed="false"] { background: var(--cyan); color: 
    the front page's commission sheet — the six tiers as a strip, each one a
    door straight into the order form with itself already picked
    -------------------------------------------------------------------------- */
-.comms-promo { padding: 14px 16px; }
+/* (Aug 14 2026, Justin: "make the comissions section on front page stand out
+   right now its blending in with the rest".) It was a tooth tab + a .box,
+   which is exactly the shape of every other section on the page — so it read
+   as more of the same. It's the one INVERTED slab in the flow now: dark
+   panel, halftone dots, pink offset shadow, shout headline, and the six
+   cream tiles popping off the dark. It deliberately breaks the
+   tooth-then-box rhythm, because that rhythm is what it was disappearing
+   into. */
+.commsad {
+  position: relative;
+  margin: 26px 0;
+  padding: 26px 24px 22px;
+  border: 4px solid var(--ink);
+  box-shadow: 10px 10px 0 var(--pink);
+  background: #14131a;
+  color: #fff;
+  overflow: hidden;
+}
+.commsad::before {          /* the halftone grain, same trick as the paper */
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.07) 1px, transparent 1.3px) 0 0 / 9px 9px;
+  pointer-events: none;
+}
+.commsad > * { position: relative; z-index: 1; }
+/* ...but NOT the badge — the rule above would flatten its absolute
+   positioning and drop it into the flow above the flag. */
+.commsad .commsad__burst { position: absolute; top: 18px; right: 22px; z-index: 2; }
+
+.commsad__flag {
+  display: inline-block;
+  font-family: var(--font-pixel);
+  font-size: 13px;
+  letter-spacing: 2px;
+  color: var(--ink);
+  background: var(--lime);
+  border: 2px solid var(--ink);
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.55);
+  padding: 3px 9px;
+  transform: rotate(-2deg);
+}
+.commsad__flag.is-full { background: var(--red); color: #fff; }
+
+.commsad__title {
+  font-family: var(--font-shout);
+  font-size: clamp(34px, 5.4vw, 58px);
+  line-height: 0.95;
+  letter-spacing: 1px;
+  margin: 14px 0 8px;
+  text-shadow: 5px 5px 0 rgba(0, 0, 0, 0.6);
+}
+.commsad__title span { color: var(--pink); }
+.commsad__blurb { margin: 0 0 18px; max-width: 620px; color: #cfcbd8; font-size: 15px; }
+
+
+.commsad__foot { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; margin-top: 18px; }
+.commsad__note { font-family: var(--font-pixel); font-size: 12.5px; letter-spacing: 1.5px; color: #b9b4c6; }
+@media (max-width: 560px) {
+  .commsad { padding: 20px 16px 18px; box-shadow: 6px 6px 0 var(--pink); }
+  .commsad__burst { display: none; }   /* it lands on the headline at this width */
+  .commsad__foot .btn { width: 100%; text-align: center; }
+}
+
+/* the tiles are cream cards on the dark slab, in BOTH themes — pinned, not
+   token-driven, because --paper flips to near-black at night and the strip
+   would vanish into the panel it's meant to pop off */
+.commsad .comms-promo__item { background: #f6f3ea; border-color: #0e0e12; box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.55); }
+.commsad .comms-promo__item:hover { box-shadow: 7px 8px 0 var(--pink); }
+.commsad .comms-promo__bar { color: #191919; }
+.commsad .comms-promo__price { color: #d81b8c; }
+html.dark .commsad .comms-promo__price { color: #d81b8c; }
+
+/* at night the page is deep violet — a near-black slab would blend right back
+   in, so the panel goes ultraviolet and the shadow goes cyan */
+html.dark .commsad { background: #241a3d; border-color: var(--yellow); box-shadow: 10px 10px 0 var(--cyan); }
+html.dark .commsad__blurb { color: #cabce8; }
+html.dark .commsad__note { color: #b0a0d8; }
+html.dark .commsad .btn--zzz--pink { color: #fff; }
+
 .comms-promo__grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; }
 @media (max-width: 900px) { .comms-promo__grid { grid-template-columns: repeat(3, 1fr); } }
 @media (max-width: 460px) { .comms-promo__grid { grid-template-columns: repeat(2, 1fr); } }
