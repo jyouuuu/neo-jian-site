@@ -19,10 +19,13 @@
 </head>
 <body>
 
+  <!-- The counts and the next-batch date are written in by slots.js from the
+       one number in data/slots.js. What's typed here is the no-JS fallback, so
+       it says nothing that can go out of date — never a count, never a month. -->
   <div class="marquee" aria-hidden="true">
-    <div class="marquee__track">
-      COMMISSIONS <b>OPEN</b> ★ 2 OF 5 SLOTS LEFT ★ NEXT BATCH SEPT 1 ★ STICKER DESIGNS FROM $55 ★
-      COMMISSIONS <b>OPEN</b> ★ 2 OF 5 SLOTS LEFT ★ NEXT BATCH SEPT 1 ★ STICKER DESIGNS FROM $55 ★&nbsp;
+    <div class="marquee__track" data-slots-track>
+      COMMISSIONS ★ SLOTS OPEN THE 1ST ★ STICKER DESIGNS FROM $55 ★
+      COMMISSIONS ★ SLOTS OPEN THE 1ST ★ STICKER DESIGNS FROM $55 ★&nbsp;
     </div>
   </div>
 
@@ -62,7 +65,7 @@
 
     <div class="container">
 
-      <div class="burst" style="top: 26px; right: 30px;">2 / 5<br>SLOTS</div>
+      <div class="burst" style="top: 26px; right: 30px;" data-slots-burst>SLOTS<br>THE 1ST</div>
 
       <div class="tooth">
         <div class="tooth__tab">JIAN <span class="accent">COMMISSIONS</span></div>
@@ -240,9 +243,59 @@
            assets/js/order.js for the one key that has to be pasted in.
            =========================================================== -->
       <div class="tooth tooth--sub" id="order">
-        <div class="tooth__tab">START YOUR ORDER</div>
+        <div class="tooth__tab" id="order-tab">START YOUR ORDER</div>
         <div class="tooth__bar"></div>
       </div>
+
+      <!-- Shown INSTEAD of the order form when data/slots.js says the batch is
+           full (slots.js does the swap). A sold-out page used to be a dead end
+           — everyone who arrived wanting one simply left. -->
+      <form class="winbox order-form" id="waitlist-form" novalidate hidden>
+        <div class="winbox__bar">WAITLIST.EXE — SLOTS ARE FULL <span class="dots">•••</span></div>
+        <div class="winbox__body">
+
+          <div id="waitlist-fields">
+            <p class="sub" style="margin:0 0 14px">
+              This batch is taken. The next one opens <b id="wl-date">the 1st</b> — leave your
+              email and I'll send you one message the moment it does. That's the only thing
+              it's ever used for.
+            </p>
+
+            <div class="fgrid">
+              <div class="f-row">
+                <label class="f-label" for="w-email">Your email<span class="req">*</span></label>
+                <input type="email" id="w-email" required placeholder="you@email.com" />
+              </div>
+              <div class="f-row">
+                <label class="f-label" for="w-want">What you're after</label>
+                <select id="w-want">
+                  <option value="">Not sure yet</option>
+                  <option value="sticker">Sticker design — $55</option>
+                  <option value="icon">Icon / PFP — $65</option>
+                  <option value="emote3">Emote pack — $75</option>
+                  <option value="emote5">Emote pack, 5 — $120</option>
+                  <option value="lineless">Lineless — $120</option>
+                  <option value="halfbody">Halfbody — $145</option>
+                  <option value="fullbody">Fullbody — $195</option>
+                  <option value="other">Something bigger</option>
+                </select>
+                <span class="f-hint">Optional — it just tells me what to draw next.</span>
+              </div>
+            </div>
+
+            <label class="hp" aria-hidden="true" tabindex="-1">
+              Leave this empty <input type="checkbox" id="w-botcheck" tabindex="-1" autocomplete="off" />
+            </label>
+          </div>
+
+          <div class="order-actions" id="waitlist-actions">
+            <button class="btn btn--send" type="submit" id="waitlist-send">TELL ME WHEN →</button>
+            <p class="sub">One email when slots open. Not a newsletter.</p>
+          </div>
+
+          <div class="order-status" id="waitlist-status" role="status" aria-live="polite" hidden></div>
+        </div>
+      </form>
 
       <form class="winbox order-form" id="order-form" novalidate>
         <div class="winbox__bar">ORDER.EXE — NEW ORDER <span class="dots">•••</span></div>
@@ -450,6 +503,8 @@
   </footer>
 
   <script src="assets/js/sfx.js"></script>
+  <script src="data/slots.js"></script>
+  <script src="assets/js/slots.js"></script>
   <script src="assets/js/main.js"></script>
   <script src="assets/js/order.js"></script>
 </body>

@@ -194,6 +194,20 @@
         render();
         SFX.pop();
         document.querySelector("#order").scrollIntoView({ behavior: "smooth", block: "start" });
+
+        /* When the batch is full the order form is hidden and the waitlist is
+           in its place — carry the tier they pressed across, so a full month
+           still tells us what people were coming for. */
+        const wait = document.querySelector("#waitlist-form");
+        if (wait && !wait.hidden) {
+          const want = document.querySelector("#w-want");
+          if (want) want.value = t;
+          wait.classList.add("is-flash");
+          setTimeout(() => wait.classList.remove("is-flash"), 900);
+          setTimeout(() => document.querySelector("#w-email").focus({ preventScroll: true }), 700);
+          return;
+        }
+
         form.classList.add("is-flash");
         setTimeout(() => form.classList.remove("is-flash"), 900);
         setTimeout(() => el("f-brief").focus({ preventScroll: true }), 700);
@@ -314,5 +328,74 @@
     });
 
     render();
+  });
+
+  /* =====================================================================
+     THE WAITLIST — shown by slots.js instead of the order form when the
+     batch is full. Lives in this file, not slots.js, so the Web3Forms key
+     is written down exactly once.
+     ===================================================================== */
+  ready(function () {
+    const wl = document.querySelector("#waitlist-form");
+    if (!wl) return;
+
+    const SFX = window.JIAN_SFX || { party() {}, unpop() {} };
+    const btn = wl.querySelector("#waitlist-send");
+    const status = wl.querySelector("#waitlist-status");
+    const email = wl.querySelector("#w-email");
+    const want = wl.querySelector("#w-want");
+
+    function say(kind, html) {
+      status.className = "order-status is-" + kind;
+      status.innerHTML = html;
+      status.hidden = false;
+    }
+
+    wl.addEventListener("submit", function (e) {
+      e.preventDefault();
+      if (wl.querySelector("#w-botcheck").checked) return;
+      if (!wl.reportValidity()) return;
+
+      const when = (window.JIAN_SLOT_STATE || {}).nextBatch || "the 1st";
+      const wants = want.options[want.selectedIndex].text;
+      const p = {
+        access_key: ACCESS_KEY,
+        subject: "Waitlist signup — " + email.value.trim(),
+        from_name: "jiansketch.com waitlist",
+        replyto: email.value.trim(),
+        "Waitlist": "Someone wants a slot in the " + when + " batch",
+        "Email": email.value.trim(),
+        "After": want.value ? wants : "not sure yet",
+      };
+
+      btn.disabled = true;
+      btn.textContent = "SENDING…";
+      say("busy", "Adding you…");
+
+      const fd = new FormData();
+      Object.keys(p).forEach((k) => fd.append(k, p[k]));
+
+      fetch(ENDPOINT, { method: "POST", body: fd })
+        .then((r) => r.json())
+        .then((data) => {
+          if (!data.success) throw new Error(data.message || "rejected");
+          SFX.party();
+          wl.querySelector("#waitlist-fields").hidden = true;
+          wl.querySelector("#waitlist-actions").hidden = true;
+          say("ok",
+            "<b>YOU'RE ON THE LIST ✓</b><br>" +
+            "I'll email you when the <b>" + when + "</b> batch opens. One message, that's it.");
+        })
+        .catch(() => {
+          SFX.unpop();
+          btn.disabled = false;
+          btn.textContent = "TELL ME WHEN →";
+          say("bad",
+            "<b>That didn't go through.</b> " +
+            "<a href='mailto:" + FALLBACK_MAIL + "?subject=" + encodeURIComponent("Waitlist please") +
+            "&body=" + encodeURIComponent("Add me to the waitlist for the " + when + " batch.\n\nAfter: " + wants) +
+            "'>Email me instead</a> and I'll add you by hand.");
+        });
+    });
   });
 })();

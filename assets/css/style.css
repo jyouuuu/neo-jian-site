@@ -1467,6 +1467,28 @@ html.dark .nav-btn--sug[aria-pressed="false"] { background: var(--cyan); color: 
 
 .cta-zone { text-align: center; margin: 28px 0 8px; }
 
+/* 404 — the big dumb number */
+.big404 {
+  font-family: var(--font-shout);
+  font-size: clamp(80px, 18vw, 190px);
+  line-height: 0.85;
+  margin: 0 0 10px;
+  color: var(--pink);
+  letter-spacing: 4px;
+  text-shadow: 6px 6px 0 var(--ink);
+  user-select: none;
+}
+html.dark .big404 { color: var(--yellow); text-shadow: 6px 6px 0 #000; }
+
+/* the COMMS button when the batch is full — it must not still say OPEN */
+.nav-btn--comms.is-full,
+.comms-btn.is-full { background: var(--grey); color: var(--ink-dim); }
+.nav-btn--comms.is-full:hover,
+.comms-btn.is-full:hover { background: var(--grey-hover); color: #fff; }
+html.dark .nav-btn--comms.is-full,
+html.dark .comms-btn.is-full { background: var(--grey); color: var(--ink-dim); }
+html.dark .comms-btn.is-full { color: var(--ink-dim) !important; }
+
 /* (Aug 14 2026, Justin: "if the image is pressed it will also function as the
    order this and send them down the page to the fill out section.")
    The art is the biggest target on a card, so it orders too. An ORDER tag
@@ -1524,9 +1546,13 @@ html.dark .nav-btn--sug[aria-pressed="false"] { background: var(--cyan); color: 
    same sticker mechanic as the buttons: ink border, hard offset shadow.
    -------------------------------------------------------------------------- */
 .order-form { display: block; }
-/* the JS shows/hides rows with .hidden — a class-level display: would
-   otherwise out-specify the browser's own [hidden] rule and they'd never go */
-.order-form [hidden], #order-fields[hidden], #order-actions[hidden] { display: none !important; }
+/* The JS shows/hides with .hidden — a class-level display: out-specifies the
+   browser's own [hidden] rule, so without this they never actually go away.
+   NOTE the first selector: .order-form[hidden] is the FORM ITSELF, which is
+   how slots.js swaps the order form for the waitlist. Leave it in. */
+.order-form[hidden],
+.order-form [hidden],
+#order-fields[hidden], #order-actions[hidden] { display: none !important; }
 .order-form.is-flash { animation: orderFlash 0.9s var(--spring); }
 @keyframes orderFlash {
   0%, 100% { box-shadow: 6px 6px 0 var(--shadow); }

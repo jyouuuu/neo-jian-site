@@ -4,6 +4,27 @@
 (function () {
   "use strict";
 
+  /* ------------------------------------------------------------------------
+     TRAFFIC COUNTING — Cloudflare Web Analytics (Aug 2026)
+
+     >>> PASTE THE TOKEN BELOW AND IT SWITCHES ON. Empty = nothing loads. <<<
+     dash.cloudflare.com -> Analytics & Logs -> Web Analytics -> Add a site
+     -> jiansketch.com. It hands you a token. That's the whole job.
+
+     Free with no view limit, and it sets NO cookies and stores nothing
+     personal — which is why the site needs no cookie banner. It lives here,
+     in the one script every page already loads, so there's a single place to
+     change it and no chance of a page being missed.
+     ------------------------------------------------------------------------ */
+  var CF_ANALYTICS_TOKEN = "";
+  if (CF_ANALYTICS_TOKEN) {
+    var beacon = document.createElement("script");
+    beacon.defer = true;
+    beacon.src = "https://static.cloudflareinsights.com/beacon.min.js";
+    beacon.setAttribute("data-cf-beacon", JSON.stringify({ token: CF_ANALYTICS_TOKEN }));
+    document.head.appendChild(beacon);
+  }
+
   function ready(fn) {
     if (document.readyState !== "loading") fn();
     else document.addEventListener("DOMContentLoaded", fn);
