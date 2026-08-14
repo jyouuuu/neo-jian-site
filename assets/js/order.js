@@ -328,6 +328,30 @@
     });
 
     render();
+
+    /* -------------------------------------------------------------------
+       Arriving from the front page's commission block: commissions?tier=X
+       lands here with that tier already chosen, so nobody has to pick the
+       same thing twice.
+       ------------------------------------------------------------------- */
+    try {
+      const asked = new URLSearchParams(window.location.search).get("tier");
+      if (asked && TIERS[asked]) {
+        tierSel.value = asked;
+        render();
+        const wait = document.querySelector("#waitlist-form");
+        if (wait && !wait.hidden) {
+          const want = document.querySelector("#w-want");
+          if (want) want.value = asked;
+        }
+        /* the #order hash does the scrolling; just make it obvious we heard */
+        setTimeout(function () {
+          const target = wait && !wait.hidden ? wait : form;
+          target.classList.add("is-flash");
+          setTimeout(() => target.classList.remove("is-flash"), 900);
+        }, 400);
+      }
+    } catch (err) { /* no URLSearchParams, no preselect — the form still works */ }
   });
 
   /* =====================================================================

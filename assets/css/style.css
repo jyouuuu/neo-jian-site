@@ -1467,6 +1467,58 @@ html.dark .nav-btn--sug[aria-pressed="false"] { background: var(--cyan); color: 
 
 .cta-zone { text-align: center; margin: 28px 0 8px; }
 
+/* --------------------------------------------------------------------------
+   the front page's commission sheet — the six tiers as a strip, each one a
+   door straight into the order form with itself already picked
+   -------------------------------------------------------------------------- */
+.comms-promo { padding: 14px 16px; }
+.comms-promo__grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; }
+@media (max-width: 900px) { .comms-promo__grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 460px) { .comms-promo__grid { grid-template-columns: repeat(2, 1fr); } }
+
+.comms-promo__item {
+  display: block;
+  border: 3px solid var(--ink);
+  background: var(--paper);
+  box-shadow: 4px 4px 0 var(--shadow);
+  overflow: hidden;
+  line-height: 0;
+  transition: transform 0.16s var(--spring), box-shadow 0.16s var(--spring);
+}
+.comms-promo__item:hover { transform: translate(-2px, -3px) rotate(-0.8deg); box-shadow: 6px 7px 0 var(--pink); }
+.comms-promo__item:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--shadow); }
+.comms-promo__item img {
+  width: 100%;
+  height: auto;
+  /* 5/6 is the native ratio of every file in assets/img/comms (760x911), so
+     nothing is cropped — a square crop was cutting the legs off the fullbody,
+     which is the one tier whose whole selling point is head to toe. The
+     ratio is pinned rather than left to the image so the row stays even if a
+     replacement piece is a different shape. */
+  aspect-ratio: 5 / 6;
+  object-fit: cover;
+  object-position: top center;
+  border-bottom: 3px solid var(--ink);
+}
+.comms-promo__bar {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  padding: 6px 8px;
+  line-height: 1.2;
+  font-family: var(--font-shout);
+  font-size: 13px;
+  letter-spacing: 0.5px;
+  color: var(--ink);
+}
+.comms-promo__bar b { font-weight: 400; }
+.comms-promo__price { margin-left: auto; color: var(--pink); font-variant-numeric: tabular-nums; }
+html.dark .comms-promo__price { color: var(--cyan); }
+
+.comms-promo__foot { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; }
+.comms-promo__foot .sub { flex: 1 1 260px; }
+@media (max-width: 560px) { .comms-promo__foot .comms-btn { width: 100%; text-align: center; } }
+
 /* 404 — the big dumb number */
 .big404 {
   font-family: var(--font-shout);

@@ -73,6 +73,22 @@
     var burst = document.querySelector("[data-slots-burst]");
     if (burst) burst.innerHTML = FULL ? "SLOTS<br>FULL" : LEFT + " / " + TOTAL + "<br>SLOTS";
 
+    /* ---- the front page's commissions block -------------------------------
+       Same one number, so the home page can never promise something the
+       commissions page has already stopped offering. */
+    document.querySelectorAll("[data-slots-headline]").forEach(function (h) {
+      h.textContent = FULL ? "★ FULL" : "★ OPEN";
+    });
+    document.querySelectorAll("[data-slots-line]").forEach(function (n) {
+      n.textContent = FULL
+        ? "this month is taken — the next batch opens " + NEXT_BATCH + ". get on the waitlist."
+        : LEFT + " of " + TOTAL + " slots left this month. next batch " + NEXT_BATCH + ".";
+    });
+    document.querySelectorAll("[data-slots-sheet]").forEach(function (a) {
+      a.textContent = FULL ? "JOIN THE WAITLIST →" : "SEE THE FULL SHEET →";
+      a.classList.toggle("is-full", FULL);
+    });
+
     /* ---- commissions page: order form, or waitlist ----------------------- */
     var order = document.querySelector("#order-form");
     var wait = document.querySelector("#waitlist-form");
