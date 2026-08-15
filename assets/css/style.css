@@ -1446,11 +1446,18 @@ html.dark .nav-btn--shop:hover { background: #ff5cbc; color: #fff; }
 html.dark .nav-btn--comms,
 html.dark .comms-btn,
 html.dark .hero__flag,
-html.dark .winbox__bar,
 html.dark .post__bar,
 html.dark .btn--cyan,
-html.dark .btn--zzz { background: #fff; color: #000; }
+html.dark .btn--zzz:not(.btn--zzz--pink) { background: #fff; color: #000; }
 html.dark .comms-btn { color: #000 !important; }
+/* the purple default winbox bar goes white with black type — but bars with an
+   INLINE background (AKIRA red SOCIALS/LINKS, X blue) keep that brand color,
+   and those keep white type */
+html.dark .winbox__bar { background: #fff; }
+html.dark .winbox__bar:not([style]) { color: #000; }
+/* the post bar's # anchor is pinned white for the cyan bar — on the white bar it vanishes */
+html.dark .post__anchor { color: #000; }
+html.dark .post__anchor:hover { color: var(--pink); }
 html.dark .btn--cyan:hover,
 html.dark .btn--zzz:hover { background: var(--pink); color: #000; }
 html.dark .nav-btn--sound[aria-pressed="true"],
@@ -1580,6 +1587,7 @@ html.dark .commsad .comms-promo__price { color: #d81b8c; }
 /* at night the page is true black — the slab stays black too but the frame
    inverts: white border, magenta shadow (light mode's own pairing) */
 html.dark .commsad { background: #000; box-shadow: 10px 10px 0 var(--pink); }
+html.dark .commsad__flag:not(.is-full) { background: #fff; color: #000; }   /* lime breaks the law */
 html.dark .commsad__blurb { color: #b8b8b8; }
 html.dark .commsad__note { color: #8f8f8f; }
 html.dark .commsad .btn--zzz--pink { color: #fff; }
