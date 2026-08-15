@@ -5,3 +5,6 @@ tools/fonts_src/
 # python tooling venv
 tools/.venv/
 __pycache__/
+
+# local page backups from in-progress edits — never ship these
+_prev_*.html
