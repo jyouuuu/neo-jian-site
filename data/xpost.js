@@ -2,8 +2,8 @@
 window.JIAN_XPOST = {
   "text": "",
   "date": "2026-08-14",
-  "link": "https://bsky.app/profile/jiansketch.com/post/3mt2jt6tcqs25",
-  "media": "https://video.bsky.app/watch/did%3Aplc%3Avccm47t7uma2b2xsjvnoo5wa/bafkreie737pwzjgik5zu3xdxtpg7p6bmevu5iapaelxwblzzur7enesbbi/thumbnail.jpg",
+  "link": "https://bsky.app/profile/jiansketch.com/post/3mt32jtteuw27",
+  "media": "https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:vccm47t7uma2b2xsjvnoo5wa/bafkreig7j3sxl7d26sdwqbv5pgsrsaxztiloetwb7wquopmm3az5ecmvhi",
   "avatar": "assets/img/x_avatar.jpg",
   "user": "jiansketch.com",
   "net": "bsky"
