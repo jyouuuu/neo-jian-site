@@ -776,8 +776,9 @@ img { display: block; }
   .navbar .nav-btn:not(.nav-btn--menu):not(.nav-btn--sound):not(.nav-btn--sug):not(.nav-btn--kofi) { display: none; }
   .navbar.is-open { display: grid; grid-template-columns: 1fr 1fr; }
   .navbar.is-open .nav-btn:not(.nav-btn--menu):not(.nav-btn--sound):not(.nav-btn--sug) { display: flex; }
-  /* the support button never hides behind the hamburger */
-  .nav-btn--kofi { flex: 0 0 auto; padding: 0 12px; }
+  /* the support button never hides behind the hamburger. It takes its own
+     full-width row under MENU — sharing that row overflows it off-screen. */
+  .nav-btn--kofi { flex: 1 1 100%; }
   .navbar.is-open .nav-btn--menu { grid-column: 1 / -1; }
   .nav-btn--img img { height: 26px; }
 
