@@ -164,6 +164,12 @@ img { display: block; }
 .nav-btn--patreon { background: #ff424d; }
 .nav-btn--patreon:hover { background: #ff5a64; }
 .nav-btn--patreon img { background: #fff; border-radius: 50%; padding: 2px; height: 26px; }
+/* (Aug 14 2026, Justin: "add kofi button" / "not apparent enough") — the
+   support button rides the nav on every page instead of only living at the
+   bottom of LINKS.SYS. Ko-fi blue, so it reads as itself next to Patreon. */
+.nav-btn--kofi { background: #72a4f2; color: #fff; gap: 6px; }
+.nav-btn--kofi:hover { background: #8fb8f6; color: #fff; }
+.nav-btn__cup { font-size: 15px; }
 
 /* banner — framed like a poster plate */
 .banner {
@@ -767,9 +773,11 @@ img { display: block; }
   .navbar { gap: 6px; padding: 6px 0 8px; }
   .nav-btn { font-size: 14px; height: 42px; }
   .nav-btn--menu { display: flex; flex: 1 1 auto; }
-  .navbar .nav-btn:not(.nav-btn--menu):not(.nav-btn--sound):not(.nav-btn--sug) { display: none; }
+  .navbar .nav-btn:not(.nav-btn--menu):not(.nav-btn--sound):not(.nav-btn--sug):not(.nav-btn--kofi) { display: none; }
   .navbar.is-open { display: grid; grid-template-columns: 1fr 1fr; }
   .navbar.is-open .nav-btn:not(.nav-btn--menu):not(.nav-btn--sound):not(.nav-btn--sug) { display: flex; }
+  /* the support button never hides behind the hamburger */
+  .nav-btn--kofi { flex: 0 0 auto; padding: 0 12px; }
   .navbar.is-open .nav-btn--menu { grid-column: 1 / -1; }
   .nav-btn--img img { height: 26px; }
 
@@ -1362,42 +1370,51 @@ html.sfw [data-sug="1"] { display: none !important; }
 }
 
 /* --------------------------------------------------------------------------
-   DARK MODE — "ULTRAVIOLET": deep violet paper, purple strips, soft
-   lavender ink (picked by Justin from a 4-scheme preview, Aug 2026).
+   DARK MODE — "BLACKOUT": true-black paper, white ink, jian-magenta accent.
+   (Aug 15 2026, Justin: "i dont like the purple dark mode ... black white
+   and pink ... in the style of adult swim" — ULTRAVIOLET retired.) The
+   [as] discipline: a flat black field, white type, white die-cut sticker
+   shadows, and ONE hot pink (the site's own --pink) doing all accent work.
+   The --yellow accent slot goes magenta at night, so every surface that was
+   yellow in light mode (buttons, tabs, marquee, ticks) turns pink; purely
+   decorative purple/cyan/lime surfaces go white. Semantic green/red (FREE,
+   ok/error states) stay — they're meaning, not decoration.
    Toggled by the sun/moon switch (main.js), persisted as jian_dark, applied
    pre-paint by an inline script in each page's <head>. Default follows
    prefers-color-scheme.
    -------------------------------------------------------------------------- */
 html.dark {
-  --paper: #100c1a;          /* deep violet-black */
-  --panel: #1a1428;          /* violet panel */
-  --ink: #f1ecff;            /* soft lavender white */
-  --ink-dim: #b0a0d8;
-  --grey: #2c2344;           /* muted violet chrome */
-  --grey-hover: #3d3058;
-  --grey-soft: #211a33;
-  --yellow: #7b5cff;         /* accent chips go ultraviolet at night */
-  --shadow: #000000;
+  --paper: #000000;          /* true black */
+  --panel: #0c0c0c;          /* near-black panel */
+  --ink: #ffffff;            /* white ink — type, borders, frames */
+  --ink-dim: #9c9c9c;
+  --grey: #1f1f1f;           /* dark chrome */
+  --grey-hover: #303030;
+  --grey-soft: #141414;
+  --yellow: #ff2ea6;         /* the accent slot goes jian magenta at night */
+  --shadow: #ffffff;         /* offset shadows invert — die-cut stickers on black */
 }
 html.dark body {
   background:
     radial-gradient(circle, rgba(255, 255, 255, 0.045) 1px, transparent 1.3px) 0 0 / 9px 9px,
     var(--paper);
 }
-html.dark a { color: #a78bff; }
+/* body-text links only — the :not([class]) keeps the pink OUT of component
+   typography (nav buttons, order buttons), which was the pink-on-pink bug */
+html.dark a:not([class]) { color: #ff5cbc; }
 html.dark a:hover { color: #fff; }
 html.dark .splash__warn { background: var(--panel); }
-/* strips lead with the ultraviolet, black type, white highlights */
-html.dark .marquee { background: var(--yellow); color: #0d0722; }
+/* strips + tabs lead with the magenta, black type, white highlights */
+html.dark .marquee { background: var(--yellow); color: #000; }
 html.dark .marquee b { color: #fff; }
 html.dark .marquee:hover .marquee__track { color: #fff; }
-html.dark .tooth__tab { background: var(--yellow); color: #0d0722; }
+html.dark .tooth__tab { background: var(--yellow); color: #000; }
 html.dark .tooth__tab .accent { color: #fff; }
 html.dark .tooth__bar { background: var(--yellow); }
 html.dark .tooth--sub .tooth__tab { background: var(--grey); color: var(--ink); }
 html.dark .tooth--sub .tooth__bar { background: var(--grey); }
-/* contrast pass: ultraviolet surfaces take near-black type (the flipped
-   lavender ink was unreadable on purple), and purple-on-dark text brightens */
+/* contrast pass: magenta accent surfaces take black type (the poster look),
+   and the plain .btn hover inverts to a white block */
 html.dark .btn,
 html.dark .nav-btn.is-here,
 html.dark .chip.is-on,
@@ -1407,21 +1424,36 @@ html.dark .combo__hits,
 html.dark .sfx-toast,
 html.dark .reel__arrow,
 html.dark .reelbox__cap,
-html.dark .now-line { color: #0d0722; }
+html.dark .price-card__order,
+html.dark .now-line { color: #000; }
+/* ...except the ghost: its background is the dark chrome, so it keeps white type */
+html.dark .btn--ghost { color: var(--ink); }
+html.dark .btn:hover { background: #fff; color: #000; }
 html.dark .lightbox__cap b { color: #fff; }
-html.dark .hero__price,
-html.dark .hero__offer b,
-html.dark .footer__bar a:hover { color: #a78bff; }
-/* accent recolor: the loud lime/orange/green clashed with ultraviolet —
-   orange SHOP goes hot pink (site's core pair), lime + "safe" greens go cyan */
+/* two ink-on-ink fixes this theme forces: the footer bar was background:--ink
+   (white-on-white here), so it's pinned to black; the sound toggle's OFF state
+   was the same trap, so it falls to dark chrome. (--yellow-slot text on the
+   hero price, offer and footer hover now just turns magenta by itself.) */
+html.dark .footer__bar { background: var(--paper); }
+html.dark .footer__bar a { color: #fff; }   /* footer links are classless — keep them white, not link-pink */
+html.dark .nav-btn--sound { background: var(--grey); color: var(--ink); }
+/* accent recolor: decorative cyan/lime/purple surfaces go WHITE with black
+   type; active toggles and their hovers go magenta. Explicit-pink brand
+   surfaces (SHOP, SEND, the pop card) keep their white type either theme. */
 html.dark .nav-btn--shop { background: var(--pink); color: #fff; }
 html.dark .nav-btn--shop:hover { background: #ff5cbc; color: #fff; }
 html.dark .nav-btn--comms,
 html.dark .comms-btn,
-html.dark .hero__flag { background: var(--cyan); color: #0d0722; }
-html.dark .comms-btn { color: #0d0722 !important; }
+html.dark .hero__flag,
+html.dark .winbox__bar,
+html.dark .post__bar,
+html.dark .btn--cyan,
+html.dark .btn--zzz { background: #fff; color: #000; }
+html.dark .comms-btn { color: #000 !important; }
+html.dark .btn--cyan:hover,
+html.dark .btn--zzz:hover { background: var(--pink); color: #000; }
 html.dark .nav-btn--sound[aria-pressed="true"],
-html.dark .nav-btn--sug[aria-pressed="false"] { background: var(--cyan); color: #06272c; }
+html.dark .nav-btn--sug[aria-pressed="false"] { background: var(--pink); color: #000; }
 
 /* --------------------------------------------------------------------------
    commissions — price cards, add-on tables, order steps
@@ -1544,11 +1576,11 @@ html.dark .nav-btn--sug[aria-pressed="false"] { background: var(--cyan); color: 
 .commsad .comms-promo__price { color: #d81b8c; }
 html.dark .commsad .comms-promo__price { color: #d81b8c; }
 
-/* at night the page is deep violet — a near-black slab would blend right back
-   in, so the panel goes ultraviolet and the shadow goes cyan */
-html.dark .commsad { background: #241a3d; border-color: var(--yellow); box-shadow: 10px 10px 0 var(--cyan); }
-html.dark .commsad__blurb { color: #cabce8; }
-html.dark .commsad__note { color: #b0a0d8; }
+/* at night the page is true black — the slab stays black too but the frame
+   inverts: white border, magenta shadow (light mode's own pairing) */
+html.dark .commsad { background: #000; box-shadow: 10px 10px 0 var(--pink); }
+html.dark .commsad__blurb { color: #b8b8b8; }
+html.dark .commsad__note { color: #8f8f8f; }
 html.dark .commsad .btn--zzz--pink { color: #fff; }
 
 .comms-promo__grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; }
@@ -1592,7 +1624,6 @@ html.dark .commsad .btn--zzz--pink { color: #fff; }
 }
 .comms-promo__bar b { font-weight: 400; }
 .comms-promo__price { margin-left: auto; color: var(--pink); font-variant-numeric: tabular-nums; }
-html.dark .comms-promo__price { color: var(--cyan); }
 
 .comms-promo__foot { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; }
 .comms-promo__foot .sub { flex: 1 1 260px; }
@@ -1833,7 +1864,7 @@ html.dark .comms-btn.is-full { color: var(--ink-dim) !important; }
 
 .hp { position: absolute; left: -9999px; opacity: 0; height: 0; overflow: hidden; }
 
-/* dark mode pass — inputs sit on the violet panel, ticks go ultraviolet */
+/* dark mode pass — inputs sit on the black panel, ticks go magenta */
 html.dark .order-form input[type="text"],
 html.dark .order-form input[type="email"],
 html.dark .order-form select,
@@ -1842,18 +1873,25 @@ html.dark .tick { background: var(--grey-soft); color: var(--ink); }
 html.dark .order-form input:focus,
 html.dark .order-form select:focus,
 html.dark .order-form textarea:focus { background: var(--panel); }
-html.dark .tick:has(input:checked) { background: var(--yellow); color: #0d0722; }
-html.dark .tick:has(input:checked) small { color: rgba(13, 7, 34, 0.72); }
-html.dark .order-total__value { color: var(--cyan); }
-html.dark .order-status.is-warn { color: #0d0722; }
-html.dark .order-status.is-warn a { color: #0d0722; }
-html.dark .btn--send { background: var(--cyan); color: #0d0722; }
-html.dark .btn--send:hover { background: var(--pink); color: #fff; }
-html.dark .price-card__order:hover { background: var(--pink); color: #fff; }
+html.dark .tick:has(input:checked) { background: var(--yellow); color: #000; }
+html.dark .tick:has(input:checked) small { color: rgba(0, 0, 0, 0.72); }
+html.dark .tick:has(input:checked) .tick__price--free { color: #000; }   /* green-on-pink guard */
+html.dark .order-status.is-warn { color: #000; }
+html.dark .order-status.is-warn a { color: #000; }
+html.dark .btn--send:hover { background: #fff; color: #000; }
+html.dark .price-card__order:hover { background: #fff; color: #000; }
 html.dark .price-card--pop .price-card__order { color: #fff; }
-html.dark .price-card--pop .price-card__order:hover { background: var(--cyan); color: #0d0722; }
+html.dark .price-card--pop .price-card__order:hover { background: #fff; color: #000; }
 
 @media (max-width: 640px) {
   .order-total__value { font-size: 32px; }
   .btn--send { width: 100%; text-align: center; }
 }
+
+/* ===== KO-FI (Aug 14 2026, Justin: "add kofi button to jiansketch.com") =====
+   Drawn as a .link-btn instead of Ko-fi's widget script, so it can't be
+   blocked and it follows the site's tokens (incl. dark mode) for free.
+   Spans both grid columns — it's the support CTA, not a ninth social. */
+.link-btn--kofi { background: #72a4f2; grid-column: 1 / -1; justify-content: center; }
+.kofi-slot { margin-top: 10px; }
+.kofi-slot .link-btn { justify-content: center; }

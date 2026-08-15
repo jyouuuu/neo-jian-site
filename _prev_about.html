@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -46,7 +46,6 @@
       <a class="nav-btn nav-btn--shop" href="https://jiansketch.bigcartel.com/" target="_blank" rel="noopener">SHOP</a>
       <a class="nav-btn nav-btn--comms" href="commissions.html">COMMS OPEN</a>
       <a class="nav-btn nav-btn--img nav-btn--patreon" href="https://www.patreon.com/jiansketch" target="_blank" rel="noopener"><img src="assets/img/patreon02.png" alt="Patreon" /></a>
-      <a class="nav-btn nav-btn--kofi" href="https://ko-fi.com/N4N426AHW" target="_blank" rel="noopener"><span class="nav-btn__cup" aria-hidden="true">&#9749;</span>KO-FI</a>
     </nav>
 
     <div class="util-bar">
@@ -91,9 +90,11 @@
             <li><a href="https://www.patreon.com/jiansketch" target="_blank" rel="noopener">Patreon</a></li>
           </ul>
           <!-- (Aug 14 2026, Justin: "add kofi button to jiansketch.com".)
-               Drawn by us, not by Ko-fi's widget script — see home.html. -->
+               Ko-fi's own widget. Widget_2.js draws with document.write — it
+               must stay INLINE here, never deferred to the bottom of the page. -->
           <div class="kofi-slot">
-            <a class="link-btn link-btn--kofi" href="https://ko-fi.com/N4N426AHW" target="_blank" rel="noopener"><span class="link-btn__glyph">☕</span>SUPPORT ME ON KO-FI</a>
+            <script type='text/javascript' src='https://storage.ko-fi.com/cdn/widget/Widget_2.js'></script>
+            <script type='text/javascript'>kofiwidget2.init('Support me on Ko-fi', '#72a4f2', 'N4N426AHW');kofiwidget2.draw();</script>
           </div>
         </div>
       </div>
