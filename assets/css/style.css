@@ -3353,3 +3353,84 @@ html.dark { --copy: #d4d4d4; }
 .drop-tile__bar { white-space: normal; align-items: center; }
 .drop-tile__name { white-space: normal; overflow: visible; }
 .drop-tile__name small { white-space: normal; line-height: 1.2; }
+
+/* ---- 3.2c MOBILE (Sep 5 2026, Justin: "Also make it mobile friendly") -------
+   Rendered every page at 390 and 768 inside an iframe rig (headless Chrome
+   won't lay out under 500px on its own — trap #6). Grids, forms, the wall,
+   the blog and the gallery already stacked; what didn't:
+     * the top bar spent a whole row on MENU + SHOP — now one row: logo left,
+       MENU + SHOP right; the open menu still drops below as a 2-col grid
+     * the deck copy sat over the busy art with a left-to-right scrim that
+       meant nothing at 390px wide — the slide is now art on top, copy on a
+       bottom-up scrim, the same read as the desktop cut
+     * the deck's info band crammed a disc + 4 tabs + 2 arrows into 390px —
+       the disc goes, the tabs share the width, words only
+     * hover lifts STICK after a tap on touch screens — every hover transform
+       is now behind (hover: hover); taps keep the press squash + the sound
+     * the sound toast landed on top of the dock
+   -------------------------------------------------------------------------- */
+@media (hover: none) {
+  .sign:hover:not(.is-pressed), .shelf__item:hover:not(.is-pressed), .drop-tile:hover:not(.is-pressed),
+  .bundle:hover:not(.is-pressed), .btn:hover:not(.is-pressed), .price-card:hover, .comms-promo__item:hover:not(.is-pressed),
+  .postr__art:hover img, .free-card .media:hover, .plushgal__thumb:hover, .rail .nav-btn:hover, html.dark .rail .nav-btn:hover,
+  .rail .nav-btn--shop:hover, html.dark .rail .nav-btn--shop:hover, .rail .nav-btn--comms:hover, html.dark .rail .nav-btn--comms:hover,
+  .media:hover img, a:hover .media img, .drop-tile:hover img, .comms-promo__item:hover img, .link-btn:hover, .buttons-row a:hover, .webring a:hover,
+  .brand__logo:hover .brand__logo-img, .tile:hover, .reel__item:hover, .img-btn:hover, .btn--zzz:hover { transform: none; }
+  .drop-tile:hover .drop-tile__bar b, .bundle:hover b, .sign:hover .sign__price, .shelf__item:hover .shelf__price,
+  .price-card:hover .price, .hero__cta:hover .hero__price, .sign:hover .sign__go { transform: none; }
+  .hero__price, .deck__slide .hero__price { transform: rotate(-3deg); }
+}
+
+@media (max-width: 1000px) {
+  /* the top bar: one row */
+  .rail { padding: 10px 14px; gap: 8px 12px; align-items: center; }
+  .rail .brand { flex: 1 1 auto; min-width: 0; padding: 0; }
+  .rail .brand__logo-img { width: 104px; }
+  .rail .navbar { flex: 0 0 auto; padding: 0; gap: 8px; }
+  .rail .navbar.is-open { flex: 1 1 100%; padding: 10px 0 4px; gap: 8px; }
+  .rail .nav-btn--menu, .rail .navbar.is-open .nav-btn--menu { flex: 0 0 auto; width: auto; padding: 0 14px; height: 40px; }
+  .rail .nav-btn--shop, html.dark .rail .nav-btn--shop, .rail .navbar.is-open .nav-btn--shop { flex: 0 0 auto; width: auto; padding: 0 18px; height: 40px; min-height: 40px; }
+  .rail .navbar.is-open .nav-btn--shop { width: 100%; }
+  .rail .util-bar { padding: 4px 0 6px; }
+  .sfx-toast { bottom: 72px; }
+
+  /* the deck: art on top, copy on a bottom-up scrim */
+  .deck__slide { display: flex; flex-direction: column; justify-content: flex-end; min-height: min(80vh, 640px); }
+  .deck__slide::before {
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.94) 0%, rgba(0, 0, 0, 0.82) 38%, rgba(0, 0, 0, 0.35) 62%, rgba(0, 0, 0, 0) 100%);
+  }
+  .deck__slide .hero__panel { position: relative; left: auto; bottom: auto; max-width: none; padding: 160px 18px 74px; }
+  .deck__slide .hero__title { font-size: clamp(42px, 12vw, 64px); }
+  .deck__slide .hero__offer { font-size: 17px; }
+  .deck__burst { top: 14px; right: 14px; width: 92px; height: 92px; font-size: 15px; }
+}
+
+@media (max-width: 640px) {
+  /* the info band: no disc, four even tabs, words only */
+  .deck__disc { display: none; }
+  .deck__tabs { height: 50px; }
+  .deck__tab { flex: 1 1 0; min-width: 0; justify-content: center; align-items: center; padding: 0 3px; font-size: 12px; letter-spacing: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .deck__tab span { display: block; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+  .deck__tab b { display: none; }
+  .deck__arrow { flex: 0 0 42px; font-size: 24px; }
+  .deck__bar { bottom: 50px; }
+  .deck__slide .hero__cta { gap: 10px; }
+  .deck__slide .hero__cta .btn { font-size: 16px; padding: 10px 16px; }
+  .hero__price, .deck__slide .hero__price { font-size: 26px; padding: 5px 12px 3px; }
+  .plushgal__arrow { width: 40px; height: 40px; }
+  .tooth .tooth__tab, html.dark .tooth .tooth__tab { font-size: 34px; }
+  .postr__title { font-size: 40px; }
+  .commsad__title { font-size: 38px; }
+  .postr, .commsad { padding: 28px var(--gut) 32px; }
+  .signs__kick { font-size: 19px; }
+  .cd--big { font-size: 22px; }
+  .container { padding-bottom: 28px; }
+}
+
+/* 3.2c, second look: the sound toast is a desktop idea (touch unlocks audio on
+   the first tap anyway) and it sat on the deck's tab strip; the Patreon row in
+   the open menu has room for its word */
+@media (max-width: 1000px) {
+  .sfx-toast { display: none; }
+  .rail .nav-btn--patreon::after { content: "PATREON"; }
+}
