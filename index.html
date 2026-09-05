@@ -14,7 +14,12 @@
   <meta property="og:image" content="https://jiansketch.com/assets/img/og.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="stylesheet" href="assets/css/style.css" />
-  <script>(function(){var t=localStorage.getItem("jian_dark");if(t==null){t=window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches?"on":"off";}if(t==="on")document.documentElement.classList.add("dark");})();</script>
+  <!-- (Sep 4 2026) BLACKOUT is the default now, not just the OS preference: every
+       poster, sheet and shop ad he made this year is printed on black, and the cream
+       skin reads as a different studio next to them. Still a toggle, still persisted —
+       one visit to the sun/moon switch and a visitor keeps light forever. To go back to
+       following the OS, restore the prefers-color-scheme test here. -->
+  <script>(function(){var t=localStorage.getItem("jian_dark");if(t==null)t="on";if(t==="on")document.documentElement.classList.add("dark");})();</script>
 </head>
 <body class="splash">
 

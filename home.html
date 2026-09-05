@@ -10,34 +10,37 @@
   <meta property="og:description" content="fast food for your eyes" />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="assets/img/homepage.png" />
-  <meta name="theme-color" content="#f4f1e8" />
+  <meta name="theme-color" content="#0a0a0c" />
   <link rel="alternate" type="application/rss+xml" title="jiansketch.com" href="feed.xml" />
   <meta property="og:title" content="JIAN ★ jiansketch.com" />
-  <meta property="og:description" content="fast food for your eyes — art, fanart, and the singing wall" />
+  <meta property="og:description" content="fast food for your eyes — the 2026 drop, the JESTER SKULLS plush, and commissions open" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://jiansketch.com/" />
   <meta property="og:image" content="https://jiansketch.com/assets/img/og.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="stylesheet" href="assets/css/style.css" />
-  <script>(function(){var t=localStorage.getItem("jian_dark");if(t==null){t=window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches?"on":"off";}if(t==="on")document.documentElement.classList.add("dark");})();</script>
+  <!-- (Sep 4 2026) BLACKOUT is the default now, not just the OS preference: every
+       poster, sheet and shop ad he made this year is printed on black, and the cream
+       skin reads as a different studio next to them. Still a toggle, still persisted —
+       one visit to the sun/moon switch and a visitor keeps light forever. To go back to
+       following the OS, restore the prefers-color-scheme test here. -->
+  <script>(function(){var t=localStorage.getItem("jian_dark");if(t==null)t="on";if(t==="on")document.documentElement.classList.add("dark");})();</script>
 </head>
 <body>
 
-  <div class="marquee" aria-hidden="true">
-    <div class="marquee__track">
-      WELCOME TO <b>JIANSKETCH.COM</b> ★ SITE 2.0 ★ FAST FOOD FOR YOUR EYES ★ THE WALL SINGS WHEN YOU TOUCH IT ★
-      WELCOME TO <b>JIANSKETCH.COM</b> ★ SITE 2.0 ★ FAST FOOD FOR YOUR EYES ★ THE WALL SINGS WHEN YOU TOUCH IT ★&nbsp;
-    </div>
-  </div>
 
-  <div class="frame">
-    <span class="vlabel vlabel--left">JIANSKETCH DOT COM</span>
-    <span class="vlabel vlabel--right">EST. NYC ★ 2026</span>
-
+  <!-- ===================== THE RAIL =====================
+       (Sep 5 2026, Justin: "a reconfiguration of how this site looks
+       structurally ... not using the full layout".) The centred box is
+       gone. Navigation lives in this fixed left rail; everything else is
+       the STAGE to its right, running to the screen edge. Under 1000px the
+       rail is a top bar and main.js's MENU toggle opens the page list.
+       ==================================================== -->
+  <aside class="rail">
     <div class="brand">
       <a class="brand__logo" href="home.html"><img class="brand__logo-img" src="assets/img/logo.png" alt="JIAN" /></a>
       <span class="brand__tag">fast food for your eyes</span>
-      <img class="brand__banner" src="assets/img/banner777.gif" alt="" />
+      <span class="brand__who">Justin You — <b>illustrator, NYC.</b><br />stickers, charms, and your character drawn.</span>
     </div>
 
     <nav class="navbar">
@@ -64,18 +67,269 @@
         </span>
       </button>
     </div>
+  </aside>
+
+  <main class="stage">
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee__track">
+      THE DROP IS <b>OUT NOW</b> · HOLO STICKERS · FOIL CARDS · CHARMS · JESTER SKULLS PRE-SALE CLOSES IN <span class="cd" data-countdown="2026-09-22T17:00:00Z" data-countdown-over="CLOSED">SEP 23</span> · COMMISSIONS OPEN · 
+      THE DROP IS <b>OUT NOW</b> · HOLO STICKERS · FOIL CARDS · CHARMS · JESTER SKULLS PRE-SALE CLOSES IN <span class="cd" data-countdown="2026-09-22T17:00:00Z" data-countdown-over="CLOSED">SEP 23</span> · COMMISSIONS OPEN · &nbsp;
+    </div>
+  </div>
 
     <div class="container">
 
-      <div class="hero">
-        <div class="burst" style="top: 16px; right: 18px;">JOIN<br>NOW ★</div>
-        <div class="hero__panel">
-          <span class="hero__flag">ON NOW ★ MONTHLY DROP</span>
-          <div class="hero__title">THE STICKER<br /><span>CLUB</span></div>
-          <p class="hero__offer">fresh hand-drawn stickers, mailed to you.<br /><b>2 STICKERS + 1 POSTCARD</b> every month — only on Patreon.</p>
-          <div class="hero__cta">
-            <a class="btn btn--zzz btn--zzz--pink" href="https://www.patreon.com/jiansketch" target="_blank" rel="noopener">JOIN THE CLUB →</a>
-            <span class="hero__price">$15</span>
+      <!-- ===================== THE DECK =====================
+           (Sep 4 2026, Justin: "the mini news on the hero is too small, make
+           it a slide show of all the latest news".) The hero and the three
+           NOW cards under it became one hero-sized slideshow. Slide 1 is
+           still the Sticker Club — it's what loads — and the drop, the plush
+           and VGen each get the same footprint. Driven by assets/js/deck.js:
+           arrows, the numbered tabs, left/right keys, swipe, and a 7s
+           auto-advance that pauses while you're on it (and never runs under
+           reduced-motion). No JS = slide 1 shows on its own, nothing breaks.
+           Dates and prices on these slides are repeated in the sections
+           below; when the plush pre-sale closes on Sep 23, slide 3 goes.
+           ==================================================== -->
+      <section class="deck" id="deck" aria-roledescription="carousel" aria-label="Latest news">
+        <div class="deck__track">
+
+          <article class="deck__slide is-on" data-deck="club">
+            <img class="deck__art" src="assets/img/hero_stickers.webp" alt="The Sticker Club - this month's stickers, fanned out" style="object-position: center 20%;" fetchpriority="high" />
+            <div class="burst deck__burst">JOIN<br>NOW ★</div>
+            <div class="hero__panel">
+              <span class="hero__flag">MONTHLY · ON PATREON</span>
+              <div class="hero__title">THE STICKER<br /><span>CLUB</span></div>
+              <p class="hero__offer">fresh hand-drawn stickers, mailed to you.<br /><b>2 STICKERS + 1 POSTCARD</b> every month — only on Patreon.</p>
+              <div class="hero__cta">
+                <a class="btn btn--zzz btn--zzz--pink" href="https://www.patreon.com/jiansketch" target="_blank" rel="noopener">JOIN THE CLUB →</a>
+                <span class="hero__price">$15</span>
+              </div>
+              <span class="hero__spec">MONTHLY ✦ MAILED FROM NYC ✦ CANCEL ANYTIME</span>
+            </div>
+          </article>
+
+          <article class="deck__slide" data-deck="drop">
+            <img class="deck__art" src="assets/img/deck_drop.webp" alt="The 2026 drop - lace card, maid skull charm, holo sticker" style="object-position: center center;" loading="lazy" />
+            <div class="burst deck__burst">OUT<br>NOW ★</div>
+            <div class="hero__panel">
+              <span class="hero__flag">OUT NOW</span>
+              <div class="hero__title">THE 2026<br /><span>DROP</span></div>
+              <p class="hero__offer">holo stickers, foil + lace photocards, acrylic charms.<br /><b>SINGLES FROM $4.99</b> — sets and mystery bags too.</p>
+              <div class="hero__cta">
+                <a class="btn btn--zzz btn--zzz--pink" href="https://jiansketch.bigcartel.com/" target="_blank" rel="noopener">SHOP THE DROP →</a>
+                <a class="btn btn--zzz" href="#drop">SEE IT BELOW ↓</a>
+              </div>
+              <span class="hero__spec">LIMITED STOCK ✦ SHIPS FROM NYC ✦ FREE US SHIPPING</span>
+            </div>
+          </article>
+
+          <article class="deck__slide" data-deck="plush">
+            <img class="deck__art" src="assets/img/deck_plush.webp" alt="JESTER SKULLS plush next to the poster art" style="object-position: 72% 40%;" loading="lazy" />
+            <div class="burst deck__burst">ENDS<br>SEP 23</div>
+            <div class="hero__panel">
+              <span class="hero__flag">PRE-SALE · CLOSES SEP 23</span>
+              <div class="hero__title">JESTER<br /><span>SKULLS</span></div>
+              <p class="hero__offer">19cm of soft skull — jester fit, maid fit, or both.<br /><b>ORDER BY SEP 23</b>, she ships in december.</p>
+              <div class="hero__cta">
+                <a class="btn btn--zzz btn--zzz--pink" href="https://craftifyx.com/products/jester-skulls" target="_blank" rel="noopener">PRE-ORDER HER →</a>
+                <span class="hero__price">$29.99</span>
+              </div>
+              <span class="hero__spec">PRE-SALE CLOSES IN <span class="cd" data-countdown="2026-09-22T17:00:00Z" data-countdown-over="CLOSED">SEP 23</span> ✦ SHIPS DEC</span>
+            </div>
+          </article>
+
+          <article class="deck__slide" data-deck="vgen">
+            <img class="deck__art" src="assets/img/deck_vgen.webp" alt="The VGen commission sheet - chibi, icon, illustration and YCH rows" style="object-position: center center;" loading="lazy" />
+            <div class="burst deck__burst">COMMS<br>OPEN ★</div>
+            <div class="hero__panel">
+              <span class="hero__flag">COMMISSIONS · OPEN</span>
+              <div class="hero__title">ORDER ON<br /><span>VGEN</span></div>
+              <p class="hero__offer">chibi, icon, illustration + two YCH scenes.<br /><b>BUYER PROTECTION</b>, same queue, same me drawing it.</p>
+              <div class="hero__cta">
+                <a class="btn btn--zzz btn--zzz--pink" href="https://vgen.co/jiansketch" target="_blank" rel="noopener">ORDER ON VGEN →</a>
+                <span class="hero__price">FROM $20</span>
+              </div>
+              <span class="hero__spec">SKETCH APPROVED BEFORE RENDER ✦ 2 ROUNDS AT SKETCH ✦ BUYER PROTECTION</span>
+            </div>
+          </article>
+
+        </div>
+
+        <div class="deck__tabs" aria-label="Latest news">
+          <span class="deck__disc" aria-hidden="true"><i></i><span><b data-deck-count>01</b>/04<small>NOW SHOWING</small></span></span>
+          <button class="deck__arrow deck__arrow--prev" type="button" aria-label="Previous">‹</button>
+          <button class="deck__tab is-on" type="button" role="tab" aria-selected="true" data-deck-to="0"><b>NOW ✦</b><span>THE CLUB</span></button>
+          <button class="deck__tab" type="button" role="tab" aria-selected="false" data-deck-to="1"><b>OUT NOW</b><span>THE DROP</span></button>
+          <button class="deck__tab" type="button" role="tab" aria-selected="false" data-deck-to="2"><b>PRE-SALE</b><span>THE PLUSH</span></button>
+          <button class="deck__tab" type="button" role="tab" aria-selected="false" data-deck-to="3"><b>OPEN</b><span>VGEN</span></button>
+          <button class="deck__arrow deck__arrow--next" type="button" aria-label="Next">›</button>
+        </div>
+        <div class="deck__bar" aria-hidden="true"></div>
+      </section>
+
+      <!-- ===================== START HERE =====================
+           (Sep 5 2026, Justin: "Make the site easy to understand upon
+           clicking on the site".) Four doors in one row, straight under
+           the deck: what you can buy, what you can order, what you can
+           join, what you can take for free. The prices are each door's
+           floor and are repeated, with their sources, in the sections
+           below — if one changes there, change it here.
+           ===================================================== -->
+      <section class="signs" id="start" aria-label="Start here">
+        <div class="signs__head">
+          <span class="signs__kick">START HERE</span>
+          <span class="signs__note">new here? the whole site is four doors.</span>
+        </div>
+        <div class="signs__grid">
+          <a class="sign" href="https://jiansketch.bigcartel.com/" target="_blank" rel="noopener">
+            <span class="media media--sq"><img src="assets/img/drop/sticker-cate.webp" alt="" loading="lazy" /></span>
+            <span class="sign__body">
+              <b class="sign__title">THE <span>SHOP</span></b>
+              <span class="sign__line">holo stickers, foil cards and acrylic charms &mdash; real things, shipped from NYC.</span>
+              <span class="sign__foot"><span class="sign__price">FROM $4.99</span><span class="sign__go">GO &rarr;</span></span>
+            </span>
+          </a>
+          <a class="sign" href="commissions.html">
+            <span class="media media--sq"><img src="assets/img/comms/sticker.webp" alt="" loading="lazy" /></span>
+            <span class="sign__body">
+              <b class="sign__title">GET <span>DRAWN</span></b>
+              <span class="sign__line">your character, drawn by me. you approve a sketch before I render a thing.</span>
+              <span class="sign__foot"><span class="sign__price">FROM $55</span><span class="sign__go">GO &rarr;</span></span>
+            </span>
+          </a>
+          <a class="sign" href="https://www.patreon.com/jiansketch" target="_blank" rel="noopener">
+            <span class="media media--sq"><img src="assets/img/stititi.webp" alt="" loading="lazy" /></span>
+            <span class="sign__body">
+              <b class="sign__title">THE <span>CLUB</span></b>
+              <span class="sign__line">2 stickers + 1 postcard in your mailbox, every month. cancel whenever.</span>
+              <span class="sign__foot"><span class="sign__price">$15 / MO</span><span class="sign__go">GO &rarr;</span></span>
+            </span>
+          </a>
+          <a class="sign" href="free.html">
+            <span class="media media--sq"><img src="assets/img/sketch.png" alt="" loading="lazy" /></span>
+            <span class="sign__body">
+              <b class="sign__title">FREE <span>STUFF</span></b>
+              <span class="sign__line">a whole book, four sketchbooks, phone icons. take something home.</span>
+              <span class="sign__foot"><span class="sign__price">$0.00</span><span class="sign__go">GO &rarr;</span></span>
+            </span>
+          </a>
+        </div>
+      </section>
+
+      <!-- ===================== THE DROP =====================
+           Every tile, price and link in here was read off the LIVE Big Cartel
+           products.json when it was built, and the photos are the storefront's
+           own — so the site cannot advertise something the shop isn't selling.
+           If a product sells out, re-read the storefront and rebuild; don't
+           hand-type a price in here.
+           ==================================================== -->
+      <div class="tooth" id="drop">
+        <div class="tooth__tab">THE DROP <span class="accent">★</span> OUT NOW</div>
+        <div class="tooth__bar"><span class="tooth__note">HOLO STICKERS · FOIL + LACE CARDS · ACRYLIC CHARMS</span></div>
+      </div>
+      <p class="sub">the 2026 drop is up on Big Cartel. holo stickers, gold and silver foil photocards, lace cards and acrylic charms — singles below, sets and mystery bags underneath.</p>
+
+      <div class="drop-grid">
+        <a class="drop-tile" href="https://jiansketch.bigcartel.com/product/cate-holo" target="_blank" rel="noopener">
+          <img src="assets/img/drop/sticker-cate.webp" alt="CATE holographic sticker" loading="lazy" width="620" height="620" />
+          <span class="drop-tile__bar"><span class="drop-tile__name">CATE<small>HOLO STICKER</small></span><b>$4.99</b></span>
+        </a>
+        <a class="drop-tile" href="https://jiansketch.bigcartel.com/product/meowheart-holo" target="_blank" rel="noopener">
+          <img src="assets/img/drop/sticker-heart.webp" alt="MeowHeart holographic sticker" loading="lazy" width="620" height="620" />
+          <span class="drop-tile__bar"><span class="drop-tile__name">MEOWHEART<small>HOLO STICKER</small></span><b>$4.99</b></span>
+        </a>
+        <a class="drop-tile" href="https://jiansketch.bigcartel.com/product/maid-skull-charm" target="_blank" rel="noopener">
+          <img src="assets/img/drop/charm-maid.webp" alt="Maid Skull acrylic charm" loading="lazy" width="620" height="620" />
+          <span class="drop-tile__bar"><span class="drop-tile__name">MAID SKULL<small>ACRYLIC CHARM</small></span><b>$8.99</b></span>
+        </a>
+        <a class="drop-tile" href="https://jiansketch.bigcartel.com/product/mina-charm" target="_blank" rel="noopener">
+          <img src="assets/img/drop/charm-mina.webp" alt="Mina acrylic charm" loading="lazy" width="620" height="620" />
+          <span class="drop-tile__bar"><span class="drop-tile__name">MINA<small>ACRYLIC CHARM</small></span><b>$8.99</b></span>
+        </a>
+        <a class="drop-tile" href="https://jiansketch.bigcartel.com/product/mina-gold-foil-photocard" target="_blank" rel="noopener">
+          <img src="assets/img/drop/card-mina.webp" alt="Mina gold foil photocard" loading="lazy" width="620" height="620" />
+          <span class="drop-tile__bar"><span class="drop-tile__name">MINA<small>GOLD FOIL CARD</small></span><b>$7.99</b></span>
+        </a>
+        <a class="drop-tile" href="https://jiansketch.bigcartel.com/product/maid-mina-lace-photocard" target="_blank" rel="noopener">
+          <img src="assets/img/drop/card-lace.webp" alt="Maid Mina lace photocard" loading="lazy" width="620" height="620" />
+          <span class="drop-tile__bar"><span class="drop-tile__name">MAID MINA<small>LACE CARD</small></span><b>$7.99</b></span>
+        </a>
+      </div>
+
+      <div class="drop-bundles">
+        <a class="bundle" href="https://jiansketch.bigcartel.com/product/sticker-squad" target="_blank" rel="noopener">STICKER SQUAD · ALL 4 <b>$15.99</b></a>
+        <a class="bundle" href="https://jiansketch.bigcartel.com/product/charm-pair-any-2" target="_blank" rel="noopener">CHARM PAIR · PICK 2 <b>$15.99</b></a>
+        <a class="bundle" href="https://jiansketch.bigcartel.com/product/full-card-collection" target="_blank" rel="noopener">ALL 6 CARDS <b>$35.99</b></a>
+        <a class="bundle" href="https://jiansketch.bigcartel.com/product/mystery-bag-1" target="_blank" rel="noopener">MYSTERY BAG · 4 ITEMS <b>$16.99</b></a>
+        <a class="bundle" href="https://jiansketch.bigcartel.com/product/loaded-bag" target="_blank" rel="noopener">STANDEE MYSTERY · 5 ITEMS <b>$29.99</b></a>
+      </div>
+
+      <p style="margin:16px 0 4px;"><a class="btn btn--zzz btn--zzz--pink" href="https://jiansketch.bigcartel.com/" target="_blank" rel="noopener">SEE THE WHOLE SHELF →</a></p>
+
+      <!-- ===================== THE PLUSH =====================
+           JESTER SKULLS, the second CraftifyX run. It's a PRE-SALE with a
+           closing date, which is the one thing on this page that expires —
+           when Sep 23 passes, this block and the NOW card above it are what
+           need editing (or pulling).
+           ===================================================== -->
+      <div class="tooth" id="plush">
+        <div class="tooth__tab">THE PLUSH <span class="accent">★</span> PRE-SALE</div>
+        <div class="tooth__bar"><span class="tooth__note">JIANSKETCH × CRAFTIFYX — CLOSES SEP 23 2026</span></div>
+      </div>
+
+      <div class="postr postr--plush">
+        <!-- the gallery: CraftifyX's photos of the actual sample, off the live
+             product page (assets/img/plush/, framed square on cream by the
+             3.2 pass). Driven by assets/js/plushgal.js; with no JS the first
+             photo shows and the thumbs are plain pictures. -->
+        <div class="plushgal" id="plushgal" tabindex="0" aria-label="JESTER SKULLS sample photos">
+          <div class="plushgal__frame">
+            <img class="plushgal__img" src="assets/img/plush/01-jester-front.webp" alt="JESTER SKULLS plush sample - jester fit, front" width="800" height="800" />
+            <button class="plushgal__arrow plushgal__arrow--prev" type="button" aria-label="Previous photo">&lsaquo;</button>
+            <button class="plushgal__arrow plushgal__arrow--next" type="button" aria-label="Next photo">&rsaquo;</button>
+            <div class="plushgal__cap"><b>01/10</b>JESTER FIT &middot; FRONT</div>
+          </div>
+          <div class="plushgal__thumbs">
+            <button class="plushgal__thumb is-on" type="button" aria-pressed="true" data-full="assets/img/plush/01-jester-front.webp" data-cap="JESTER FIT &middot; FRONT" data-alt="JESTER SKULLS plush sample &mdash; JESTER FIT - FRONT"><img src="assets/img/plush/01-jester-front.webp" alt="" loading="lazy" width="800" height="800" /></button>
+            <button class="plushgal__thumb" type="button" aria-pressed="false" data-full="assets/img/plush/02-maid-front.webp" data-cap="MAID FIT &middot; FRONT" data-alt="JESTER SKULLS plush sample &mdash; MAID FIT - FRONT"><img src="assets/img/plush/02-maid-front.webp" alt="" loading="lazy" width="800" height="800" /></button>
+            <button class="plushgal__thumb" type="button" aria-pressed="false" data-full="assets/img/plush/03-jester-side.webp" data-cap="JESTER FIT &middot; SIDE" data-alt="JESTER SKULLS plush sample &mdash; JESTER FIT - SIDE"><img src="assets/img/plush/03-jester-side.webp" alt="" loading="lazy" width="800" height="800" /></button>
+            <button class="plushgal__thumb" type="button" aria-pressed="false" data-full="assets/img/plush/04-maid-side.webp" data-cap="MAID FIT &middot; SIDE" data-alt="JESTER SKULLS plush sample &mdash; MAID FIT - SIDE"><img src="assets/img/plush/04-maid-side.webp" alt="" loading="lazy" width="800" height="800" /></button>
+            <button class="plushgal__thumb" type="button" aria-pressed="false" data-full="assets/img/plush/05-jester-face.webp" data-cap="JESTER FIT &middot; THE FACE" data-alt="JESTER SKULLS plush sample &mdash; JESTER FIT - THE FACE"><img src="assets/img/plush/05-jester-face.webp" alt="" loading="lazy" width="800" height="800" /></button>
+            <button class="plushgal__thumb" type="button" aria-pressed="false" data-full="assets/img/plush/06-maid-face.webp" data-cap="MAID FIT &middot; THE FACE" data-alt="JESTER SKULLS plush sample &mdash; MAID FIT - THE FACE"><img src="assets/img/plush/06-maid-face.webp" alt="" loading="lazy" width="800" height="800" /></button>
+            <button class="plushgal__thumb" type="button" aria-pressed="false" data-full="assets/img/plush/07-jester-back.webp" data-cap="JESTER FIT &middot; BACK" data-alt="JESTER SKULLS plush sample &mdash; JESTER FIT - BACK"><img src="assets/img/plush/07-jester-back.webp" alt="" loading="lazy" width="800" height="800" /></button>
+            <button class="plushgal__thumb" type="button" aria-pressed="false" data-full="assets/img/plush/09-jester-fit.webp" data-cap="THE JESTER FIT, OFF" data-alt="JESTER SKULLS plush sample &mdash; THE JESTER FIT, OFF"><img src="assets/img/plush/09-jester-fit.webp" alt="" loading="lazy" width="800" height="800" /></button>
+            <button class="plushgal__thumb" type="button" aria-pressed="false" data-full="assets/img/plush/10-maid-fit.webp" data-cap="THE MAID FIT, OFF" data-alt="JESTER SKULLS plush sample &mdash; THE MAID FIT, OFF"><img src="assets/img/plush/10-maid-fit.webp" alt="" loading="lazy" width="800" height="800" /></button>
+            <button class="plushgal__thumb" type="button" aria-pressed="false" data-full="assets/img/plush.webp" data-fit="contain" data-cap="THE POSTER" data-alt="JESTER SKULLS pre-sale poster"><img src="assets/img/plush.webp" alt="" loading="lazy" width="860" height="1179" /></button>
+          </div>
+          <p class="plushgal__note">the sample, photographed by CraftifyX &mdash; this is what ships.</p>
+        </div>
+        <div>
+          <span class="postr__kick">PRE-SALE ★ SEP 1 → SEP 23</span>
+          <h2 class="shout shout--split postr__title">JESTER<br />SKULLS</h2>
+          <p>
+            She's getting made. 19cm of soft skull, and she comes with a jester fit —
+            or with the maid fit, or with both if you can't choose. The run only happens
+            if enough of you go in on it, which is what a pre-sale is: the order window
+            closes September 23 and she ships in December.
+          </p>
+          <p>
+            Made with <a href="https://craftifyx.com/products/jester-skulls" target="_blank" rel="noopener">CraftifyX</a>,
+            the same people who made Skully real. Ordering and shipping both happen on their page.
+          </p>
+          <div class="spec">
+            <span class="spec__code" aria-hidden="true"></span>
+            <span class="spec__lines">
+              <b class="spec__big">$29.99</b>
+              <span class="k">BOTH OUTFITS</span> <b>$41.99</b><br />
+              <span class="k">SIZE</span> 19 CM · <span class="k">SHIPS</span> DEC 2026<br />
+              <span class="k">WINDOW</span> SEP 1 → SEP 23 2026
+            </span>
+          </div>
+          <p style="margin:14px 0 0;"><span class="cd cd--big" data-countdown="2026-09-22T17:00:00Z" data-countdown-format="dhms" data-countdown-over="PRE-SALE CLOSED">SEP 23</span></p>
+          <div class="postr__foot">
+            <a class="btn btn--zzz btn--zzz--pink" href="https://craftifyx.com/products/jester-skulls" target="_blank" rel="noopener">PRE-ORDER HER →</a>
+            <span class="postr__ticker">SKULLY IS STILL ON THAT SHELF TOO — <b>SEE BELOW</b></span>
           </div>
         </div>
       </div>
@@ -141,38 +395,86 @@
         </div>
       </section>
 
+      <!-- ===================== ON VGEN =====================
+           (Sep 4 2026.) The Aug 27 copy said "every tier I offer, the same
+           prices as this site" — that was true the day it was written and
+           isn't now. VGen carries a DIFFERENT, shorter roster: three tiers
+           plus two YCH scenes that don't exist on this site at all. Read off
+           the live vgen.co/jiansketch page when this was written; if the
+           roster changes there, this block and the sheet image both need a
+           refresh, and the sheet is rebuilt from
+           JIAN COMMISSION SHEET\POST THIS - VGEN 2026-09.
+           =================================================== -->
+      <div class="tooth tooth--acid" id="vgen">
+        <div class="tooth__tab">ON VGEN <span class="accent">★</span> THE SECOND DOOR</div>
+        <div class="tooth__bar"><span class="tooth__note">BUYER PROTECTION · A PAPER TRAIL · THE SAME QUEUE</span></div>
+      </div>
+
+      <div class="postr postr--acid postr--sheet">
+        <a class="postr__art" href="https://vgen.co/jiansketch" target="_blank" rel="noopener">
+          <img src="assets/img/vgen.webp" alt="jiansketch commission sheet on VGen — chibi, icon, illustration and two YCH scenes" loading="lazy" width="900" height="1125" />
+        </a>
+        <div>
+          <span class="postr__kick">COMMISSIONS ★ OPEN</span>
+          <h2 class="shout shout--split postr__title">ORDER ON<br />VGEN</h2>
+          <p>
+            <a href="https://vgen.co/jiansketch" target="_blank" rel="noopener">vgen.co/jiansketch</a> is
+            the second door into the same queue. It's there if you'd rather buy through a platform
+            with buyer protection and a paper trail than fill in a form on some guy's website — no
+            hard feelings, I'd do the same.
+          </p>
+          <p>
+            The roster over there is shorter and it has two things this site doesn't: the
+            <b>YCH scenes</b>, where you pick the scene and I draw your character into it.
+            Everything else — sketch approved before I render, two rounds of changes at
+            sketch and one at colour — works exactly the same.
+          </p>
+          <div class="spec">
+            <span class="spec__code" aria-hidden="true"></span>
+            <span class="spec__lines">
+              <span class="k">CHIBI</span> <b>$55</b> · <span class="k">ICON / PFP</span> <b>$65</b> · <span class="k">ILLUSTRATION</span> <b>$145</b><br />
+              <span class="k">YCH — IN THE FORTNITE LOBBY</span> <b>$20</b><br />
+              <span class="k">YCH — D.VA SELFIE</span> <b>$30</b>
+            </span>
+          </div>
+          <div class="postr__foot">
+            <a class="btn btn--zzz btn--zzz--pink" href="https://vgen.co/jiansketch" target="_blank" rel="noopener">ORDER ON VGEN →</a>
+            <a class="btn" href="commissions.html">…OR USE THE FORM HERE →</a>
+          </div>
+        </div>
+      </div>
+
       <div class="tooth">
         <div class="tooth__tab">THE CLUB + THE SHOP</div>
-        <div class="tooth__bar"></div>
+        <div class="tooth__bar"><span class="tooth__note">THE MONTHLY &middot; THE PLUSH THAT EXISTS &middot; THE GAMBLE</span></div>
       </div>
 
-      <div class="box news-box">
-        <img src="assets/img/stititi.webp" alt="Sticker Club — 2 stickers + 1 postcard a month, $15 on Patreon" loading="lazy" />
-        <div class="news-txt">
-          <span class="news-flag">MAIN NEWS ★</span>
-          <h3>THE STICKER CLUB</h3>
-          <p>Fresh hand-drawn stickers, mailed to you. Join the club on Patreon and get the monthly drop — plus HI-REZ art, WIPs and timelapses every day.</p>
-          <p><a class="btn" href="https://www.patreon.com/jiansketch" target="_blank" rel="noopener">JOIN THE CLUB →</a></p>
-        </div>
-      </div>
-
-      <div class="duo">
-        <div class="box" style="text-align:center;">
-          <h3>SKULLY PLUSH ★ READY TO SHIP</h3>
-          <a class="img-btn" href="https://craftifyx.com/products/ready-to-ship-skully?variant=47667355287784" target="_blank" rel="noopener">
-            <img src="assets/img/skully.png" alt="Skully plush" style="width:min(240px,70%); margin:0 auto;" loading="lazy" />
-          </a>
-          <p>it's real. it exists. it can judge you from your shelf.</p>
-          <p><a class="btn btn--zzz" href="https://craftifyx.com/products/ready-to-ship-skully?variant=47667355287784" target="_blank" rel="noopener">GET SKULLY →</a></p>
-        </div>
-        <div class="box">
-          <h3>THE SHOP</h3>
-          <a class="img-btn" href="https://jiansketch.bigcartel.com/" target="_blank" rel="noopener">
-            <img class="fit" src="assets/img/shop.webp" alt="The jiansketch Big Cartel shop" loading="lazy" />
-          </a>
-          <p>Prints, charms, standees, books and whatever else escapes the sketchbook.</p>
-          <p><a class="btn btn--zzz btn--zzz--pink" href="https://jiansketch.bigcartel.com/" target="_blank" rel="noopener">SHOP BIG CARTEL →</a></p>
-        </div>
+      <!-- three equal cards, one media frame each (the 3.2 media grammar) -->
+      <div class="shelf">
+        <a class="shelf__item" href="https://www.patreon.com/jiansketch" target="_blank" rel="noopener">
+          <span class="media media--sq"><img src="assets/img/stititi.webp" alt="Sticker Club - 2 stickers + 1 postcard a month" loading="lazy" /></span>
+          <span class="shelf__body">
+            <b class="shelf__title">THE STICKER CLUB</b>
+            <span class="shelf__line">Fresh hand-drawn stickers, mailed to you. Join on Patreon for the monthly drop &mdash; plus hi-rez art, WIPs and timelapses every day.</span>
+            <span class="shelf__foot"><span class="shelf__price">$15 / MO</span><span class="btn btn--zzz btn--zzz--pink">JOIN THE CLUB &rarr;</span></span>
+          </span>
+        </a>
+        <a class="shelf__item" href="https://craftifyx.com/products/ready-to-ship-skully?variant=47667355287784" target="_blank" rel="noopener">
+          <span class="media media--sq media--fit"><img src="assets/img/skully.png" alt="Skully plush" loading="lazy" /></span>
+          <span class="shelf__body">
+            <b class="shelf__title">SKULLY PLUSH &#9733; READY TO SHIP</b>
+            <span class="shelf__line">It's real. It exists. It can judge you from your shelf. $32.99 with the transparent card.</span>
+            <span class="shelf__foot"><span class="shelf__price">$29.99</span><span class="btn btn--zzz">GET SKULLY &rarr;</span></span>
+          </span>
+        </a>
+        <a class="shelf__item" href="https://jiansketch.bigcartel.com/product/mystery-bag-1" target="_blank" rel="noopener">
+          <span class="media media--sq"><img src="assets/img/shop_drop.webp" alt="Mystery Bag - four items, picked by me" loading="lazy" /></span>
+          <span class="shelf__body">
+            <b class="shelf__title">MYSTERY BAG &#9733; MY PICK</b>
+            <span class="shelf__line">Four items out of the drop, my pick, your gamble. No photocards, no duds &mdash; about $25 of stuff, shipped tracked.</span>
+            <span class="shelf__foot"><span class="shelf__price">$16.99</span><span class="btn btn--zzz btn--zzz--pink">TAKE THE BAG &rarr;</span></span>
+          </span>
+        </a>
       </div>
 
       <div class="tooth">
@@ -229,7 +531,6 @@
       </div>
 
     </div>
-  </div>
 
   <footer class="footer">
     <div class="footer__bar">
@@ -253,6 +554,14 @@
     </div>
     <a class="footer__top" href="#">↑ top of page</a>
   </footer>
+  </main>
+
+  <!-- the phone dock: shop, comms, club — one thumb away on every page (hype.js hides it over the footer) -->
+  <nav class="dock" aria-label="Quick links">
+    <a class="dock--shop" href="https://jiansketch.bigcartel.com/" target="_blank" rel="noopener">★ SHOP</a>
+    <a href="commissions.html">COMMS</a>
+    <a class="dock--club" href="https://www.patreon.com/jiansketch" target="_blank" rel="noopener">♥ CLUB</a>
+  </nav>
 
   <script src="assets/js/sfx.js"></script>
   <script src="data/fanart.js"></script>
@@ -263,6 +572,9 @@
   <script src="assets/js/xpost.js"></script>
   <script src="data/slots.js"></script>
   <script src="assets/js/slots.js"></script>
+  <script src="assets/js/deck.js"></script>
+  <script src="assets/js/plushgal.js"></script>
+  <script src="assets/js/hype.js"></script>
   <script src="assets/js/main.js"></script>
 </body>
 </html>

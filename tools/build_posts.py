@@ -6,6 +6,8 @@ WORKFLOW (same as the art pipeline):
   1. Make a folder:  posts/YYYY-MM-DD-my-title/
   2. Write post.txt: first line = title, rest = body.
      Blank line = new paragraph.  @img filename.png  embeds an image inline.
+     [label](https://url)  becomes a link. Links are body-text only - they
+     render classless so dark mode's pink picks them up automatically.
      Any images not mentioned are appended after the body, in filename order.
   3. Drop images next to post.txt (png/jpg/webp/gif).
   4. Run this script.
@@ -37,6 +39,29 @@ Image.MAX_IMAGE_PIXELS = 80_000_000
 
 FOLDER_RE = re.compile(r"^(\d{4})-(\d{2})-(\d{2})-(.+)$")
 IMG_RE = re.compile(r"^@img\s+(\S+)\s*$")
+LINK_RE = re.compile(r"\[([^\]]+)\]\(([^)\s]+)\)")
+
+
+def plain(text):
+    """link markup stripped to its label - for excerpts and the RSS feed."""
+    return LINK_RE.sub(r"\1", text)
+
+
+def inline(text):
+    """a paragraph with no links stays a plain string (every older post takes
+    this path, so posts.js and blog.js keep their original contract). One with
+    links becomes a run list: [["t", txt], ["a", label, url], ...]."""
+    if not LINK_RE.search(text):
+        return text
+    runs, at = [], 0
+    for m in LINK_RE.finditer(text):
+        if m.start() > at:
+            runs.append(["t", text[at:m.start()]])
+        runs.append(["a", m.group(1), m.group(2)])
+        at = m.end()
+    if at < len(text):
+        runs.append(["t", text[at:]])
+    return runs
 
 
 def opt_image(src, dst_dir, stem):
@@ -110,9 +135,10 @@ def parse_post(folder):
             except Exception as e:  # noqa: BLE001
                 print(f"  !! {folder}/{val}: {e}")
         else:
-            mapped.append(("p", val))
+            mapped.append(("p", inline(val)))
 
-    excerpt = next((v for k, v in mapped if k == "p"), "")
+    # excerpt/RSS want flat text, so read it off the pre-inline body
+    excerpt = plain(next((v for k, v in body if k == "p"), ""))
     return {
         "id": "p-" + folder,
         "slug": folder,

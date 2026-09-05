@@ -773,12 +773,12 @@ img { display: block; }
   .navbar { gap: 6px; padding: 6px 0 8px; }
   .nav-btn { font-size: 14px; height: 42px; }
   .nav-btn--menu { display: flex; flex: 1 1 auto; }
-  .navbar .nav-btn:not(.nav-btn--menu):not(.nav-btn--sound):not(.nav-btn--sug):not(.nav-btn--kofi) { display: none; }
+  /* (Sep 5 2026, 3.1) SHOP stays out on the top bar, KO-FI goes behind MENU */
+  .navbar .nav-btn:not(.nav-btn--menu):not(.nav-btn--sound):not(.nav-btn--sug):not(.nav-btn--shop) { display: none; }
   .navbar.is-open { display: grid; grid-template-columns: 1fr 1fr; }
   .navbar.is-open .nav-btn:not(.nav-btn--menu):not(.nav-btn--sound):not(.nav-btn--sug) { display: flex; }
   /* the support button never hides behind the hamburger. It takes its own
      full-width row under MENU — sharing that row overflows it off-screen. */
-  .nav-btn--kofi { flex: 1 1 100%; }
   .navbar.is-open .nav-btn--menu { grid-column: 1 / -1; }
   .nav-btn--img img { height: 26px; }
 
@@ -1193,6 +1193,10 @@ html.sfw [data-sug="1"] { display: none !important; }
 .post__title a { color: var(--ink); }
 .post__title a:hover { color: var(--pink); }
 .post__p { margin: 0 0 10px; font-size: 15px; color: var(--ink); }
+/* body-text links in a post. Left classless in the markup so the BLACKOUT
+   rule (html.dark a:not([class])) recolours them at night without a second
+   rule here - all this adds is the magenta underline so a link reads as one. */
+.post__p a { font-weight: 800; text-decoration: underline; text-decoration-color: var(--pink); text-underline-offset: 2px; text-decoration-thickness: 2px; }
 .post__imglink {
   display: table;
   margin: 12px auto;
@@ -1904,3 +1908,1448 @@ html.dark .price-card--pop .price-card__order:hover { background: #fff; color: #
 .link-btn--kofi { background: #72a4f2; grid-column: 1 / -1; justify-content: center; }
 .kofi-slot { margin-top: 10px; }
 .kofi-slot .link-btn { justify-content: center; }
+
+/* ==========================================================================
+   SITE 2.3 — "THE POSTER PRESS"
+   (Sep 4 2026, Justin: "revamp the overall look to be more up to date with
+   my recent art".) The reference is his OWN 2026 output, not a mood board:
+   the JESTER SKULLS plush poster, the VGen commission sheet, and the LOWKEY
+   shop ads. What those three share, and what the site was missing:
+
+     * black ground with a fine ruled grid over the halftone (the poster's
+       graph paper), never cream
+     * ACID LIME as the second voice next to the magenta — the VGen sheet is
+       built on it, and the site had --lime declared and almost unused
+     * display type set ITALIC and tight, printed slightly out of register
+       the way the wordmarks on both posters are
+     * spec micro-text: barcodes, rules, tiny mono caps stating price, dates,
+       dimensions. The posters carry a data plate; the site carried none.
+
+   This is additive — it re-voices the existing components through the token
+   layer and adds the new ones the drop/plush/vgen content needed. Nothing
+   above this banner was rewritten, so every page picks it up at once.
+   ========================================================================== */
+
+:root {
+  --acid: #c8f000;           /* VGen sheet lime — the second voice */
+  --acid-ink: #0a0a0a;       /* type that sits ON the acid */
+  --violet: #8b5cf6;         /* plush poster violet */
+  --rule: rgba(25, 25, 25, 0.10);
+}
+html.dark {
+  --acid: #c8f000;
+  --violet: #a78bfa;
+  --rule: rgba(255, 46, 166, 0.085);
+}
+
+/* the ruled grid, over the halftone that was already there ------------------ */
+body {
+  background:
+    linear-gradient(var(--rule) 1px, transparent 1px) 0 0 / 68px 68px,
+    linear-gradient(90deg, var(--rule) 1px, transparent 1px) 0 0 / 68px 68px,
+    radial-gradient(circle, rgba(25, 25, 25, 0.055) 1px, transparent 1.3px) 0 0 / 9px 9px,
+    var(--paper);
+}
+html.dark body {
+  background:
+    linear-gradient(var(--rule) 1px, transparent 1px) 0 0 / 68px 68px,
+    linear-gradient(90deg, var(--rule) 1px, transparent 1px) 0 0 / 68px 68px,
+    radial-gradient(circle, rgba(255, 255, 255, 0.045) 1px, transparent 1.3px) 0 0 / 9px 9px,
+    var(--paper);
+}
+
+/* --------------------------------------------------------------------------
+   PRESS TYPE — the poster wordmark, as a heading.
+   Italic, tight, and printed slightly out of register: a magenta plate and a
+   cyan plate offset under the black one. Same chromatic split that's on
+   JESTER SKULLS and on the JIAN tag.
+   -------------------------------------------------------------------------- */
+.shout {
+  font-family: var(--font-shout);
+  font-style: normal;
+  text-transform: uppercase;
+  letter-spacing: -0.5px;
+  line-height: 0.9;
+  transform: skewX(-7deg);
+  transform-origin: left bottom;
+  margin: 0;
+}
+.shout--split { text-shadow: 2px 0 0 var(--pink), -2px 0 0 rgba(78, 207, 224, 0.85); }
+.shout em { font-style: normal; color: var(--pink); }
+.shout .acid { color: var(--acid); }
+
+/* --------------------------------------------------------------------------
+   SPEC PLATE — the data block off the bottom of the plush poster. Barcode,
+   then a stack of mono micro-lines. Used wherever the page states hard facts
+   (price, dates, size, where it ships from).
+   -------------------------------------------------------------------------- */
+.spec {
+  display: flex;
+  gap: 12px;
+  align-items: stretch;
+  border: 3px solid var(--ink);
+  background: var(--panel);
+  box-shadow: 4px 4px 0 var(--shadow);
+  padding: 9px 12px 9px 9px;
+}
+.spec__code {
+  flex: 0 0 22px;
+  background-image: repeating-linear-gradient(90deg,
+    currentColor 0 2px, transparent 2px 4px, currentColor 4px 5px, transparent 5px 9px,
+    currentColor 9px 12px, transparent 12px 14px);
+  opacity: 0.85;
+}
+.spec__lines { flex: 1 1 auto; font-family: var(--font-pixel); font-size: 12.5px; letter-spacing: 1.3px; line-height: 1.7; }
+.spec__lines b { color: var(--pink); font-weight: 700; }
+.spec__lines .k { color: var(--ink-dim); }
+.spec__big {
+  font-family: var(--font-shout);
+  font-size: 26px;
+  line-height: 1;
+  letter-spacing: 0;
+  display: block;
+  margin-bottom: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   SECTION MASTHEAD — the tooth tab keeps its shape, but picks up the sheet's
+   right-hand micro-caption ("PICK A SCENE — I DRAW YOUR CHARACTER INTO IT")
+   so every section states what it is in spec type.
+   -------------------------------------------------------------------------- */
+.tooth { display: flex; align-items: flex-end; gap: 0; flex-wrap: wrap; }
+.tooth__tab { flex: 0 0 auto; }
+.tooth__bar { flex: 1 1 120px; position: relative; }
+.tooth__note {
+  position: absolute;
+  right: 4px;
+  bottom: calc(100% + 8px);        /* above the 8px bar, on the page ground */
+  font-family: var(--font-pixel);
+  font-size: 12.5px;
+  letter-spacing: 1.6px;
+  color: var(--ink);
+  white-space: nowrap;
+  pointer-events: none;
+}
+@media (max-width: 700px) { .tooth__note { display: none; } }
+
+/* the acid slot — sections that are SELLING something lead with the lime */
+.tooth--acid .tooth__tab { background: var(--acid); color: var(--acid-ink); }
+.tooth--acid .tooth__tab .accent { color: var(--acid-ink); }
+.tooth--acid .tooth__bar { background: var(--acid); height: 24px; }
+.tooth--acid .tooth__note { color: var(--acid-ink); bottom: auto; top: 50%; right: 10px; transform: translateY(-50%); }
+html.dark .tooth--acid .tooth__tab { background: var(--acid); color: var(--acid-ink); }
+html.dark .tooth--acid .tooth__tab .accent { color: var(--acid-ink); }
+html.dark .tooth--acid .tooth__bar { background: var(--acid); height: 24px; }
+
+/* (NOW SHOWING strip removed Sep 4 2026 — it became the deck; see THE DECK
+   at the end of this file.) */
+
+/* --------------------------------------------------------------------------
+   THE DROP — the shop grid. Real product photography off the live storefront,
+   so the site can never advertise something the shop isn't selling.
+   -------------------------------------------------------------------------- */
+.drop-grid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px; }
+@media (max-width: 900px) { .drop-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 520px) { .drop-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.drop-tile {
+  display: block;
+  min-width: 0;
+  border: 3px solid var(--ink);
+  background: var(--panel);
+  box-shadow: 4px 4px 0 var(--shadow);
+  overflow: hidden;
+  color: inherit;
+  transition: transform 0.16s var(--spring), box-shadow 0.16s var(--spring);
+}
+.drop-tile:hover { transform: translate(-2px, -3px); box-shadow: 7px 8px 0 var(--pink); color: inherit; }
+/* height:auto is load-bearing — the width/height ATTRIBUTES on the <img> are a
+   presentational hint the browser treats as a specified height, and a specified
+   height silently kills both aspect-ratio and object-fit. Without it the tiles
+   render 620px tall and squashed. */
+.drop-tile img { width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; border-bottom: 3px solid var(--ink); }
+.drop-tile__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  padding: 5px 6px 5px 8px;
+  font-family: var(--font-pixel);
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+.drop-tile__bar b,
+.bundle b {
+  font-family: var(--font-shout);
+  letter-spacing: 0;
+  line-height: 1.2;
+  color: #000;
+  background: var(--pink);
+  padding: 2px 7px 1px;
+  flex: 0 0 auto;
+}
+.drop-tile__bar b { font-size: 17px; }
+.drop-tile__name { display: flex; flex-direction: column; min-width: 0; line-height: 1.25; overflow: hidden; text-overflow: ellipsis; }
+.drop-tile__name small { font-size: 10.5px; letter-spacing: 1px; color: var(--ink-dim); }
+
+.drop-bundles { display: flex; flex-wrap: wrap; gap: 10px; margin: 14px 0 4px; }
+.bundle {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 7px 13px;
+  border: 3px solid var(--ink);
+  background: var(--panel);
+  color: var(--ink);
+  box-shadow: 4px 4px 0 var(--shadow);
+  font-family: var(--font-pixel);
+  font-size: 12.5px;
+  letter-spacing: 1.4px;
+  transition: transform 0.16s var(--spring), box-shadow 0.16s var(--spring);
+}
+.bundle:hover { transform: translate(-2px, -2px); box-shadow: 7px 7px 0 var(--pink); color: var(--ink); }
+.bundle b { font-size: 19px; padding: 2px 9px 1px; }
+
+/* --------------------------------------------------------------------------
+   POSTER BLOCK — plush + VGen. The artwork IS the pitch, so it gets printed
+   at size next to a spec plate rather than shrunk into a news thumbnail.
+   -------------------------------------------------------------------------- */
+.postr {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 400px) minmax(0, 1fr);
+  gap: 22px;
+  align-items: start;
+  padding: 22px;
+  border: 4px solid var(--ink);
+  background: #0e0e12;
+  box-shadow: 8px 9px 0 var(--pink);
+  color: #efeaf5;
+  overflow: hidden;
+}
+@media (max-width: 820px) { .postr { grid-template-columns: 1fr; } }
+.postr::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px) 0 0 / 46px 46px,
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px) 0 0 / 46px 46px;
+  pointer-events: none;
+}
+.postr > * { position: relative; z-index: 1; }
+.postr--acid { box-shadow: 8px 9px 0 var(--acid); }
+.postr__art { display: block; line-height: 0; }
+.postr__art img { width: 100%; height: auto; border: 3px solid #efeaf5; }
+.postr__art:hover img { border-color: var(--pink); }
+.postr__kick {
+  display: inline-block;
+  font-family: var(--font-pixel);
+  font-size: 11px;
+  letter-spacing: 2px;
+  padding: 3px 9px;
+  background: var(--pink);
+  color: #fff;
+  margin-bottom: 10px;
+}
+.postr--acid .postr__kick { background: var(--acid); color: var(--acid-ink); }
+.postr__title { font-size: clamp(34px, 5.4vw, 56px); color: #fff; margin-bottom: 10px; }
+.postr p { color: #cfcbd8; font-size: 15px; margin: 0 0 12px; }
+.postr p a { color: #ff5cbc; }
+.postr--acid p a { color: var(--acid); }
+.postr p a:hover { color: #fff; }
+.postr .spec { background: rgba(255, 255, 255, 0.05); border-color: #efeaf5; box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.5); color: #efeaf5; }
+.postr .spec__lines .k { color: #b9b4c6; }
+.postr .spec__lines b { color: #fff; }
+.postr--acid .spec__lines b { color: var(--acid); }
+.postr__foot { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-top: 16px; }
+.postr__ticker {
+  font-family: var(--font-pixel);
+  font-size: 12.5px;
+  letter-spacing: 1.5px;
+  color: #b9b4c6;
+}
+.postr__ticker b { color: var(--pink); }
+
+/* the VGen sheet prints tall — give it the room, not a 300px thumbnail slot */
+.postr--sheet { grid-template-columns: minmax(0, 340px) minmax(0, 1fr); }
+@media (max-width: 820px) { .postr--sheet { grid-template-columns: 1fr; } }
+
+/* --------------------------------------------------------------------------
+   THE DECK — the hero as a slideshow (Sep 4 2026, Justin: "the mini news on
+   the hero is too small, make it a slide show of all the latest news").
+   One slide = one .hero, same panel/flag/title/offer/cta classes, so the
+   type is exactly the hero he already approved. Slides stack in one grid
+   cell and crossfade; the art comes in per slide as --art / --art-pos so
+   the HTML owns the picture and this owns the treatment.
+   Driven by assets/js/deck.js; with no JS, slide 1 (.is-on) simply shows.
+   -------------------------------------------------------------------------- */
+.deck {
+  position: relative;
+  border: 3px solid var(--ink);
+  box-shadow: 8px 8px 0 var(--shadow);
+  margin-bottom: 26px;
+  background: #101014;
+  overflow: hidden;
+}
+.deck__track { display: grid; touch-action: pan-y; }
+.deck__slide {
+  grid-area: 1 / 1;
+  position: relative;
+  min-height: 420px;
+  background: #101014;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(28px);
+  transition: opacity 0.45s ease, transform 0.55s var(--spring-soft), visibility 0s linear 0.45s;
+  pointer-events: none;
+}
+.deck__slide.is-on {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition: opacity 0.45s ease, transform 0.55s var(--spring-soft), visibility 0s;
+  pointer-events: auto;
+  z-index: 1;
+}
+/* the art is a real <img>, not a background: a url() that reaches CSS through
+   var() gets resolved against the stylesheet's folder in Chrome, and every
+   slide came up blank. object-position per slide rides in the tag's style. */
+.deck__art {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.deck__slide::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(100deg, rgba(15, 15, 18, 0.9) 0%, rgba(15, 15, 18, 0.74) 36%, rgba(15, 15, 18, 0.06) 64%);
+}
+.deck__slide .hero__panel { padding-bottom: 72px; }   /* clears the tab strip */
+.deck__burst { top: 16px; right: 18px; }
+.deck__slide .hero__cta .btn--zzz:not(.btn--zzz--pink) { background: #fff; color: #000; }
+
+/* arrows — the first and last cells of the tab strip, so they never sit on
+   top of the copy the way a mid-slide arrow does */
+.deck__arrow {
+  flex: 0 0 52px;
+  padding: 0;
+  border: 0;
+  border-right: 3px solid var(--ink);
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+  font-family: var(--font-shout);
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.16s, color 0.16s;
+}
+.deck__arrow--next { border-right: 0; border-left: 3px solid var(--ink); }
+.deck__arrow:hover { background: var(--pink); color: #000; }
+.deck__arrow:active { background: #fff; }
+.deck__arrow:focus-visible { outline: 3px solid #fff; outline-offset: -3px; }
+
+/* the numbered tabs along the bottom — spec-plate register, not dots */
+.deck__tabs {
+  position: absolute;
+  z-index: 5;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  background: rgba(10, 10, 12, 0.86);
+  border-top: 3px solid var(--ink);
+}
+.deck__tab {
+  flex: 1 1 0;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 8px;
+  min-width: 0;
+  padding: 9px 8px;
+  border: 0;
+  border-right: 3px solid var(--ink);
+  background: transparent;
+  color: #d9d5e3;
+  font-family: var(--font-pixel);
+  font-size: 12.5px;
+  letter-spacing: 1.6px;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.16s, color 0.16s;
+}
+.deck__tab:last-child { border-right: 0; }
+.deck__tab b { font-family: var(--font-shout); font-size: 16px; letter-spacing: 0; color: var(--pink); }
+.deck__tab:hover { background: rgba(255, 255, 255, 0.1); color: #fff; }
+.deck__tab.is-on { background: var(--pink); color: #000; }
+.deck__tab.is-on b { color: #000; }
+.deck__tab:focus-visible { outline: 3px solid #fff; outline-offset: -3px; }
+
+/* the auto-advance bar along the top — only drawn while the deck is running */
+.deck__bar {
+  position: absolute;
+  z-index: 6;
+  left: 0;
+  top: 0;
+  height: 4px;
+  width: 0;
+  background: var(--pink);
+  opacity: 0;
+}
+.deck.is-auto .deck__bar { opacity: 1; animation: deckbar 7s linear forwards; }
+@keyframes deckbar { from { width: 0; } to { width: 100%; } }
+
+@media (max-width: 640px) {
+  .deck__slide { min-height: 380px; }
+  .deck__tab span { display: none; }        /* numbers only, the words won't fit */
+  .deck__tab { padding: 8px 4px; }
+  .deck__arrow { flex-basis: 44px; font-size: 24px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .deck__slide { transition: none; }
+  .deck__bar { animation: none !important; }
+}
+
+/* ==========================================================================
+   SITE 3.1 — "FULL BLEED"
+   (Sep 5 2026, Justin, on 3.0: "Visuals are very busy, the overall base of
+   this site is still the same to me ... I want a reconfiguration of how this
+   site looks structurally ... Everything looks like its still in the middle
+   and not using the full layout of the site ... I am not a fan of the word
+   drop shadow ... I preferr the old gate page.")
+
+   So 3.0 is gone (its block was cut, not overridden) and the SKELETON changed:
+     * the centred 1200px framed box is dead. Navigation is a fixed LEFT RAIL
+       (logo, the pages stacked, SHOP as a block, COMMS, the toggles at the
+       bottom — the ZZZ calendar's side column). Content is a STAGE that runs
+       from the rail to the right edge of the screen.
+     * the deck is a full-bleed key visual, ~78vh, copy bottom-left over a
+       scrim, the info band pinned to its bottom edge. Poster sections and the
+       commissions ad are full-bleed bands; grids fill the stage.
+     * type is upright and clean: Anton mastheads with NO offset plate, no
+       skew, no chromatic split; a thin rule and a caption under each.
+     * the texture went: no grain, no slash pseudo-elements, no sparkles, no
+       stickers on tiles, no pulsing nav, no page-wide diagonal. One accent
+       (magenta), black, white, and the art.
+     * kept from 3.0 because it isn't decoration: the live countdown, the
+       phone dock, scroll-reveal, the press burst, readable price tags.
+     * the gate is the AKIRA-red TETSUO page again, byte-for-byte.
+   Under 1000px the rail becomes a top bar (logo + MENU + SHOP; main.js's
+   MENU toggle still opens the rest) and the dock stays at the bottom.
+   ========================================================================== */
+
+:root {
+  --rail: 232px;
+  --gut: clamp(18px, 3.2vw, 56px);
+  --off: #f4f1e8;
+  --mag-deep: #b0145c;
+}
+
+/* ---- ground: black + the halftone it always had. no grain, no slash ------ */
+html.dark body {
+  background:
+    radial-gradient(circle, rgba(255, 255, 255, 0.045) 1px, transparent 1.3px) 0 0 / 9px 9px,
+    var(--paper);
+}
+body { background-image: radial-gradient(circle, rgba(25, 25, 25, 0.055) 1px, transparent 1.3px); background-size: 9px 9px; }
+
+/* ---- SKELETON: rail + stage ---------------------------------------------- */
+.rail {
+  position: fixed;
+  z-index: 500;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: var(--rail);
+  display: flex;
+  flex-direction: column;
+  padding: 22px 18px 18px;
+  background: var(--paper);
+  border-right: 3px solid var(--ink);
+  overflow-y: auto;
+}
+.stage { margin-left: var(--rail); min-height: 100vh; }
+.stage .marquee { position: sticky; top: 0; z-index: 90; }
+.container {
+  border: 0;
+  box-shadow: none;
+  background: transparent;
+  padding: 0 var(--gut) 40px;
+}
+.frame, .vlabel { display: none; }
+
+/* brand, in the rail */
+.rail .brand { flex-direction: column; align-items: flex-start; gap: 10px; padding: 0 0 6px; }
+.rail .brand__logo-img { width: 100%; max-width: 170px; transform: none; filter: none; }
+.rail .brand__logo:hover .brand__logo-img { transform: rotate(-2deg); }
+.rail .brand__tag { box-shadow: none; border: 0; padding: 0; font-size: 11px; letter-spacing: 2px; color: var(--ink-dim); background: transparent; }
+.rail .brand__banner { display: none; }
+
+/* the pages, stacked. flat rows, a magenta edge on the one you're on */
+.rail .navbar {
+  position: static;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  gap: 2px;
+  padding: 22px 0 14px;
+  background: transparent;
+}
+.rail .nav-btn,
+html.dark .rail .nav-btn {
+  flex: 0 0 auto;
+  justify-content: flex-start;
+  height: 42px;
+  padding: 0 12px;
+  font-size: 17px;
+  letter-spacing: 1px;
+  color: var(--ink);
+  background: transparent;
+  border: 0;
+  border-left: 4px solid transparent;
+  box-shadow: none;
+  transform: none;
+}
+.rail .nav-btn:hover,
+html.dark .rail .nav-btn:hover { background: var(--grey-soft); border-left-color: var(--pink); color: var(--ink); transform: none; box-shadow: none; }
+.rail .nav-btn.is-here,
+html.dark .rail .nav-btn.is-here { color: var(--pink); border-left-color: var(--pink); background: transparent; }
+.rail .nav-btn--shop,
+html.dark .rail .nav-btn--shop {
+  margin-top: 16px;
+  height: 54px;
+  justify-content: center;
+  border: 0;
+  background: var(--pink);
+  color: #000;
+  font-size: 21px;
+  letter-spacing: 2px;
+  animation: none;
+}
+.rail .nav-btn--shop:hover,
+html.dark .rail .nav-btn--shop:hover { background: var(--ink); color: var(--paper); }
+.rail .nav-btn--comms,
+html.dark .rail .nav-btn--comms {
+  margin-top: 8px;
+  height: 46px;
+  justify-content: center;
+  border: 3px solid var(--ink);
+  background: transparent;
+  color: var(--ink);
+}
+.rail .nav-btn--comms:hover,
+html.dark .rail .nav-btn--comms:hover { background: var(--ink); color: var(--paper); }
+.rail .nav-btn--comms.is-full { border-color: var(--red); color: var(--red); }
+.rail .nav-btn--patreon,
+.rail .nav-btn--kofi,
+html.dark .rail .nav-btn--patreon,
+html.dark .rail .nav-btn--kofi { height: 36px; font-size: 13px; color: var(--ink-dim); background: transparent; }
+.rail .nav-btn--patreon img { height: 22px; background: #fff; border-radius: 50%; padding: 2px; }
+.rail .nav-btn--menu { display: none; }
+
+/* the toggles sit at the foot of the rail, not floating over the page */
+.rail .util-bar {
+  position: static;
+  margin-top: auto;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  padding-top: 18px;
+}
+.rail .util-bar .nav-btn,
+html.dark .rail .util-bar .nav-btn { height: 30px; padding: 0 8px; font-size: 10px; border: 2px solid var(--ink); border-left-width: 2px; }
+.rail .util-bar .theme-switch { padding: 0; border: 2px solid var(--ink); }
+
+/* ---- TYPE — upright, no plates, no skew, no split ------------------------ */
+.shout, .shout--split, .postr__title, .commsad__title, .commsad__title span, .hero__title, .hero__price,
+.tooth .tooth__tab, html.dark .tooth .tooth__tab, .tooth .tooth__tab .accent, html.dark .tooth .tooth__tab .accent,
+.splash__warn-big, .price-card .price, .cd, .btn--zzz, .btn--zzz:hover, .btn--zzz:active, .postr__kick {
+  text-shadow: none;
+  transform: none;
+}
+.btn--zzz:hover { transform: translate(-2px, -3px); }
+.btn--zzz:active { transform: translate(2px, 2px); }
+
+/* MASTHEAD: the title, a thin rule, the caption under it */
+.tooth { display: block; margin: 64px 0 24px; }
+.tooth:first-child { margin-top: 28px; }
+.tooth .tooth__tab,
+html.dark .tooth .tooth__tab {
+  display: block;
+  font-family: var(--font-shout);
+  font-size: clamp(40px, 6vw, 92px);
+  line-height: 0.92;
+  letter-spacing: -1px;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: transparent;
+  border: 0;
+  padding: 0 0 12px;
+  box-shadow: none;
+  clip-path: none;
+}
+.tooth .tooth__tab .accent,
+html.dark .tooth .tooth__tab .accent { color: var(--pink); }
+.tooth .tooth__bar,
+html.dark .tooth .tooth__bar,
+.tooth--acid .tooth__bar,
+html.dark .tooth--acid .tooth__bar,
+.tooth--sub .tooth__bar,
+html.dark .tooth--sub .tooth__bar {
+  display: block;
+  position: static;
+  height: auto;
+  margin: 0;
+  background: transparent;
+  clip-path: none;
+  border-top: 2px solid var(--ink);
+}
+.tooth__note,
+.tooth--acid .tooth__note {
+  position: static;
+  display: block;
+  transform: none;
+  padding-top: 8px;
+  font-family: var(--font-pixel);
+  font-size: 12px;
+  letter-spacing: 2px;
+  color: var(--ink-dim);
+  white-space: normal;
+}
+.tooth--sub .tooth__tab,
+html.dark .tooth--sub .tooth__tab { font-size: clamp(26px, 3vw, 40px); }
+.tooth--acid .tooth__tab .accent,
+html.dark .tooth--acid .tooth__tab .accent { color: var(--acid); }
+.sub { max-width: 760px; }
+
+/* ---- THE DECK — full-bleed key visual, info band on its bottom edge -------- */
+.deck {
+  border: 0;
+  box-shadow: none;
+  margin: 0 calc(-1 * var(--gut)) 0;
+  background: #000;
+}
+.deck__slide { min-height: min(78vh, 820px); max-height: 900px; background: #000; }
+.deck__slide::before {
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.86) 0%, rgba(0, 0, 0, 0.62) 34%, rgba(0, 0, 0, 0.1) 62%, rgba(0, 0, 0, 0) 100%),
+    linear-gradient(0deg, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0) 45%);
+}
+.deck__slash, .deck__sparks, .deck__stamp, .btn__spark { display: none !important; }
+.deck__slide .hero__panel {
+  position: absolute;
+  left: var(--gut);
+  bottom: 92px;
+  z-index: 3;
+  max-width: 680px;
+  padding: 0;
+}
+.deck__slide .hero__flag,
+html.dark .deck__slide .hero__flag {
+  background: transparent;
+  color: #fff;
+  border: 0;
+  box-shadow: none;
+  padding: 0 0 0 16px;
+  transform: none;
+  font-size: 12px;
+  letter-spacing: 3px;
+  position: relative;
+}
+.deck__slide .hero__flag::before { content: ""; position: absolute; left: 0; top: 4px; width: 9px; height: 9px; background: var(--pink); }
+.deck__slide .hero__title {
+  font-size: clamp(52px, 8.4vw, 132px);
+  line-height: 0.86;
+  letter-spacing: -2px;
+  margin: 14px 0 14px;
+  color: #fff;
+}
+.deck__slide .hero__title span { color: var(--pink); }
+.deck__slide[data-deck="vgen"] .hero__title span { color: var(--acid); }
+.deck__slide .hero__offer {
+  font-family: var(--font-round);
+  font-weight: 600;
+  font-size: 19px;
+  line-height: 1.35;
+  letter-spacing: 0;
+  text-transform: none;
+  max-width: 520px;
+  color: #efeaf5;
+}
+.deck__slide .hero__offer b { color: #fff; background: transparent; padding: 0; }
+.deck__slide .hero__cta { margin-top: 4px; }
+.deck__slide .hero__price { color: #fff; font-size: 34px; }
+.hero__spec {
+  display: block;
+  margin-top: 14px;
+  font-family: var(--font-pixel);
+  font-size: 11.5px;
+  letter-spacing: 2px;
+  color: rgba(255, 255, 255, 0.7);
+}
+.deck__tabs {
+  height: 60px;
+  align-items: stretch;
+  background: rgba(0, 0, 0, 0.82);
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(6px);
+}
+.deck__disc {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 18px 0 var(--gut);
+  border-right: 1px solid rgba(255, 255, 255, 0.3);
+  color: #fff;
+  font-family: var(--font-shout);
+  font-size: 22px;
+  letter-spacing: 1px;
+}
+.deck__disc i {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #000 0 3px, var(--pink) 3px 7px, #111 7px 9px, #2a2a2a 9px 10px, #111 10px 12px, #2a2a2a 12px 13px, #111 13px 15px);
+  box-shadow: 0 0 0 1px #fff;
+  animation: spin 7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.deck__disc b { color: var(--pink); font-weight: 400; }
+.deck__disc small { display: block; font-family: var(--font-pixel); font-size: 10px; letter-spacing: 2px; color: #9d97ab; line-height: 1; margin-top: 3px; }
+.deck__tab {
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 2px;
+  padding: 0 18px;
+  border-right: 1px solid rgba(255, 255, 255, 0.18);
+  background: transparent;
+  color: #b9b4c6;
+  font-family: var(--font-shout);
+  font-size: 16px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transform: none;
+}
+.deck__tab b { font-family: var(--font-pixel); font-size: 10px; letter-spacing: 2px; color: #7d7890; }
+.deck__tab:hover { background: rgba(255, 255, 255, 0.06); color: #fff; }
+.deck__tab.is-on { background: transparent; color: #fff; box-shadow: inset 0 -4px 0 var(--pink); }
+.deck__tab.is-on b { color: var(--pink); }
+.deck__arrow { flex-basis: 56px; background: transparent; border: 0; border-left: 1px solid rgba(255, 255, 255, 0.3); color: #fff; font-size: 26px; }
+.deck__arrow--prev { border-left: 0; border-right: 1px solid rgba(255, 255, 255, 0.3); }
+.deck__arrow:hover { background: var(--pink); color: #000; }
+.deck__bar { height: 3px; top: auto; bottom: 60px; }
+
+/* ---- BANDS: posters + the commissions ad run edge to edge ----------------- */
+.postr, .commsad {
+  margin: 0 calc(-1 * var(--gut));
+  padding: 48px var(--gut);
+  border: 0;
+  box-shadow: none;
+}
+.postr { grid-template-columns: minmax(0, 420px) minmax(0, 640px); gap: 44px; background: #0e0e12; --accent: var(--pink); }
+.postr--acid { --accent: var(--acid); }
+.postr--sheet { grid-template-columns: minmax(0, 380px) minmax(0, 640px); }
+.postr::before, .postr::after { display: none; }
+.postr__art img { border: 0; }
+.postr .postr__art { box-shadow: none; }
+.postr__kick { font-size: 12px; letter-spacing: 3px; background: transparent; color: var(--accent); padding: 0 0 0 16px; position: relative; }
+.postr__kick::before { content: ""; position: absolute; left: 0; top: 4px; width: 9px; height: 9px; background: var(--accent); }
+.postr--acid .postr__kick { background: transparent; color: var(--acid); }
+.postr__title { font-size: clamp(44px, 5.6vw, 84px); line-height: 0.9; letter-spacing: -1.5px; }
+.postr p { font-family: var(--font-round); font-weight: 500; font-size: 17px; line-height: 1.5; color: #cfcbd8; }
+.postr .spec { border: 0; border-left: 3px solid var(--accent); background: rgba(255, 255, 255, 0.04); box-shadow: none; padding: 12px 16px; }
+.postr .spec__code { display: none; }
+.postr .spec__lines b { color: #fff; }
+.postr--acid .spec__lines b { color: var(--acid); }
+.commsad { background: #0e0e12; }
+.commsad::before { display: none; }
+.commsad__title { font-size: clamp(40px, 5.6vw, 84px); letter-spacing: -1.5px; }
+.commsad__flag { transform: none; }
+.commsad .comms-promo__item { box-shadow: none; border-width: 0; }
+.commsad .comms-promo__item:hover { box-shadow: 0 0 0 3px var(--pink); }
+
+/* ---- GRIDS + CARDS — flat, full width, art first ------------------------ */
+.drop-grid { gap: 18px; }
+.drop-tile { border: 0; box-shadow: none; background: transparent; }
+.drop-tile:hover { transform: translateY(-4px); box-shadow: none; }
+.drop-tile img { border: 0; }
+.drop-tile::before, .drop-tile::after { display: none; }
+.drop-tile__bar { padding: 10px 0 0; }
+.drop-tile__bar b, .bundle b { background: var(--pink); color: #000; padding: 2px 8px 1px; }
+.drop-tile:hover .drop-tile__bar b, .bundle:hover b { animation: none; }
+.bundle { border: 2px solid var(--ink); box-shadow: none; background: transparent; }
+.bundle:hover { border-color: var(--pink); box-shadow: none; transform: translateY(-2px); }
+.box, .winbox, .price-card, .news-box { box-shadow: none; }
+.box::before { display: none; }
+.box > h3 { padding-right: 0; }
+.duo { gap: 24px; }
+.comms-promo__grid { gap: 18px; }
+.price-card .price { background: var(--pink); color: #000; padding: 2px 10px 1px; font-size: 26px; }
+html.dark .price-card .price { color: #000; }
+.comms-promo__price { background: var(--pink); color: #000 !important; padding: 1px 7px 0; }
+.btn { box-shadow: 4px 4px 0 var(--shadow); }
+.btn--zzz--pink { color: #000; }
+html.dark .btn--zzz--pink { color: #000; }
+.btn--zzz--pink:hover { background: #fff; color: #000; }
+.nav-btn--shop { animation: none; }
+
+/* ---- the ticker, calm: black, white, one magenta word ------------------- */
+html.dark .marquee { background: #000; color: #fff; border-bottom: 1px solid rgba(255, 255, 255, 0.25); }
+html.dark .marquee b { color: var(--pink); }
+.marquee { font-size: 12.5px; letter-spacing: 2.5px; }
+.marquee__track { padding: 9px 0; }
+.marquee .cd { font-size: 12.5px; padding: 0 8px; background: var(--pink); color: #000; transform: none; }
+.marquee .cd b { color: #000; }
+
+/* ---- COUNTDOWN CHIP ------------------------------------------------------ */
+.cd {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 5px;
+  font-family: var(--font-shout);
+  font-size: 15px;
+  letter-spacing: 1px;
+  background: #fff;
+  color: #000;
+  padding: 2px 10px 1px;
+  white-space: nowrap;
+}
+.cd b { color: var(--mag-deep); font-weight: 400; }
+.cd--big { font-size: 24px; padding: 4px 14px 2px; }
+.cd.is-over { background: var(--grey); }
+
+/* ---- FOOTER — a rule across the stage, then the bar ---------------------- */
+.footer { max-width: none; margin: 0; padding: 0 0 30px; }
+.footer__bar { border: 0; border-top: 3px solid var(--ink); box-shadow: none; padding: 20px var(--gut); }
+.barcode-zone, .footer__top { margin-left: var(--gut); }
+
+/* ---- the press burst — smaller, fewer ----------------------------------- */
+.zap {
+  position: fixed;
+  z-index: 9000;
+  left: 0;
+  top: 0;
+  font-size: 14px;
+  line-height: 1;
+  color: var(--pink);
+  pointer-events: none;
+  animation: zap 0.5s cubic-bezier(0.2, 0.8, 0.3, 1) forwards;
+}
+@keyframes zap { from { transform: translate(-50%, -50%) scale(0.4); opacity: 1; } to { transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(1); opacity: 0; } }
+
+/* ---- scroll reveal ------------------------------------------------------- */
+.reveal { opacity: 0; transform: translateY(18px); }
+.reveal.is-in { opacity: 1; transform: none; transition: opacity 0.5s ease, transform 0.55s var(--spring-soft); }
+.reveal--pop { transform: translateY(14px); }
+
+/* ---- the phone dock ------------------------------------------------------ */
+.dock {
+  position: fixed;
+  z-index: 700;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: none;
+  background: #000;
+  border-top: 2px solid #fff;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.dock a {
+  flex: 1 1 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 52px;
+  font-family: var(--font-shout);
+  font-size: 17px;
+  letter-spacing: 1px;
+  color: #fff;
+  border-right: 1px solid rgba(255, 255, 255, 0.25);
+  text-transform: uppercase;
+}
+.dock a:last-child { border-right: 0; }
+.dock a.dock--shop { background: var(--pink); color: #000; }
+.dock a.dock--club { color: var(--pink); }
+.dock a:active { background: #fff; color: #000; }
+
+/* ---- under 1000px: the rail becomes a top bar, the stage takes the width --- */
+@media (max-width: 1000px) {
+  .rail {
+    position: static;
+    width: auto;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    border-right: 0;
+    border-bottom: 3px solid var(--ink);
+    overflow: visible;
+  }
+  .stage { margin-left: 0; }
+  .rail .brand { flex: 1 1 auto; flex-direction: row; align-items: center; padding: 0; }
+  .rail .brand__logo-img { width: 120px; }
+  .rail .brand__tag { display: none; }
+  .rail .navbar { flex: 1 1 100%; flex-direction: row; flex-wrap: wrap; gap: 6px; padding: 8px 0 0; }
+  .rail .nav-btn--menu { display: flex; flex: 1 1 auto; justify-content: center; border: 2px solid var(--ink); border-left-width: 2px; height: 40px; }
+  .rail .navbar .nav-btn:not(.nav-btn--menu):not(.nav-btn--shop) { display: none; }
+  .rail .navbar.is-open { display: grid; grid-template-columns: 1fr 1fr; }
+  .rail .navbar.is-open .nav-btn { display: flex; border: 2px solid var(--ink); border-left-width: 2px; height: 42px; justify-content: center; }
+  .rail .navbar.is-open .nav-btn--menu { grid-column: 1 / -1; }
+  .rail .nav-btn--shop, html.dark .rail .nav-btn--shop { flex: 1 1 auto; margin: 0; height: 40px; font-size: 16px; }
+  /* the toggles stop floating over the page on phones — they live inside MENU */
+  .rail .util-bar { display: none; flex: 1 1 100%; margin: 0; padding: 6px 0 0; flex-direction: row; align-items: center; justify-content: flex-start; }
+  .rail .navbar.is-open ~ .util-bar { display: flex; }
+  .dock { display: flex; }
+  body { padding-bottom: 58px; }
+  .deck__slide { min-height: min(70vh, 760px); max-height: none; }
+  .deck__slide .hero__panel { position: relative; left: auto; bottom: auto; padding: 24px 18px 96px; }
+  .deck__slide .hero__title { font-size: clamp(44px, 12vw, 72px); }
+  .deck__disc { padding: 0 12px; font-size: 16px; }
+  .deck__disc small { display: none; }
+  .deck__tab { padding: 0 8px; font-size: 12.5px; letter-spacing: 0; }
+  .deck__tab b { display: none; }
+  .deck__tab span { display: inline; }
+  .deck__tabs { height: 50px; }
+  .deck__bar { bottom: 50px; }
+  .postr, .postr--sheet { grid-template-columns: 1fr; padding: 32px var(--gut); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .deck__disc i { animation: none; }
+  .reveal { opacity: 1; transform: none; }
+  .zap { display: none; }
+}
+
+/* ---- the gate is AKIRA red in BOTH themes. The Sep 4 `html.dark body` ground
+   rule outranked `.splash` and quietly turned it black at night; this pins the
+   original. The warning band keeps its own dark-mode rule from BLACKOUT. ---- */
+.splash,
+html.dark body.splash {
+  background:
+    radial-gradient(circle, rgba(0, 0, 0, 0.14) 1.2px, transparent 1.5px) 0 0 / 10px 10px,
+    var(--red);
+}
+html.dark body.splash::before { display: none; }
+
+/* ==========================================================================
+   SITE 3.2 — "DIE-CUT"
+   (Sep 5 2026, Justin, on 3.1: "the layout is better, but some of the text
+   is still hard to read especially the prices. The website needs some of its
+   old charm back, add a background or texture to the site background. The
+   side tabs are constantly changing sizes depending on which page im on
+   which is annoying. Make the site easy to understand upon clicking on the
+   site. Make it fun and dopamanergic to click around the site. Show examples
+   of the plush on the plush section, theres large empty space for a
+   slideshow. Site needs consistency in the image sizes and spacing.")
+
+   The rail + stage skeleton stays. On top of it:
+     * PRICES are YELLOW TAGS with black Anton type, never under 20px. One
+       colour means money on this site now: yellow = price, magenta = action,
+       acid = VGen. Nothing else is yellow.
+     * MICRO TYPE: nothing under 13px. Flags, captions, spec lines and notes
+       are set in the rounded font; the pixel font keeps the ticker and the
+       barcodes, where it is flavour and not information.
+     * THE GROUND: the halftone is visible again, a paper grain sits over it
+       and a magenta glow comes off the top of every page — the backing sheet
+       the stickers are cut from. (3.1 had a 4.5%-alpha halftone: invisible.)
+     * DIE-CUT: every card, tile, poster and button gets its ink border and
+       hard offset shadow back — white on black at night — and pops toward
+       the cursor. TEXT shadows stay gone; a box shadow is a sticker edge,
+       a text shadow was the "word drop shadow" he cut.
+     * THE RAIL is rigid: one width, one row height, nothing flexes, so it is
+       the same to the pixel on every page — and it says who this is.
+     * START HERE: four signposts under the deck, so a first visit reads the
+       whole site in one row: shop / commissions / club / free.
+     * THE PLUSH: a gallery of the real sample photos, in the space that was
+       empty (assets/js/plushgal.js).
+     * ONE MEDIA GRAMMAR: .media frames at 1:1 or 4:5, one border, one shadow,
+       one grid gap (--gap) and one section rhythm (--sec) across the site.
+   ========================================================================== */
+
+:root {
+  --gap: 18px;                       /* every grid on the site */
+  --sec: 72px;                       /* space above every section masthead */
+  --tag: #ffd23f;                    /* the price colour — a LITERAL, because BLACKOUT
+                                        redefines --yellow to magenta at night, which is
+                                        exactly the unreadable tag he was looking at */
+  --tag-ink: #111;
+  --cut: 5px 5px 0 var(--shadow);    /* the die-cut edge */
+  --cut-hover: 8px 9px 0 var(--pink);
+  --grain-dark: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.13 0'/></filter><rect width='220' height='220' filter='url(%23g)'/></svg>");
+  --grain-light: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.11 0'/></filter><rect width='220' height='220' filter='url(%23g)'/></svg>");
+}
+
+/* ---- THE GROUND: halftone you can see, paper grain, a glow off the top ---- */
+body {
+  background:
+    var(--grain-light) 0 0 / 220px 220px,
+    radial-gradient(circle, rgba(25, 25, 25, 0.13) 1.3px, transparent 1.8px) 0 0 / 11px 11px,
+    var(--paper);
+}
+html.dark body {
+  background:
+    var(--grain-dark) 0 0 / 220px 220px,
+    radial-gradient(circle, rgba(255, 255, 255, 0.13) 1.3px, transparent 1.8px) 0 0 / 11px 11px,
+    var(--paper);
+}
+.stage {
+  background: radial-gradient(ellipse 58% 34% at 30% 0%, rgba(255, 46, 166, 0.10), transparent 72%) no-repeat;
+}
+html.dark .stage {
+  background: radial-gradient(ellipse 58% 34% at 30% 0%, rgba(255, 46, 166, 0.20), transparent 72%) no-repeat;
+}
+.rail { background: var(--paper); }
+html.dark .rail {
+  background:
+    var(--grain-dark) 0 0 / 220px 220px,
+    radial-gradient(circle, rgba(255, 255, 255, 0.09) 1.3px, transparent 1.8px) 0 0 / 11px 11px,
+    var(--paper);
+}
+
+/* ---- THE RAIL — rigid, and it says who this is -------------------------- */
+.rail {
+  width: var(--rail);
+  min-width: var(--rail);
+  max-width: var(--rail);
+  padding: 20px 16px 16px;
+  overflow-x: hidden;
+}
+.rail .brand { gap: 8px; padding: 0 0 4px; }
+.rail .brand__logo-img { width: 168px; max-width: none; height: auto; }
+.rail .brand__tag {
+  font-family: var(--font-round);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.4px;
+  color: var(--ink-dim);
+}
+.brand__who {
+  display: block;
+  margin-top: 6px;
+  font-family: var(--font-round);
+  font-weight: 600;
+  font-size: 13.5px;
+  line-height: 1.4;
+  color: var(--ink);
+}
+.brand__who b { color: var(--pink); font-weight: 700; }
+.rail .navbar { padding: 16px 0 10px; gap: 0; }
+.rail .nav-btn,
+html.dark .rail .nav-btn {
+  flex: none;
+  width: 100%;
+  height: 44px;
+  min-height: 44px;
+  font-size: 18px;
+  padding: 0 12px;
+  border-left-width: 5px;
+  transition: transform 0.18s var(--spring), background 0.12s, color 0.12s, border-color 0.12s, box-shadow 0.18s var(--spring);
+}
+.rail .nav-btn:hover,
+html.dark .rail .nav-btn:hover { transform: translateX(6px); }
+.rail .nav-btn.is-here,
+html.dark .rail .nav-btn.is-here { background: var(--grey-soft); }
+.rail .nav-btn--shop,
+html.dark .rail .rail .nav-btn--shop,
+html.dark .rail .nav-btn--shop {
+  height: 56px;
+  min-height: 56px;
+  margin-top: 14px;
+  border: 3px solid var(--ink);
+  box-shadow: var(--cut);
+  font-size: 23px;
+}
+.rail .nav-btn--shop:hover,
+html.dark .rail .nav-btn--shop:hover { transform: translate(-2px, -3px); background: #fff; color: #000; box-shadow: var(--cut-hover); }
+.rail .nav-btn--shop:active,
+html.dark .rail .nav-btn--shop:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--shadow); }
+.rail .nav-btn--comms,
+html.dark .rail .nav-btn--comms {
+  height: 48px;
+  min-height: 48px;
+  margin-top: 10px;
+  border: 3px solid var(--ink);
+  box-shadow: var(--cut);
+}
+.rail .nav-btn--comms:hover,
+html.dark .rail .nav-btn--comms:hover { transform: translate(-2px, -3px); background: var(--pink); color: #000; border-color: var(--ink); box-shadow: var(--cut); }
+.rail .nav-btn--comms.is-here,
+html.dark .rail .nav-btn--comms.is-here { background: var(--pink); color: #000; }
+.rail .nav-btn--patreon,
+.rail .nav-btn--kofi,
+html.dark .rail .nav-btn--patreon,
+html.dark .rail .nav-btn--kofi { height: 38px; min-height: 38px; font-size: 14px; color: var(--ink); }
+.rail .nav-btn--patreon::after { content: "PATREON"; margin-left: 8px; }
+.rail .util-bar .nav-btn,
+html.dark .rail .util-bar .nav-btn { height: 30px; min-height: 30px; width: auto; font-size: 11px; }
+.rail .util-bar .nav-btn:hover,
+html.dark .rail .util-bar .nav-btn:hover { transform: none; }
+
+/* ---- TYPE — nothing under 13px, information in the rounded font ---------- */
+.marquee { font-size: 13.5px; letter-spacing: 2.2px; }
+.sub { font-size: 15px; margin: 0 0 20px; }
+.tooth { margin: var(--sec) 0 22px; }
+.tooth:first-child { margin-top: 26px; }
+.tooth .tooth__tab,
+html.dark .tooth .tooth__tab { font-size: clamp(38px, 4.6vw, 66px); padding: 0 0 10px; }
+.tooth--sub .tooth__tab,
+html.dark .tooth--sub .tooth__tab { font-size: 30px; }
+.tooth .tooth__bar,
+html.dark .tooth .tooth__bar,
+.tooth--acid .tooth__bar,
+html.dark .tooth--acid .tooth__bar,
+.tooth--sub .tooth__bar,
+html.dark .tooth--sub .tooth__bar { border-top: 3px solid var(--ink); }
+.tooth__note,
+.tooth--acid .tooth__note {
+  font-family: var(--font-round);
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--ink);
+  opacity: 0.8;
+}
+.wall-hint { font-size: 14px; }
+.deck__slide .hero__flag,
+html.dark .deck__slide .hero__flag { font-family: var(--font-round); font-weight: 700; font-size: 13.5px; letter-spacing: 2.4px; }
+.deck__slide .hero__offer { font-size: 20px; }
+.hero__spec { font-family: var(--font-round); font-weight: 600; font-size: 13.5px; letter-spacing: 1.6px; color: rgba(255, 255, 255, 0.82); }
+.deck__tab b { font-family: var(--font-round); font-weight: 700; font-size: 12px; letter-spacing: 1.8px; }
+.deck__disc small { font-family: var(--font-round); font-weight: 700; font-size: 11px; letter-spacing: 1.8px; }
+.postr__kick, .postr--acid .postr__kick { font-family: var(--font-round); font-weight: 700; font-size: 13.5px; letter-spacing: 2.4px; }
+.spec__lines { font-family: var(--font-round); font-weight: 600; font-size: 14.5px; letter-spacing: 0.8px; line-height: 1.75; }
+.postr .spec__lines b { color: var(--tag); }
+.postr--acid .spec__lines b { color: var(--acid); }
+.postr__ticker { font-family: var(--font-round); font-weight: 600; font-size: 13.5px; letter-spacing: 1.2px; }
+.commsad__flag { font-family: var(--font-round); font-weight: 700; font-size: 13.5px; letter-spacing: 2px; }
+.commsad__note { font-family: var(--font-round); font-weight: 600; font-size: 14px; letter-spacing: 0.8px; }
+.comms-promo__bar { font-size: 15px; padding: 8px 9px; align-items: center; }
+.drop-tile__name small { font-family: var(--font-round); }
+.x-fallback { font-family: var(--font-round); font-size: 15px; }
+.free-card p, .price-card > p, .box p { font-size: 15px; }
+.update-item { font-size: 15px; }
+
+/* ---- PRICE TAGS — yellow, black Anton, big. money is yellow, full stop ---- */
+.tag,
+.drop-tile__bar b,
+.bundle b,
+.price-card .price,
+html.dark .price-card .price,
+.comms-promo__price,
+.commsad .comms-promo__price,
+html.dark .commsad .comms-promo__price,
+.spec__big,
+.hero__price,
+.deck__slide .hero__price,
+.sign__price,
+.shelf__price {
+  display: inline-block;
+  font-family: var(--font-shout);
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 1;
+  letter-spacing: 0;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  background: var(--tag);
+  color: var(--tag-ink) !important;
+  border: 2px solid #111;
+  box-shadow: 3px 3px 0 var(--shadow);
+  padding: 5px 9px 3px;
+  text-shadow: none;
+  transition: transform 0.2s var(--spring);
+}
+.drop-tile__bar b { font-size: 21px; }
+.bundle b { font-size: 20px; }
+.price-card .price, html.dark .price-card .price { font-size: 28px; margin-left: auto; }
+.comms-promo__price, .commsad .comms-promo__price { font-size: 16px; padding: 3px 7px 2px; margin-left: auto; }
+.spec__big { font-size: 30px; margin: 0 0 8px; }
+.hero__price, .deck__slide .hero__price { font-size: 32px; padding: 6px 14px 4px; box-shadow: 4px 4px 0 #fff; transform: rotate(-3deg); }
+.sign__price, .shelf__price { font-size: 19px; }
+.drop-tile:hover .drop-tile__bar b,
+.bundle:hover b,
+.sign:hover .sign__price,
+.shelf__item:hover .shelf__price,
+.price-card:hover .price { transform: rotate(-5deg) scale(1.12); }
+.hero__cta:hover .hero__price { transform: rotate(-6deg) scale(1.08); }
+.cd--big { font-size: 28px; padding: 6px 16px 4px; border: 2px solid #111; box-shadow: 3px 3px 0 var(--shadow); }
+
+/* ---- MEDIA GRAMMAR — one frame shape, one edge, everywhere --------------- */
+.media {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  background: #f4f1e8;
+  border-bottom: 3px solid var(--ink);
+  line-height: 0;
+}
+.media--sq { aspect-ratio: 1; }
+.media--tall { aspect-ratio: 4 / 5; }
+.media--wide { aspect-ratio: 16 / 9; }
+.media img { width: 100%; height: 100%; object-fit: cover; border: 0; transition: transform 0.35s var(--spring-soft); }
+.media--fit img { object-fit: contain; padding: 6%; box-sizing: border-box; }
+a:hover .media img, .media:hover img { transform: scale(1.06); }
+.media--fit:hover img, a:hover .media--fit img { transform: scale(1.04) rotate(-2deg); }
+
+/* ---- DIE-CUT — the edge and the shadow come back on every card ----------- */
+.box, .winbox, .price-card, .news-box { box-shadow: var(--cut); }
+.drop-grid, .comms-promo__grid, .duo, .free-grid, .price-grid, .signs__grid, .shelf { gap: var(--gap); }
+.drop-tile { border: 3px solid var(--ink); background: #f6f3ea; box-shadow: var(--cut); color: #111; }
+.drop-tile:hover { transform: translate(-3px, -5px) rotate(-1deg); box-shadow: var(--cut-hover); color: #111; }
+.drop-tile:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--shadow); }
+.drop-tile img { border-bottom: 3px solid var(--ink); transition: transform 0.35s var(--spring-soft); }
+.drop-tile:hover img { transform: scale(1.06); }
+.drop-tile__bar {
+  padding: 9px 12px 10px 11px;
+  font-family: var(--font-round);
+  font-weight: 700;
+  font-size: 14.5px;
+  letter-spacing: 0.2px;
+  color: #111;
+  background: #f6f3ea;
+}
+.drop-tile__name small { font-weight: 600; font-size: 12px; letter-spacing: 0.6px; color: #6f6f68; }
+.bundle {
+  border: 3px solid var(--ink);
+  background: var(--panel);
+  box-shadow: var(--cut);
+  font-family: var(--font-round);
+  font-weight: 700;
+  font-size: 14.5px;
+  letter-spacing: 0.3px;
+  padding: 8px 14px;
+}
+.bundle:hover { transform: translate(-2px, -3px); box-shadow: var(--cut-hover); border-color: var(--ink); }
+.bundle:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--shadow); }
+.drop-bundles { gap: 12px; margin: var(--gap) 0 6px; }
+.commsad .comms-promo__item { border: 3px solid #0e0e12; box-shadow: 5px 5px 0 rgba(255, 255, 255, 0.9); }
+.commsad .comms-promo__item:hover { transform: translate(-3px, -5px) rotate(-1deg); box-shadow: var(--cut-hover); }
+html.dark .commsad .comms-promo__item { box-shadow: var(--cut); }
+html.dark .commsad .comms-promo__item:hover { box-shadow: var(--cut-hover); }
+.comms-promo__item img { transition: transform 0.35s var(--spring-soft); }
+.comms-promo__item:hover img { transform: scale(1.06); }
+.price-card:hover { transform: translate(-2px, -4px); box-shadow: var(--cut-hover); }
+.price-card { transition: transform 0.18s var(--spring), box-shadow 0.18s var(--spring); }
+.postr__art { display: inline-block; max-width: 620px; }
+.postr__art img { border: 3px solid var(--ink); box-shadow: var(--cut); transition: transform 0.2s var(--spring), box-shadow 0.2s var(--spring); }
+.postr__art:hover img { transform: translate(-2px, -4px) rotate(-0.6deg); box-shadow: var(--cut-hover); border-color: var(--ink); }
+.free-card .media { border: 3px solid var(--ink); box-shadow: var(--cut); transition: transform 0.2s var(--spring), box-shadow 0.2s var(--spring); }
+.free-card .media:hover { transform: translate(-2px, -4px); box-shadow: var(--cut-hover); }
+.free-card .media img { border: 0; }
+.free-card .media img:hover { transform: none; }
+.free-card .media--fit img { transform: none; }
+.btn { border: 3px solid var(--ink); box-shadow: var(--cut); }
+.btn:hover { transform: translate(-2px, -3px); box-shadow: var(--cut-hover); }
+.btn:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--shadow); }
+.btn--zzz:hover { transform: translate(-2px, -3px); }
+.btn--zzz:active { transform: translate(2px, 2px); }
+.postr .btn, .commsad .btn { box-shadow: 5px 5px 0 #fff; }
+.postr .btn:hover, .commsad .btn:hover { box-shadow: var(--cut-hover); }
+
+/* the bands: edge to edge still, but ruled top and bottom like a page section */
+.postr, .commsad {
+  border-top: 3px solid var(--ink);
+  border-bottom: 3px solid var(--ink);
+  padding: 44px var(--gut) 48px;
+}
+.postr { grid-template-columns: minmax(0, 1fr) minmax(340px, 1fr); gap: 40px; align-items: start; }
+.postr--sheet { grid-template-columns: minmax(0, 1fr) minmax(340px, 1fr); }
+.postr p { max-width: 62ch; }
+.postr .spec { max-width: 560px; border: 3px solid var(--ink); box-shadow: var(--cut); background: rgba(255, 255, 255, 0.05); padding: 12px 16px; }
+.postr__title { margin-bottom: 14px; }
+.deck { border-bottom: 3px solid var(--ink); }
+
+/* ---- START HERE — four doors, one row ----------------------------------- */
+.signs { margin: 26px 0 0; }
+.signs__head { display: flex; align-items: baseline; flex-wrap: wrap; gap: 8px 16px; margin: 0 0 14px; }
+.signs__kick {
+  display: inline-block;
+  font-family: var(--font-shout);
+  font-size: 22px;
+  letter-spacing: 1px;
+  background: var(--pink);
+  color: #000;
+  border: 2px solid #111;
+  box-shadow: 3px 3px 0 var(--shadow);
+  padding: 4px 12px 2px;
+}
+.signs__note { font-family: var(--font-round); font-weight: 600; font-size: 15px; color: var(--ink-dim); }
+.signs__grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.sign {
+  display: flex;
+  flex-direction: column;
+  border: 3px solid var(--ink);
+  background: var(--panel);
+  box-shadow: var(--cut);
+  color: var(--ink);
+  overflow: hidden;
+  transition: transform 0.18s var(--spring), box-shadow 0.18s var(--spring);
+}
+.sign:hover { transform: translate(-3px, -5px) rotate(-0.8deg); box-shadow: var(--cut-hover); color: var(--ink); }
+.sign:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--shadow); }
+.sign .media { flex: 0 0 auto; }
+.sign__body { display: flex; flex-direction: column; gap: 8px; padding: 14px 16px 16px; flex: 1 1 auto; }
+.sign__title { font-family: var(--font-shout); font-size: 27px; line-height: 1; letter-spacing: 0.5px; font-weight: 400; }
+.sign__title span { color: var(--pink); }
+.sign--vgen .sign__title span { color: var(--acid); }
+.sign__line { font-family: var(--font-round); font-weight: 600; font-size: 14.5px; line-height: 1.4; color: var(--ink-dim); }
+.sign__foot { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: auto; padding-top: 6px; }
+.sign__go {
+  font-family: var(--font-shout);
+  font-size: 18px;
+  letter-spacing: 1px;
+  color: var(--pink);
+  transition: transform 0.2s var(--spring);
+}
+.sign:hover .sign__go { transform: translateX(6px); }
+
+/* ---- THE SHELF — club / skully / mystery bag, three equal cards ----------- */
+.shelf { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.shelf__item {
+  display: flex;
+  flex-direction: column;
+  border: 3px solid var(--ink);
+  background: var(--panel);
+  box-shadow: var(--cut);
+  color: var(--ink);
+  overflow: hidden;
+  transition: transform 0.18s var(--spring), box-shadow 0.18s var(--spring);
+}
+.shelf__item:hover { transform: translate(-3px, -5px) rotate(-0.6deg); box-shadow: var(--cut-hover); color: var(--ink); }
+.shelf__item:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--shadow); }
+.shelf__body { display: flex; flex-direction: column; gap: 8px; padding: 14px 16px 16px; flex: 1 1 auto; }
+.shelf__title { font-family: var(--font-shout); font-size: 24px; line-height: 1; letter-spacing: 0.5px; font-weight: 400; }
+.shelf__line { font-family: var(--font-round); font-weight: 600; font-size: 15px; line-height: 1.45; color: var(--ink-dim); }
+.shelf__foot { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin-top: auto; padding-top: 8px; }
+.shelf__foot .btn { font-size: 16px; padding: 9px 16px; }
+
+/* ---- THE PLUSH GALLERY — the real sample, photographed ------------------- */
+.plushgal { display: flex; flex-direction: column; gap: 10px; max-width: 760px; outline: none; }
+.plushgal__frame {
+  position: relative;
+  aspect-ratio: 1;
+  overflow: hidden;
+  background: #f4f1e8;
+  border: 3px solid var(--ink);
+  box-shadow: var(--cut);
+}
+.plushgal__img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.plushgal__img.is-fit { object-fit: contain; }
+.plushgal__img.is-pop { animation: galpop 0.42s var(--spring-soft); }
+@keyframes galpop { 0% { transform: scale(0.94); opacity: 0.4; } 100% { transform: none; opacity: 1; } }
+.plushgal__arrow {
+  position: absolute;
+  top: 50%;
+  z-index: 3;
+  width: 44px;
+  height: 44px;
+  transform: translateY(-50%);
+  font-family: var(--font-shout);
+  font-size: 26px;
+  line-height: 1;
+  color: #000;
+  background: var(--tag);
+  border: 3px solid #111;
+  box-shadow: 3px 3px 0 #111;
+  cursor: pointer;
+  opacity: 0.92;
+  transition: transform 0.16s var(--spring), background 0.12s;
+}
+.plushgal__arrow--prev { left: 12px; }
+.plushgal__arrow--next { right: 12px; }
+.plushgal__arrow:hover { background: var(--pink); color: #000; transform: translateY(-50%) scale(1.1); }
+.plushgal__arrow:active { transform: translateY(-50%) scale(0.94); }
+.plushgal__cap {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: 3;
+  padding: 7px 12px 6px;
+  background: #111;
+  color: #fff;
+  font-family: var(--font-round);
+  font-weight: 700;
+  font-size: 13.5px;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  border-top: 3px solid #111;
+  border-right: 3px solid #111;
+}
+.plushgal__cap b { color: var(--tag); font-weight: 700; margin-right: 6px; }
+.plushgal__thumbs { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; }
+.plushgal__thumb {
+  padding: 0;
+  aspect-ratio: 1;
+  overflow: hidden;
+  background: #f4f1e8;
+  border: 3px solid var(--ink);
+  box-shadow: 3px 3px 0 var(--shadow);
+  cursor: pointer;
+  opacity: 0.72;
+  transition: transform 0.18s var(--spring), opacity 0.15s, box-shadow 0.18s var(--spring);
+}
+.plushgal__thumb img { width: 100%; height: 100%; object-fit: cover; display: block; pointer-events: none; }
+.plushgal__thumb[data-fit="contain"] img { object-fit: cover; object-position: center 30%; }
+.plushgal__thumb:hover { opacity: 1; transform: translate(-2px, -3px); box-shadow: 5px 5px 0 var(--pink); }
+.plushgal__thumb.is-on { opacity: 1; border-color: var(--pink); box-shadow: 0 0 0 2px var(--pink), 3px 3px 0 var(--shadow); }
+.plushgal__thumb:active { transform: translate(1px, 1px); }
+.plushgal__note { margin: 4px 0 0; font-family: var(--font-round); font-weight: 600; font-size: 13.5px; letter-spacing: 0.6px; color: #b9b4c6; }
+
+/* ---- feedback: the press ------------------------------------------------- */
+.is-pressed { transform: translate(2px, 2px) !important; transition-duration: 0.06s !important; }
+
+/* ---- phones + narrow -------------------------------------------------- */
+@media (max-width: 1100px) {
+  .signs__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .plushgal__thumbs { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+}
+@media (max-width: 1000px) {
+  .rail { min-width: 0; max-width: none; width: auto; padding: 12px 16px; }
+  .brand__who { display: none; }
+  .rail .nav-btn, html.dark .rail .nav-btn { width: auto; }
+  .rail .nav-btn:hover, html.dark .rail .nav-btn:hover { transform: none; }
+  .rail .nav-btn--shop, html.dark .rail .nav-btn--shop { height: 42px; min-height: 42px; margin: 0; font-size: 17px; box-shadow: 3px 3px 0 var(--shadow); }
+  .rail .nav-btn--comms, html.dark .rail .nav-btn--comms { height: 42px; min-height: 42px; margin: 0; box-shadow: none; }
+  .rail .nav-btn--patreon::after { content: none; }
+  .postr, .postr--sheet { grid-template-columns: 1fr; gap: 26px; }
+  .shelf { grid-template-columns: 1fr; }
+  .plushgal { max-width: none; }
+  .tooth { margin: 52px 0 18px; }
+}
+@media (max-width: 560px) {
+  .signs__grid { grid-template-columns: 1fr; }
+  .sign { flex-direction: row; }
+  .sign .media { flex: 0 0 112px; border-bottom: 0; border-right: 3px solid var(--ink); }
+  .sign__body { padding: 10px 12px 12px; gap: 4px; }
+  .sign__title { font-size: 22px; }
+  .sign__line { font-size: 13.5px; }
+  .plushgal__thumbs { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; }
+  .plushgal__arrow { width: 38px; height: 38px; font-size: 22px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .plushgal__img.is-pop { animation: none; }
+  .sign:hover, .shelf__item:hover, .drop-tile:hover, .bundle:hover, .btn:hover { transform: none; }
+}
+
+/* ---- 3.2b (same day, off the first render): body copy was 15px grey at 60%
+   contrast and the tile category ("ACRYLIC CHARM") was clipped by nowrap ---- */
+:root { --copy: #3d3d39; }
+html.dark { --copy: #d4d4d4; }
+.sub, .commsad__blurb, html.dark .commsad__blurb, .commsad__note, html.dark .commsad__note, .update-item, .wall-hint,
+.box p, .price-card > p, .steps, .wont, .free-card p, .sign__line, .shelf__line, .signs__note, .addon-table { color: var(--copy); }
+.sub, .commsad__blurb, .update-item, .wall-hint, .box p, .price-card > p, .free-card p { font-size: 15.5px; letter-spacing: 0; line-height: 1.55; }
+.drop-tile__bar { white-space: normal; align-items: center; }
+.drop-tile__name { white-space: normal; overflow: visible; }
+.drop-tile__name small { white-space: normal; line-height: 1.2; }

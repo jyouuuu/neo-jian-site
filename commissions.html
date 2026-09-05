@@ -6,7 +6,7 @@
   <title>COMMISSIONS — jiansketch</title>
   <link rel="icon" type="image/png" href="assets/img/favicon.png" />
   <meta name="description" content="jiansketch commission prices — stickers, icons, emotes, halfbody, fullbody and lineless illustration. Slots open the 1st of the month." />
-  <meta name="theme-color" content="#f4f1e8" />
+  <meta name="theme-color" content="#0a0a0c" />
   <link rel="alternate" type="application/rss+xml" title="jiansketch.com" href="feed.xml" />
   <meta property="og:title" content="COMMISSIONS ★ jiansketch.com" />
   <meta property="og:description" content="sticker designs $55 · icons $65 · emotes $75 · lineless $120 · halfbody $145 · fullbody $195" />
@@ -15,28 +15,31 @@
   <meta property="og:image" content="https://jiansketch.com/assets/img/og.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="stylesheet" href="assets/css/style.css" />
-  <script>(function(){var t=localStorage.getItem("jian_dark");if(t==null){t=window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches?"on":"off";}if(t==="on")document.documentElement.classList.add("dark");})();</script>
+  <!-- (Sep 4 2026) BLACKOUT is the default now, not just the OS preference: every
+       poster, sheet and shop ad he made this year is printed on black, and the cream
+       skin reads as a different studio next to them. Still a toggle, still persisted —
+       one visit to the sun/moon switch and a visitor keeps light forever. To go back to
+       following the OS, restore the prefers-color-scheme test here. -->
+  <script>(function(){var t=localStorage.getItem("jian_dark");if(t==null)t="on";if(t==="on")document.documentElement.classList.add("dark");})();</script>
 </head>
 <body>
 
   <!-- The counts and the next-batch date are written in by slots.js from the
        one number in data/slots.js. What's typed here is the no-JS fallback, so
        it says nothing that can go out of date — never a count, never a month. -->
-  <div class="marquee" aria-hidden="true">
-    <div class="marquee__track" data-slots-track>
-      COMMISSIONS ★ SLOTS OPEN THE 1ST ★ STICKER DESIGNS FROM $55 ★
-      COMMISSIONS ★ SLOTS OPEN THE 1ST ★ STICKER DESIGNS FROM $55 ★&nbsp;
-    </div>
-  </div>
 
-  <div class="frame">
-    <span class="vlabel vlabel--left">FAST FOOD FOR YOUR EYES</span>
-    <span class="vlabel vlabel--right">SLOTS OPEN THE 1ST</span>
-
+  <!-- ===================== THE RAIL =====================
+       (Sep 5 2026, Justin: "a reconfiguration of how this site looks
+       structurally ... not using the full layout".) The centred box is
+       gone. Navigation lives in this fixed left rail; everything else is
+       the STAGE to its right, running to the screen edge. Under 1000px the
+       rail is a top bar and main.js's MENU toggle opens the page list.
+       ==================================================== -->
+  <aside class="rail">
     <div class="brand">
       <a class="brand__logo" href="home.html"><img class="brand__logo-img" src="assets/img/logo.png" alt="JIAN" /></a>
       <span class="brand__tag">fast food for your eyes</span>
-      <img class="brand__banner" src="assets/img/banner777.gif" alt="" />
+      <span class="brand__who">Justin You — <b>illustrator, NYC.</b><br />stickers, charms, and your character drawn.</span>
     </div>
 
     <nav class="navbar">
@@ -63,6 +66,15 @@
         </span>
       </button>
     </div>
+  </aside>
+
+  <main class="stage">
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee__track" data-slots-track>
+      COMMISSIONS ★ SLOTS OPEN THE 1ST ★ STICKER DESIGNS FROM $55 ★
+      COMMISSIONS ★ SLOTS OPEN THE 1ST ★ STICKER DESIGNS FROM $55 ★&nbsp;
+    </div>
+  </div>
 
     <div class="container">
 
@@ -243,6 +255,50 @@
            Static site, so the send is relayed by Web3Forms — see
            assets/js/order.js for the one key that has to be pasted in.
            =========================================================== -->
+      <!-- ===================== THE SECOND DOOR =====================
+           (Sep 4 2026.) VGen went live Aug 25 and this page never mentioned
+           it, so the only people who knew were the ones who read the blog.
+           It carries a SHORTER roster than the sheet above — three tiers —
+           plus two YCH scenes that don't exist on this site at all, which is
+           the reason to send people over rather than just a second checkout.
+           Prices read off the live vgen.co/jiansketch page; the sheet image
+           is rebuilt from JIAN COMMISSION SHEET\POST THIS - VGEN 2026-09.
+           =========================================================== -->
+      <div class="tooth tooth--acid" id="vgen">
+        <div class="tooth__tab">OR ORDER ON <span class="accent">VGEN</span></div>
+        <div class="tooth__bar"><span class="tooth__note">BUYER PROTECTION · A PAPER TRAIL · THE SAME QUEUE</span></div>
+      </div>
+
+      <div class="postr postr--acid postr--sheet">
+        <a class="postr__art" href="https://vgen.co/jiansketch" target="_blank" rel="noopener">
+          <img src="assets/img/vgen.webp" alt="jiansketch commission sheet on VGen — chibi, icon, illustration and two YCH scenes" loading="lazy" width="900" height="1125" />
+        </a>
+        <div>
+          <span class="postr__kick">SECOND DOOR ★ SAME QUEUE</span>
+          <h2 class="shout shout--split postr__title">VGEN.CO/<br />JIANSKETCH</h2>
+          <p>
+            Same hands, same queue, a platform in the middle. Worth using if you'd rather
+            have buyer protection and a paper trail than trust a form on some guy's website.
+          </p>
+          <p>
+            The roster over there is shorter, and it has the two <b>YCH scenes</b> — you pick
+            the scene, I draw your character into it. Those only exist on VGen.
+          </p>
+          <div class="spec">
+            <span class="spec__code" aria-hidden="true"></span>
+            <span class="spec__lines">
+              <span class="k">CHIBI</span> <b>$55</b> · <span class="k">ICON / PFP</span> <b>$65</b> · <span class="k">ILLUSTRATION</span> <b>$145</b><br />
+              <span class="k">YCH — IN THE FORTNITE LOBBY</span> <b>$20</b><br />
+              <span class="k">YCH — D.VA SELFIE</span> <b>$30</b>
+            </span>
+          </div>
+          <div class="postr__foot">
+            <a class="btn btn--zzz btn--zzz--pink" href="https://vgen.co/jiansketch" target="_blank" rel="noopener">ORDER ON VGEN →</a>
+            <span class="postr__ticker">OR KEEP SCROLLING AND USE THE FORM — <b>IT'S RIGHT THERE</b></span>
+          </div>
+        </div>
+      </div>
+
       <div class="tooth tooth--sub" id="order">
         <div class="tooth__tab" id="order-tab">START YOUR ORDER</div>
         <div class="tooth__bar"></div>
@@ -479,7 +535,6 @@
       </div>
 
     </div>
-  </div>
 
   <footer class="footer">
     <div class="footer__bar">
@@ -503,10 +558,19 @@
     </div>
     <a class="footer__top" href="#">↑ top of page</a>
   </footer>
+  </main>
+
+  <!-- the phone dock: shop, comms, club — one thumb away on every page (hype.js hides it over the footer) -->
+  <nav class="dock" aria-label="Quick links">
+    <a class="dock--shop" href="https://jiansketch.bigcartel.com/" target="_blank" rel="noopener">★ SHOP</a>
+    <a href="commissions.html">COMMS</a>
+    <a class="dock--club" href="https://www.patreon.com/jiansketch" target="_blank" rel="noopener">♥ CLUB</a>
+  </nav>
 
   <script src="assets/js/sfx.js"></script>
   <script src="data/slots.js"></script>
   <script src="assets/js/slots.js"></script>
+  <script src="assets/js/hype.js"></script>
   <script src="assets/js/main.js"></script>
   <script src="assets/js/order.js"></script>
 </body>

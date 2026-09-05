@@ -15,6 +15,37 @@
     return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
   }
 
+  /* body-text links: only http(s) and same-site relatives get through, so a
+     bad url in a post can never become a javascript: href */
+  function safeHref(url) {
+    return /^(https?:\/\/|\/|[\w.-]+(\/|$)|#)/i.test(url) && !/^javascript:/i.test(url)
+      ? url
+      : "#";
+  }
+
+  /* a paragraph value is either a plain string (most posts) or a run list
+     from build_posts.py: [["t", text], ["a", label, url], ...] */
+  function fillPara(el, val) {
+    if (typeof val === "string") {
+      el.textContent = val;
+      return;
+    }
+    val.forEach((run) => {
+      if (run[0] === "a") {
+        const a = document.createElement("a");
+        a.href = safeHref(run[2]);
+        a.textContent = run[1];
+        if (/^https?:\/\//i.test(a.getAttribute("href"))) {
+          a.target = "_blank";
+          a.rel = "noopener";
+        }
+        el.appendChild(a);           // classless on purpose - dark mode styles it
+      } else {
+        el.appendChild(document.createTextNode(run[1]));
+      }
+    });
+  }
+
   function postArticle(p) {
     const art = document.createElement("article");
     art.className = "winbox post";
@@ -33,7 +64,7 @@
       if (kind === "p") {
         const el = document.createElement("p");
         el.className = "post__p";
-        el.textContent = val;
+        fillPara(el, val);
         body.appendChild(el);
       } else {
         const a = document.createElement("a");

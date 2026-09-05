@@ -6,7 +6,7 @@
   <title>ABOUT — jiansketch</title>
   <link rel="icon" type="image/png" href="assets/img/favicon.png" />
   <meta name="description" content="Justin You — character design & illustration for animation, games, and print. Online as @jiansketch." />
-  <meta name="theme-color" content="#f4f1e8" />
+  <meta name="theme-color" content="#0a0a0c" />
   <link rel="alternate" type="application/rss+xml" title="jiansketch.com" href="feed.xml" />
   <meta property="og:title" content="JIAN ★ jiansketch.com" />
   <meta property="og:description" content="fast food for your eyes — art, fanart, and the singing wall" />
@@ -15,25 +15,28 @@
   <meta property="og:image" content="https://jiansketch.com/assets/img/og.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="stylesheet" href="assets/css/style.css" />
-  <script>(function(){var t=localStorage.getItem("jian_dark");if(t==null){t=window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches?"on":"off";}if(t==="on")document.documentElement.classList.add("dark");})();</script>
+  <!-- (Sep 4 2026) BLACKOUT is the default now, not just the OS preference: every
+       poster, sheet and shop ad he made this year is printed on black, and the cream
+       skin reads as a different studio next to them. Still a toggle, still persisted —
+       one visit to the sun/moon switch and a visitor keeps light forever. To go back to
+       following the OS, restore the prefers-color-scheme test here. -->
+  <script>(function(){var t=localStorage.getItem("jian_dark");if(t==null)t="on";if(t==="on")document.documentElement.classList.add("dark");})();</script>
 </head>
 <body>
 
-  <div class="marquee" aria-hidden="true">
-    <div class="marquee__track">
-      ABOUT ★ WHO IS THIS GREMLIN ★ FAST FOOD FOR YOUR EYES ★
-      ABOUT ★ WHO IS THIS GREMLIN ★ FAST FOOD FOR YOUR EYES ★&nbsp;
-    </div>
-  </div>
 
-  <div class="frame">
-    <span class="vlabel vlabel--left">WHO IS THIS GREMLIN</span>
-    <span class="vlabel vlabel--right">CHALLENGE EVERYTHING</span>
-
+  <!-- ===================== THE RAIL =====================
+       (Sep 5 2026, Justin: "a reconfiguration of how this site looks
+       structurally ... not using the full layout".) The centred box is
+       gone. Navigation lives in this fixed left rail; everything else is
+       the STAGE to its right, running to the screen edge. Under 1000px the
+       rail is a top bar and main.js's MENU toggle opens the page list.
+       ==================================================== -->
+  <aside class="rail">
     <div class="brand">
       <a class="brand__logo" href="home.html"><img class="brand__logo-img" src="assets/img/logo.png" alt="JIAN" /></a>
       <span class="brand__tag">fast food for your eyes</span>
-      <img class="brand__banner" src="assets/img/banner777.gif" alt="" />
+      <span class="brand__who">Justin You — <b>illustrator, NYC.</b><br />stickers, charms, and your character drawn.</span>
     </div>
 
     <nav class="navbar">
@@ -60,6 +63,15 @@
         </span>
       </button>
     </div>
+  </aside>
+
+  <main class="stage">
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee__track">
+      ABOUT ★ WHO IS THIS GREMLIN ★ FAST FOOD FOR YOUR EYES ★
+      ABOUT ★ WHO IS THIS GREMLIN ★ FAST FOOD FOR YOUR EYES ★&nbsp;
+    </div>
+  </div>
 
     <div class="container">
 
@@ -129,7 +141,6 @@
       </div>
 
     </div>
-  </div>
 
   <footer class="footer">
     <div class="footer__bar">
@@ -153,10 +164,19 @@
     </div>
     <a class="footer__top" href="#">↑ top of page</a>
   </footer>
+  </main>
+
+  <!-- the phone dock: shop, comms, club — one thumb away on every page (hype.js hides it over the footer) -->
+  <nav class="dock" aria-label="Quick links">
+    <a class="dock--shop" href="https://jiansketch.bigcartel.com/" target="_blank" rel="noopener">★ SHOP</a>
+    <a href="commissions.html">COMMS</a>
+    <a class="dock--club" href="https://www.patreon.com/jiansketch" target="_blank" rel="noopener">♥ CLUB</a>
+  </nav>
 
   <script src="assets/js/sfx.js"></script>
   <script src="data/slots.js"></script>
   <script src="assets/js/slots.js"></script>
+  <script src="assets/js/hype.js"></script>
   <script src="assets/js/main.js"></script>
 </body>
 </html>
