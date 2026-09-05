@@ -3434,3 +3434,30 @@ html.dark { --copy: #d4d4d4; }
   .sfx-toast { display: none; }
   .rail .nav-btn--patreon::after { content: "PATREON"; }
 }
+
+/* ---- 3.2d (Sep 5 2026, Justin: "I dont like how much space each price tag
+   takes up"). Same yellow chip, half the footprint: smaller type, tight
+   padding, thin border, NO offset shadow — the shadow was most of the bulk.
+   Yellow on black still reads at 16px; the size was never the problem. ---- */
+.tag, .drop-tile__bar b, .bundle b, .price-card .price, html.dark .price-card .price,
+.comms-promo__price, .commsad .comms-promo__price, html.dark .commsad .comms-promo__price,
+.spec__big, .hero__price, .deck__slide .hero__price, .sign__price, .shelf__price {
+  font-size: 16px;
+  padding: 2px 6px 1px;
+  border-width: 1.5px;
+  box-shadow: none;
+}
+.drop-tile__bar b { font-size: 16px; }
+.bundle b { font-size: 15px; }
+.price-card .price, html.dark .price-card .price { font-size: 20px; padding: 3px 8px 1px; }
+.comms-promo__price, .commsad .comms-promo__price { font-size: 13px; padding: 1px 5px 0; }
+.spec__big { font-size: 22px; padding: 3px 8px 1px; margin-bottom: 6px; }
+.hero__price, .deck__slide .hero__price { font-size: 22px; padding: 3px 9px 1px; transform: rotate(-3deg); }
+.sign__price, .shelf__price { font-size: 15px; }
+.cd--big { font-size: 20px; padding: 4px 10px 2px; box-shadow: none; }
+.drop-tile:hover .drop-tile__bar b, .bundle:hover b, .sign:hover .sign__price, .shelf__item:hover .shelf__price,
+.price-card:hover .price { transform: rotate(-4deg) scale(1.06); }
+.drop-tile__bar { padding: 8px 10px 9px; }
+@media (max-width: 640px) {
+  .hero__price, .deck__slide .hero__price { font-size: 20px; padding: 3px 8px 1px; }
+}
