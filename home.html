@@ -18,6 +18,7 @@
   <meta property="og:url" content="https://jiansketch.com/" />
   <meta property="og:image" content="https://jiansketch.com/assets/img/og.png" />
   <meta name="twitter:card" content="summary_large_image" />
+  <!-- (Sep 5 2026, Justin: "drop the .html in the url for each page".) Internal links are extensionless — GitHub Pages serves about.html at /about on its own, and the local test server in TOOLS + SCRIPTS does the same fallback. -->
   <link rel="stylesheet" href="assets/css/style.css" />
   <!-- (Sep 4 2026) BLACKOUT is the default now, not just the OS preference: every
        poster, sheet and shop ad he made this year is printed on black, and the cream
@@ -38,18 +39,18 @@
        ==================================================== -->
   <aside class="rail">
     <div class="brand">
-      <a class="brand__logo" href="home.html"><img class="brand__logo-img" src="assets/img/logo.png" alt="JIAN" /></a>
+      <a class="brand__logo" href="home"><img class="brand__logo-img" src="assets/img/logo.png" alt="JIAN" /></a>
       <span class="brand__tag">fast food for your eyes</span>
       <span class="brand__who">Justin You — <b>illustrator, NYC.</b><br />stickers, charms, and your character drawn.</span>
     </div>
 
     <nav class="navbar">
       <button class="nav-btn nav-btn--menu" type="button">MENU ☰</button>
-      <a class="nav-btn is-here" href="home.html">HOME</a>
-      <a class="nav-btn" href="art.html">ART</a>
-      <a class="nav-btn" href="blog.html">BLOG</a>
-      <a class="nav-btn" href="free.html">FREE STUFF</a>
-      <a class="nav-btn" href="about.html">ABOUT</a>
+      <a class="nav-btn is-here" href="home">HOME</a>
+      <a class="nav-btn" href="art">ART</a>
+      <a class="nav-btn" href="blog">BLOG</a>
+      <a class="nav-btn" href="free">FREE STUFF</a>
+      <a class="nav-btn" href="about">ABOUT</a>
       <a class="nav-btn nav-btn--shop" href="https://jiansketch.bigcartel.com/" target="_blank" rel="noopener">SHOP</a>
       <!-- (Sep 5 2026, Justin: "For comms open have it link to vgen instead of our own comission form".) COMMS OPEN, the dock COMMS and LINKS.SYS go to VGen; the form on commissions.html stays reachable from the signpost, the ad tiles and the page itself. -->
       <a class="nav-btn nav-btn--comms" href="https://vgen.co/jiansketch" target="_blank" rel="noopener">COMMS OPEN</a>
@@ -191,7 +192,7 @@
               <span class="sign__foot"><span class="sign__price">FROM $4.99</span><span class="sign__go">GO &rarr;</span></span>
             </span>
           </a>
-          <a class="sign" href="commissions.html">
+          <a class="sign" href="commissions">
             <span class="media media--sq"><img src="assets/img/comms/sticker.webp" alt="" loading="lazy" /></span>
             <span class="sign__body">
               <b class="sign__title">GET <span>DRAWN</span></b>
@@ -207,7 +208,7 @@
               <span class="sign__foot"><span class="sign__price">$15 / MO</span><span class="sign__go">GO &rarr;</span></span>
             </span>
           </a>
-          <a class="sign" href="free.html">
+          <a class="sign" href="free">
             <span class="media media--sq"><img src="assets/img/sketch.png" alt="" loading="lazy" /></span>
             <span class="sign__body">
               <b class="sign__title">FREE <span>STUFF</span></b>
@@ -341,7 +342,7 @@
       </div>
       <p class="sub">art of my art, by you — every piece credited to its creator. the reel rolls on its own; drag it, or click a frame to enlarge.</p>
       <div id="fanReel"></div>
-      <p style="margin:16px 0 4px;"><a class="btn" href="art.html">ENTER THE WALL →</a></p>
+      <p style="margin:16px 0 4px;"><a class="btn" href="art">ENTER THE WALL →</a></p>
 
       <!-- ===================== THE COMMISSION SHEET =====================
            (Aug 14 2026, Justin: "advertise the commission sheet on the front
@@ -364,34 +365,34 @@
         </p>
 
         <div class="comms-promo__grid">
-          <a class="comms-promo__item" href="commissions.html?tier=sticker#order">
+          <a class="comms-promo__item" href="commissions?tier=sticker#order">
             <img src="assets/img/comms/sticker.webp" alt="Sticker design commission" loading="lazy" width="760" height="911" />
             <span class="comms-promo__bar"><b>STICKER</b><span class="comms-promo__price">$55</span></span>
           </a>
-          <a class="comms-promo__item" href="commissions.html?tier=icon#order">
+          <a class="comms-promo__item" href="commissions?tier=icon#order">
             <img src="assets/img/comms/icon.webp" alt="Icon and profile picture commission" loading="lazy" width="760" height="911" />
             <span class="comms-promo__bar"><b>ICON</b><span class="comms-promo__price">$65</span></span>
           </a>
-          <a class="comms-promo__item" href="commissions.html?tier=emote3#order">
+          <a class="comms-promo__item" href="commissions?tier=emote3#order">
             <img src="assets/img/comms/emotes.webp" alt="Emote pack commission" loading="lazy" width="760" height="911" />
             <span class="comms-promo__bar"><b>EMOTES</b><span class="comms-promo__price">$75</span></span>
           </a>
-          <a class="comms-promo__item" href="commissions.html?tier=lineless#order">
+          <a class="comms-promo__item" href="commissions?tier=lineless#order">
             <img src="assets/img/comms/lineless.webp" alt="Lineless illustration commission" loading="lazy" width="760" height="911" />
             <span class="comms-promo__bar"><b>LINELESS</b><span class="comms-promo__price">$120</span></span>
           </a>
-          <a class="comms-promo__item" href="commissions.html?tier=halfbody#order">
+          <a class="comms-promo__item" href="commissions?tier=halfbody#order">
             <img src="assets/img/comms/halfbody.webp" alt="Halfbody illustration commission" loading="lazy" width="760" height="911" />
             <span class="comms-promo__bar"><b>HALFBODY</b><span class="comms-promo__price">$145</span></span>
           </a>
-          <a class="comms-promo__item" href="commissions.html?tier=fullbody#order">
+          <a class="comms-promo__item" href="commissions?tier=fullbody#order">
             <img src="assets/img/comms/fullbody.webp" alt="Fullbody illustration commission" loading="lazy" width="760" height="911" />
             <span class="comms-promo__bar"><b>FULLBODY</b><span class="comms-promo__price">$195</span></span>
           </a>
         </div>
 
         <div class="commsad__foot">
-          <a class="btn btn--zzz btn--zzz--pink" href="commissions.html" data-slots-sheet>SEE THE FULL SHEET →</a>
+          <a class="btn btn--zzz btn--zzz--pink" href="commissions" data-slots-sheet>SEE THE FULL SHEET →</a>
           <span class="commsad__note" data-slots-line>slots open the 1st of the month.</span>
         </div>
       </section>
@@ -440,7 +441,7 @@
           </div>
           <div class="postr__foot">
             <a class="btn btn--zzz btn--zzz--pink" href="https://vgen.co/jiansketch" target="_blank" rel="noopener">ORDER ON VGEN →</a>
-            <a class="btn" href="commissions.html">…OR USE THE FORM HERE →</a>
+            <a class="btn" href="commissions">…OR USE THE FORM HERE →</a>
           </div>
         </div>
       </div>

@@ -17,9 +17,9 @@ Static site: plain HTML/CSS/JS, no build step, no dependencies. Fast everywhere.
 | file        | what it is                                                        |
 | ----------- | ----------------------------------------------------------------- |
 | `index.html`| landing — banner, mini teaser wall, big links                     |
-| `art.html`  | **THE WALL** — the whole archive as interactive musical tiles     |
-| `free.html` | free books / sketchbooks / icon packs                             |
-| `about.html`| bio, contact, socials, webring                                    |
+| `art`  | **THE WALL** — the whole archive as interactive musical tiles     |
+| `free` | free books / sketchbooks / icon packs                             |
+| `about`| bio, contact, socials, webring                                    |
 
 ## How the wall works
 
