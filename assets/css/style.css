@@ -3461,3 +3461,59 @@ html.dark { --copy: #d4d4d4; }
 @media (max-width: 640px) {
   .hero__price, .deck__slide .hero__price { font-size: 20px; padding: 3px 8px 1px; }
 }
+
+/* ==========================================================================
+   3.2e TYPE — the grotesk under the impact face
+   (Sep 5 2026, Justin, on the deck copy: "not a fan of the bubble like font
+   text, it doesnt mesh well with the impact like font we have going on,
+   refer to zzz promo and lowkey refs".) Both body faces were ROUNDED
+   (Fredoka for captions, M PLUS Rounded for copy) — bubble type under Anton.
+   The refs pair heavy condensed display with a tight industrial grotesk in
+   caps. Barlow + Barlow Condensed (OFL, self-hosted, latin subset) are that:
+   the two tokens are re-pointed so every paragraph swaps at once, and the
+   small caps labels move to the condensed cut. Rounded files stay on disk
+   for the blog's older inline styles; nothing new should reach for them.
+   ========================================================================== */
+@font-face { font-family: "Barlow"; src: url("../fonts/Barlow-500.woff2") format("woff2"); font-weight: 500; font-display: swap; }
+@font-face { font-family: "Barlow"; src: url("../fonts/Barlow-600.woff2") format("woff2"); font-weight: 600; font-display: swap; }
+@font-face { font-family: "Barlow"; src: url("../fonts/Barlow-700.woff2") format("woff2"); font-weight: 700; font-display: swap; }
+@font-face { font-family: "Barlow"; src: url("../fonts/Barlow-700i.woff2") format("woff2"); font-weight: 700; font-style: italic; font-display: swap; }
+@font-face { font-family: "Barlow Condensed"; src: url("../fonts/BarlowCondensed-600.woff2") format("woff2"); font-weight: 600; font-display: swap; }
+@font-face { font-family: "Barlow Condensed"; src: url("../fonts/BarlowCondensed-700.woff2") format("woff2"); font-weight: 700; font-display: swap; }
+:root {
+  --font-ui: "Barlow", "Arial Narrow", Arial, sans-serif;
+  --font-round: "Barlow", "Arial Narrow", Arial, sans-serif;
+  --font-cond: "Barlow Condensed", "Arial Narrow", Arial, sans-serif;
+}
+body { font-weight: 500; font-size: 16.5px; }
+b, strong { font-weight: 700; }
+
+/* the small caps labels: condensed, tight, one size up (the cut is narrower) */
+.deck__slide .hero__flag, html.dark .deck__slide .hero__flag, .hero__spec, .postr__kick, .postr--acid .postr__kick,
+.commsad__flag, .commsad__note, .postr__ticker, .tooth__note, .tooth--acid .tooth__note, .plushgal__cap,
+.deck__tab b, .deck__disc small, .signs__note, .drop-tile__name small, .spec__lines .k, .x-card__date,
+.plushgal__note, .brand__tag {
+  font-family: var(--font-cond);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.deck__slide .hero__flag, html.dark .deck__slide .hero__flag { font-size: 15px; letter-spacing: 2px; }
+.hero__spec { font-size: 14.5px; letter-spacing: 1.6px; }
+.postr__kick, .postr--acid .postr__kick, .commsad__flag { font-size: 15px; letter-spacing: 2px; }
+.tooth__note, .tooth--acid .tooth__note { font-size: 15.5px; letter-spacing: 1.4px; }
+.commsad__note, .postr__ticker, .plushgal__note, .signs__note { font-size: 15px; letter-spacing: 0.8px; text-transform: none; font-weight: 600; }
+.plushgal__cap { font-size: 14.5px; letter-spacing: 1.6px; }
+.drop-tile__name small { font-size: 13px; letter-spacing: 0.8px; }
+.drop-tile__bar, .bundle { font-family: var(--font-cond); font-weight: 700; font-size: 16px; letter-spacing: 0.4px; text-transform: uppercase; }
+.spec__lines { font-family: var(--font-cond); font-weight: 600; font-size: 16px; letter-spacing: 0.8px; text-transform: uppercase; }
+.brand__tag, .rail .brand__tag { font-size: 14px; letter-spacing: 1.2px; text-transform: none; font-weight: 600; }
+
+/* body copy: the grotesk at reading weight */
+.deck__slide .hero__offer { font-family: var(--font-ui); font-weight: 500; font-size: 20px; line-height: 1.32; }
+.deck__slide .hero__offer b { font-weight: 700; }
+.postr p { font-family: var(--font-ui); font-weight: 500; font-size: 17.5px; }
+.sign__line, .shelf__line, .sub, .commsad__blurb, .update-item, .wall-hint, .box p, .price-card > p, .free-card p { font-family: var(--font-ui); font-weight: 500; }
+.sign__line { font-size: 15.5px; }
+.shelf__line { font-size: 16px; }
+.brand__who { font-family: var(--font-ui); font-weight: 600; font-size: 14px; }
+.sfx-toast { font-family: var(--font-shout); }
