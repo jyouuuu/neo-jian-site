@@ -68,8 +68,7 @@
           <button class="reel__arrow reel__arrow--l" type="button" aria-label="Scroll left">&lt;</button>
           <div class="reel__view"><div class="reel__track"></div></div>
           <button class="reel__arrow reel__arrow--r" type="button" aria-label="Scroll right">&gt;</button>
-        </div>
-        <p class="wall-hint" style="margin-top:10px;">the reel rolls on its own — <kbd>drag</kbd> to fling it, hold the <kbd>&lt; &gt;</kbd> arrows, <kbd>click</kbd> a frame to enlarge.</p>`;
+        </div>`;
       view = host.querySelector(".reel__view");
       track = host.querySelector(".reel__track");
 

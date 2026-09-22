@@ -164,12 +164,12 @@
         totalNote.textContent = "I'll quote this one by hand and send it with your invoice.";
       } else if (q.byHand) {
         totalOut.textContent = "from " + money(q.total);
-        totalNote.textContent = "Parts of this need a hand-quote — the real number comes in your invoice.";
+        totalNote.textContent = "Parts of this are quoted by hand. The real number comes in your invoice.";
       } else {
         totalOut.textContent = money(q.total);
-        totalNote.textContent = q.total >= 150
-          ? "Over $150, so it's half now and half when you approve the sketch."
-          : "Under $150, so it's paid in full up front.";
+        /* (Sep 22 2026) one rule, the same one the page's HOW IT WORKS states:
+           paid in full up front. The old note split it at $150 and contradicted step 3. */
+        totalNote.textContent = "Paid in full up front, when the invoice lands.";
       }
 
       linelessRow.hidden = !q.tier.fullbody;
@@ -310,8 +310,8 @@
           say("ok",
             "<b>ORDER SENT ✓</b><br>" +
             "You asked for a <b>" + p.Tier + "</b> — estimate <b>" + p.Estimate + "</b>.<br>" +
-            "I read every one of these myself and reply within 24 hours with your invoice " +
-            "and your spot in the queue. Check your spam folder if it's quiet.");
+            "I reply within 24 hours with your invoice and your spot in the queue. " +
+            "Check spam if it's quiet.");
           form.querySelector("#order-total-wrap").scrollIntoView({ behavior: "smooth", block: "center" });
         })
         .catch(() => {
