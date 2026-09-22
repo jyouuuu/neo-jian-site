@@ -55,16 +55,16 @@
 
     /* ---- the scrolling strip ---------------------------------------------
        OPT-IN ONLY, via data-slots-track. Every page has its own marquee with
-       its own words ("FREE STUFF ★ YOU HEARD THAT RIGHT", "404 ★ NOTHING
+       its own words ("FREE STUFF ★ YOU HEARD THAT RIGHT", "404 · NOTHING
        HERE") — grabbing .marquee__track blindly overwrote all of them. Same
        story for the starburst badge below. */
     var track = document.querySelector("[data-slots-track]");
     if (track) {
       var line = FULL
-        ? "COMMISSIONS <b>FULL</b> ★ NEXT BATCH " + NEXT_BATCH +
-          " ★ JOIN THE WAITLIST ★ STICKER DESIGNS FROM $55 ★ "
-        : "COMMISSIONS <b>OPEN</b> ★ " + LEFT + " OF " + TOTAL + " SLOTS LEFT ★ NEXT BATCH " +
-          NEXT_BATCH + " ★ STICKER DESIGNS FROM $55 ★ ";
+        ? "COMMISSIONS <b>FULL</b> · NEXT BATCH " + NEXT_BATCH +
+          " · JOIN THE WAITLIST · STICKER DESIGNS FROM $55 · "
+        : "COMMISSIONS <b>OPEN</b> · " + LEFT + " OF " + TOTAL + " SLOTS LEFT · NEXT BATCH " +
+          NEXT_BATCH + " · STICKER DESIGNS FROM $55 · ";
       /* twice, so the loop meets itself with no seam */
       track.innerHTML = line + line.slice(0, -1) + "&nbsp;";
     }
@@ -77,12 +77,12 @@
        Same one number, so the home page can never promise something the
        commissions page has already stopped offering. */
     document.querySelectorAll("[data-slots-headline]").forEach(function (h) {
-      h.textContent = FULL ? "★ FULL" : "★ OPEN";
+      h.textContent = FULL ? "FULL" : "OPEN";
     });
     document.querySelectorAll("[data-slots-flag]").forEach(function (f) {
       f.textContent = FULL
-        ? "COMMISSIONS FULL ★ NEXT BATCH " + NEXT_BATCH
-        : "COMMISSIONS OPEN ★ " + LEFT + " OF " + TOTAL + " SLOTS LEFT";
+        ? "COMMISSIONS FULL · NEXT BATCH " + NEXT_BATCH
+        : "COMMISSIONS OPEN · " + LEFT + " OF " + TOTAL + " SLOTS LEFT";
       f.classList.toggle("is-full", FULL);
     });
     document.querySelectorAll("[data-slots-line]").forEach(function (n) {

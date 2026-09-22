@@ -349,7 +349,7 @@
         });
         if (shown === 0 && year !== "ALL") {
           empty.style.display = "";
-          empty.innerHTML = `${year} — nothing on the wall yet.<br><br>new pieces drop here first. stay tuned ★`;
+          empty.innerHTML = `${year} — nothing on the wall yet.<br><br>new pieces drop here first. stay tuned.`;
         } else {
           empty.style.display = "none";
         }

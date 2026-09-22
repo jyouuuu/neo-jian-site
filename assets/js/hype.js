@@ -69,14 +69,17 @@
   }
 
   // ---- 4. zap — the burst under the thumb ----------------------------------
-  if (!reduce) {
+  // (Sep 22 2026, Justin: "remove the star iconography".) The star/sparkle burst is
+  // off. Flip ZAP to true to bring it back with a non-star glyph.
+  const ZAP = false;
+  if (ZAP && !reduce) {
     document.addEventListener("pointerdown", (e) => {
       const btn = e.target.closest(".btn, .nav-btn, .link-btn, .drop-tile, .bundle, .dock a, .deck__tab, .comms-btn, .sign, .shelf__item, .plushgal__thumb, .plushgal__arrow, .comms-promo__item, .price-card__shot, .chip");
       if (!btn) return;
       for (let i = 0; i < 7; i++) {
         const z = document.createElement("span");
         z.className = "zap";
-        z.textContent = i % 2 ? "✦" : "★";
+        z.textContent = "·";
         const a = (i / 7) * Math.PI * 2 + Math.random() * 0.5;
         const r = 34 + Math.random() * 30;
         z.style.left = e.clientX + "px";

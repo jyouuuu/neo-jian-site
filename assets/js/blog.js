@@ -95,7 +95,7 @@
       if (now) {
         const n = document.createElement("div");
         n.className = "now-line";
-        n.innerHTML = `<b>NOW ★</b> ${esc(now)}`;
+        n.innerHTML = `<b>NOW</b> ${esc(now)}`;
         homeBox.appendChild(n);
       }
       posts.slice(0, 3).forEach((p) => {
