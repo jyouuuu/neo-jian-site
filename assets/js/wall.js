@@ -501,6 +501,7 @@
       img.src = p.t;
       img.alt = "";
       img.loading = "lazy";
+      img.decoding = "async";
       a.appendChild(img);
       a.addEventListener("pointerenter", (e) => {
         if (e.pointerType === "touch") return;

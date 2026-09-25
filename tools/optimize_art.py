@@ -3,8 +3,13 @@
 optimize_art.py — jiansketch-site
 Reads the raw neocities download in ./raw and produces the web-ready set:
 
-  art/full/<year>/<name>.webp    long edge max 2200px, q85 (gifs copied as-is)
-  art/thumbs/<year>/<name>.webp  480px center-crop square, q80
+  art/full/<year>/<name>.webp    long edge max 1800px, q82 (gifs -> animated webp)
+  art/thumbs/<year>/<name>.webp  320px center-crop square, q76
+
+(Sep 24 2026, Justin: "optimize the images to load up faster in the gallery,
+should be lightweight and run on all pcs".) Was 2200 / 480 / gifs copied raw:
+the wall shows tiles at 76-158px and no screen shows a lightbox piece past
+~1800px, and the six gifs alone were 10MB.
   data/art.js                    window.JIAN_ART manifest (newest first)
 
 Re-run any time; it skips files that already exist.
@@ -21,8 +26,8 @@ OUT_FULL = os.path.join(ROOT, "art", "full")
 OUT_THUMB = os.path.join(ROOT, "art", "thumbs")
 DATA = os.path.join(ROOT, "data")
 
-FULL_EDGE = 2200
-THUMB_EDGE = 480
+FULL_EDGE = 1800
+THUMB_EDGE = 320
 YEARS = ["2026", "2025", "2024", "2023", "2022", "2021", "2020", "grunge", "tt"]
 
 Image.MAX_IMAGE_PIXELS = 80_000_000
@@ -62,14 +67,30 @@ def process(year, fname):
     os.makedirs(os.path.dirname(thumb_abs), exist_ok=True)
 
     animated = ext == ".gif"
-    if animated:
-        # keep the animation — copy bytes, reference the gif directly
+    gif_rel = f"art/full/{out_year(year)}/{stem}.gif"
+    gif_abs = os.path.join(ROOT, gif_rel)
+    if animated and os.path.exists(gif_abs):
+        full_rel, full_abs = gif_rel, gif_abs  # an earlier run found the gif smaller
+    elif animated and not os.path.exists(full_abs):
+        # keep the animation, as an animated webp: same frames, timing and loop
         import shutil
+        from PIL import ImageSequence
 
-        full_rel = f"art/full/{out_year(year)}/{stem}.gif"
-        full_abs = os.path.join(ROOT, full_rel)
-        if not os.path.exists(full_abs):
-            shutil.copyfile(src, full_abs)
+        with Image.open(src) as g:
+            frames, durs = [], []
+            for fr in ImageSequence.Iterator(g):
+                fr = fr.convert("RGBA")
+                if max(fr.size) > FULL_EDGE:
+                    fr.thumbnail((FULL_EDGE, FULL_EDGE), Image.LANCZOS)
+                frames.append(fr)
+                durs.append(fr.info.get("duration", g.info.get("duration", 100)) or 100)
+            frames[0].save(full_abs, "WEBP", save_all=True, append_images=frames[1:],
+                           duration=durs, loop=g.info.get("loop", 0), quality=80, method=4)
+        # small flat gifs (2023/4, 2023/5) come out BIGGER as webp: keep the gif then
+        if os.path.getsize(full_abs) >= os.path.getsize(src):
+            os.remove(full_abs)
+            shutil.copyfile(src, gif_abs)
+            full_rel, full_abs = gif_rel, gif_abs
 
     w = h = None
     try:
@@ -79,7 +100,7 @@ def process(year, fname):
                 im2 = im.convert("RGB")
                 if max(im2.size) > FULL_EDGE:
                     im2.thumbnail((FULL_EDGE, FULL_EDGE), Image.LANCZOS)
-                im2.save(full_abs, "WEBP", quality=85, method=6)
+                im2.save(full_abs, "WEBP", quality=82, method=6)
             if not os.path.exists(thumb_abs):
                 im3 = im.convert("RGB")
                 # center-crop square
@@ -88,7 +109,7 @@ def process(year, fname):
                 top = (im3.height - side) // 2
                 im3 = im3.crop((left, top, left + side, top + side))
                 im3 = im3.resize((THUMB_EDGE, THUMB_EDGE), Image.LANCZOS)
-                im3.save(thumb_abs, "WEBP", quality=80, method=6)
+                im3.save(thumb_abs, "WEBP", quality=76, method=6)
     except Exception as e:  # noqa: BLE001
         print(f"  !! {label}: {e}", file=sys.stderr)
         return None
