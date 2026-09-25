@@ -112,7 +112,12 @@
 
     // "click for sound" toast — sticks around until audio is actually unlocked.
     // (skipped on the splash gate: the OK button there IS the first click)
-    if (SFX.isEnabled() && !SFX.isUnlocked() && !document.body.classList.contains("splash")) {
+    // (Sep 24 2026, Justin: "declutter my jiansketch site ... it feels not user
+    // friendly".) OFF: it sat over the art on every page until you clicked.
+    // Sound still unlocks on the first click and SOUND in the rail still toggles
+    // it; flip SOUND_TOAST back to true to bring the banner back.
+    const SOUND_TOAST = false;
+    if (SOUND_TOAST && SFX.isEnabled() && !SFX.isUnlocked() && !document.body.classList.contains("splash")) {
       const toast = document.createElement("div");
       toast.className = "sfx-toast";
       toast.textContent = "SOUND IS ARMED — click anywhere once, the wall sings";

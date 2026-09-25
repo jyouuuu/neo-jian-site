@@ -3517,3 +3517,17 @@ b, strong { font-weight: 700; }
 .shelf__line { font-size: 16px; }
 .brand__who { font-family: var(--font-ui); font-weight: 600; font-size: 14px; }
 .sfx-toast { font-family: var(--font-shout); }
+
+/* ==========================================================================
+   (Sep 24 2026, Justin: "declutter my jiansketch site right now, it feels not
+   user friendly".) Home lost its LINKS.SYS box, so the footer is where the
+   socials live now. They were 13px pixel type in grey-on-black and read as
+   decoration; this makes them the condensed label face at a size you can hit.
+   ========================================================================== */
+.footer__bar { font-family: var(--font-cond); font-weight: 600; font-size: 15px; letter-spacing: 0.6px; }
+.footer__bar a { font-weight: 700; font-size: 16px; text-transform: uppercase; letter-spacing: 1px; margin: 0 8px; }
+.footer__bar a:hover { color: var(--pink); }
+@media (max-width: 700px) {
+  .footer__bar { font-size: 14px; }
+  .footer__bar a { font-size: 15px; margin: 0 6px; line-height: 2; }
+}
