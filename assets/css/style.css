@@ -3633,3 +3633,9 @@ html:not(.dark) .footer__bar a:hover { color: var(--pink); }
 .lightbox { backdrop-filter: none; -webkit-backdrop-filter: none; background: rgba(16, 16, 20, 0.96); }
 /* the lightbox close button was white on white at night (--ink is white in BLACKOUT) */
 html.dark .lb-btn--close { background: #000; color: #fff; border-color: #fff; }
+
+/* (Sep 24 2026, Justin: "remove the light fade on side of screen for combo".)
+   The rank-coloured screen-edge glow on the wall is off. wall.js still sets its
+   colour and opacity; the element just never shows. The combo meter itself,
+   its bursts and flames stay. Delete this rule to bring the glow back. */
+.combo-glow { display: none; }
