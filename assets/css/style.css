@@ -3577,3 +3577,29 @@ html:not(.dark) .nav-btn--comms:not(.is-full):not(.is-here) { background: #fff; 
    (in the light theme it inherited the charcoal body copy and vanished) */
 .commsad__blurb, html.dark .commsad__blurb { color: #c4c4c4; }
 .commsad__note, html.dark .commsad__note { color: #9e9e9e; }
+
+/* (Sep 24 2026, Justin, on a wide monitor: "scale these down some more its too
+   big".) The commission cards stretched to a third of the stage each, about
+   650px wide and 780px of art on his screen. Past tablet width they now cap at
+   340px, and the two YCH cards cap so their row lines up with the row above. */
+@media (min-width: 901px) {
+  .price-grid { grid-template-columns: repeat(3, minmax(0, 340px)); }
+  .price-grid--two { grid-template-columns: repeat(2, minmax(0, 519px)); }
+}
+
+/* ==========================================================================
+   (Sep 24 2026, Justin: "in light mode opt for the pink to neon blue instead
+   keep neon pink in dark mode".) The light theme's accent is electric blue.
+   #0a8bff was picked at the SAME brightness as the magenta, so every pairing
+   the pink had (black type on a filled button, accent type on the grey page)
+   stays exactly as readable. It is set on body, not :root, so the night theme
+   and the red gate (body.splash) keep their magenta; --cut-hover is rebuilt
+   here because a token made from var(--pink) on :root would stay pink.
+   ========================================================================== */
+html:not(.dark) body:not(.splash) {
+  --pink: #0a8bff;
+  --yellow: #0a8bff;
+  --mag-deep: #0a4fb3;
+  --cut-hover: 8px 9px 0 #0a8bff;
+}
+html:not(.dark) .postr p a { color: #4aa8ff; }
