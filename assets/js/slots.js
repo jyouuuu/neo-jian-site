@@ -6,7 +6,7 @@
      - the scrolling strip at the top of the commissions page
      - the 2 / 5 starburst badge
      - the COMMS button in the nav, on every page
-     - order form vs waitlist, when the batch is full
+     - the card buttons on the commissions page, when the batch is full
      - the next-batch date, which is computed, never typed
 
    Why: the counts and the date used to be hand-typed in three places on
@@ -62,9 +62,9 @@
     if (track) {
       var line = FULL
         ? "COMMISSIONS <b>FULL</b> · NEXT BATCH " + NEXT_BATCH +
-          " · JOIN THE WAITLIST · STICKER DESIGNS FROM $55 · "
+          " · ORDER ON VGEN · YCH FROM $20 · "
         : "COMMISSIONS <b>OPEN</b> · " + LEFT + " OF " + TOTAL + " SLOTS LEFT · NEXT BATCH " +
-          NEXT_BATCH + " · STICKER DESIGNS FROM $55 · ";
+          NEXT_BATCH + " · ORDER ON VGEN · YCH FROM $20 · ";
       /* twice, so the loop meets itself with no seam */
       track.innerHTML = line + line.slice(0, -1) + "&nbsp;";
     }
@@ -87,33 +87,21 @@
     });
     document.querySelectorAll("[data-slots-line]").forEach(function (n) {
       n.textContent = FULL
-        ? "this month is taken — the next batch opens " + NEXT_BATCH + ". get on the waitlist."
+        ? "this month is taken. the next batch opens " + NEXT_BATCH + "."
         : LEFT + " of " + TOTAL + " slots left this month. next batch " + NEXT_BATCH + ".";
     });
     document.querySelectorAll("[data-slots-sheet]").forEach(function (a) {
-      a.textContent = FULL ? "JOIN THE WAITLIST →" : "SEE THE FULL SHEET →";
+      a.textContent = "SEE THE FULL SHEET →";
       a.classList.toggle("is-full", FULL);
     });
 
-    /* ---- commissions page: order form, or waitlist ----------------------- */
-    var order = document.querySelector("#order-form");
-    var wait = document.querySelector("#waitlist-form");
-    if (!order || !wait) return;
-
-    order.hidden = FULL;
-    wait.hidden = !FULL;
-
-    var tab = document.querySelector("#order-tab");
-    if (tab) tab.textContent = FULL ? "SLOTS ARE FULL" : "START YOUR ORDER";
-
-    document.querySelectorAll("#wl-date").forEach(function (n) { n.textContent = NEXT_BATCH; });
-
-    /* When full, the card buttons still work — they just carry which tier the
-       person wanted into the waitlist, which is worth knowing. Relabel them so
-       they don't promise an order that can't happen yet. */
+    /* ---- commissions page ------------------------------------------------
+       (Sep 24 2026, Justin: "scrap the START YOUR ORDER category all comms now
+       done through vgen".) The order form and the waitlist are gone, so there
+       is nothing to swap. When the batch is full the card buttons still open
+       VGen, they just stop promising an order. */
     if (FULL) {
-      document.querySelectorAll(".price-card__order").forEach(function (b) { b.textContent = "JOIN WAITLIST →"; });
-      document.querySelectorAll(".price-card__tag").forEach(function (t) { t.textContent = "WAITLIST →"; });
+      document.querySelectorAll(".price-card__order, .price-card__tag").forEach(function (b) { b.textContent = "SEE IT ON VGEN →"; });
     }
   });
 })();

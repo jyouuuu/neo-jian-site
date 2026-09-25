@@ -70,7 +70,7 @@
       [10, "A", "ALRIGHT!", "#ff9e1f"],
       [6, "B", "BLAST!", "#4bff88"],
       [3, "C", "CRAZY!", "#66f7ff"],
-      [1, "D", "DOPE", "#f4f1e8"],
+      [1, "D", "DOPE", "#ececec"],
     ],
     el: null, rankEl: null, wordEl: null, multEl: null, hitsEl: null, bestEl: null, glowEl: null,
     rank() { return this.RANKS.find((r) => this.streak >= r[0]); },

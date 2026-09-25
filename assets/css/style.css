@@ -7,13 +7,13 @@
    ========================================================================== */
 
 :root {
-  --paper: #f4f1e8;          /* warm cream, like the ZZZ manuals */
-  --panel: #fffdf6;
+  --paper: #ececec;          /* CN 2013 page grey (was warm cream until Sep 24 2026) */
+  --panel: #ffffff;
   --ink: #191919;
-  --ink-dim: #6f6f68;
-  --grey: #c9c9c4;           /* ricky chrome */
-  --grey-hover: #a3a39d;
-  --grey-soft: #e3e2da;
+  --ink-dim: #6b6b6b;
+  --grey: #c4c4c4;           /* ricky chrome */
+  --grey-hover: #9e9e9e;
+  --grey-soft: #dedede;
   --yellow: #ffcc5b;         /* ricky accent */
   --pink: #ff2ea6;           /* jian magenta (FBGS poster) */
   --red: #e6402e;            /* AKIRA signal red */
@@ -74,7 +74,7 @@ img { display: block; }
   font-family: var(--font-pixel);
   font-size: 13px;
   letter-spacing: 2px;
-  color: #f0eee4;
+  color: #eeeeee;
   white-space: nowrap;
   user-select: none;
 }
@@ -607,10 +607,10 @@ img { display: block; }
   font-size: clamp(84px, 12vw, 140px);
   line-height: 0.9;
   letter-spacing: 2px;
-  color: var(--rankc, #f4f1e8);
+  color: var(--rankc, #ececec);
   -webkit-text-stroke: 3px var(--ink);
   paint-order: stroke fill;
-  text-shadow: 6px 6px 0 var(--shadow), 0 0 14px var(--rankc, #f4f1e8);
+  text-shadow: 6px 6px 0 var(--shadow), 0 0 14px var(--rankc, #ececec);
   transition: color 0.2s;
 }
 .combo__rank.is-rankup { animation: combo-rankup 0.55s var(--spring); }
@@ -646,7 +646,7 @@ img { display: block; }
   padding: 5px 14px;
 }
 .combo__mult { background: var(--ink); color: var(--yellow); }
-.combo__best { background: var(--grey, #e8e4da); color: var(--ink-dim); }
+.combo__best { background: var(--grey, #e2e2e2); color: var(--ink-dim); }
 .combo__best.is-new {
   animation: combo-best 1s var(--spring);
   background: var(--pink);
@@ -672,7 +672,7 @@ img { display: block; }
 }
 @media (max-width: 640px) {
   .combo { right: 14px; }
-  .combo__rank { font-size: 64px; -webkit-text-stroke: 2px var(--ink); text-shadow: 4px 4px 0 var(--shadow), 0 0 18px var(--rankc, #f4f1e8); }
+  .combo__rank { font-size: 64px; -webkit-text-stroke: 2px var(--ink); text-shadow: 4px 4px 0 var(--shadow), 0 0 18px var(--rankc, #ececec); }
   .combo__word { font-size: 17px; letter-spacing: 2px; }
   .combo__mult, .combo__hits { font-size: 12px; padding: 3px 10px; }
 }
@@ -922,7 +922,7 @@ img { display: block; }
   flex: 0 0 auto;
   height: 124px;
   padding: 0;
-  border: 2px solid #f4f1e8;
+  border: 2px solid #ececec;
   background: #26262e;
   cursor: pointer;
   overflow: hidden;
@@ -1073,7 +1073,7 @@ html.sfw [data-sug="1"] { display: none !important; }
   background:
     radial-gradient(circle, rgba(0, 0, 0, 0.14) 1.2px, transparent 1.5px) 0 0 / 10px 10px,
     var(--red);
-  color: #f4f1e8;
+  color: #ececec;
 }
 .splash__top {
   display: flex;
@@ -1083,9 +1083,9 @@ html.sfw [data-sug="1"] { display: none !important; }
 .pill {
   width: 74px;
   height: 34px;
-  border: 3px solid #f4f1e8;
+  border: 3px solid #ececec;
   border-radius: 20px;
-  background: linear-gradient(90deg, #f4f1e8 50%, var(--red) 50%);
+  background: linear-gradient(90deg, #ececec 50%, var(--red) 50%);
   transform: rotate(18deg);
   box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.3);
 }
@@ -1093,7 +1093,7 @@ html.sfw [data-sug="1"] { display: none !important; }
   font-family: var(--font-pixel);
   font-size: 10px;
   letter-spacing: 1px;
-  color: #f4f1e8;
+  color: #ececec;
   text-align: right;
   margin-top: 6px;
   opacity: 0.9;
@@ -1117,7 +1117,7 @@ html.sfw [data-sug="1"] { display: none !important; }
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  -webkit-text-stroke: 4px #f4f1e8;
+  -webkit-text-stroke: 4px #ececec;
   filter: drop-shadow(10px 10px 0 rgba(0, 0, 0, 0.22));
 }
 .splash__logo {
@@ -1129,7 +1129,7 @@ html.sfw [data-sug="1"] { display: none !important; }
 }
 @keyframes splashFloat { 0%, 100% { transform: rotate(-4deg) translateY(0); } 50% { transform: rotate(-2deg) translateY(-10px); } }
 .splash__warn {
-  background: #f4f1e8;
+  background: #ececec;
   color: var(--ink);
   border-top: 4px solid var(--ink);
   padding: 18px 22px 26px;
@@ -1284,7 +1284,7 @@ html.sfw [data-sug="1"] { display: none !important; }
   font-size: 14px;
   letter-spacing: 1px;
   margin: 0 0 18px;
-  color: #f0eee4;
+  color: #eeeeee;
 }
 .hero__offer b { color: var(--yellow); }
 .hero__cta { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
@@ -1582,7 +1582,7 @@ html.dark .nav-btn--sug[aria-pressed="false"] { background: var(--pink); color: 
 /* the tiles are cream cards on the dark slab, in BOTH themes — pinned, not
    token-driven, because --paper flips to near-black at night and the strip
    would vanish into the panel it's meant to pop off */
-.commsad .comms-promo__item { background: #f6f3ea; border-color: #0e0e12; box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.55); }
+.commsad .comms-promo__item { background: #f5f5f5; border-color: #0e0e12; box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.55); }
 .commsad .comms-promo__item:hover { box-shadow: 7px 8px 0 var(--pink); }
 .commsad .comms-promo__bar { color: #191919; }
 .commsad .comms-promo__price { color: #d81b8c; }
@@ -2347,7 +2347,7 @@ html.dark .tooth--acid .tooth__bar { background: var(--acid); height: 24px; }
 :root {
   --rail: 232px;
   --gut: clamp(18px, 3.2vw, 56px);
-  --off: #f4f1e8;
+  --off: #ececec;
   --mag-deep: #b0145c;
 }
 
@@ -3091,7 +3091,7 @@ html.dark .commsad .comms-promo__price,
   display: block;
   position: relative;
   overflow: hidden;
-  background: #f4f1e8;
+  background: #ececec;
   border-bottom: 3px solid var(--ink);
   line-height: 0;
 }
@@ -3106,7 +3106,7 @@ a:hover .media img, .media:hover img { transform: scale(1.06); }
 /* ---- DIE-CUT — the edge and the shadow come back on every card ----------- */
 .box, .winbox, .price-card, .news-box { box-shadow: var(--cut); }
 .drop-grid, .comms-promo__grid, .duo, .free-grid, .price-grid, .signs__grid, .shelf { gap: var(--gap); }
-.drop-tile { border: 3px solid var(--ink); background: #f6f3ea; box-shadow: var(--cut); color: #111; }
+.drop-tile { border: 3px solid var(--ink); background: #f5f5f5; box-shadow: var(--cut); color: #111; }
 .drop-tile:hover { transform: translate(-3px, -5px) rotate(-1deg); box-shadow: var(--cut-hover); color: #111; }
 .drop-tile:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--shadow); }
 .drop-tile img { border-bottom: 3px solid var(--ink); transition: transform 0.35s var(--spring-soft); }
@@ -3118,9 +3118,9 @@ a:hover .media img, .media:hover img { transform: scale(1.06); }
   font-size: 14.5px;
   letter-spacing: 0.2px;
   color: #111;
-  background: #f6f3ea;
+  background: #f5f5f5;
 }
-.drop-tile__name small { font-weight: 600; font-size: 12px; letter-spacing: 0.6px; color: #6f6f68; }
+.drop-tile__name small { font-weight: 600; font-size: 12px; letter-spacing: 0.6px; color: #6b6b6b; }
 .bundle {
   border: 3px solid var(--ink);
   background: var(--panel);
@@ -3241,7 +3241,7 @@ html.dark .commsad .comms-promo__item:hover { box-shadow: var(--cut-hover); }
   position: relative;
   aspect-ratio: 1;
   overflow: hidden;
-  background: #f4f1e8;
+  background: #ececec;
   border: 3px solid var(--ink);
   box-shadow: var(--cut);
 }
@@ -3293,7 +3293,7 @@ html.dark .commsad .comms-promo__item:hover { box-shadow: var(--cut-hover); }
   padding: 0;
   aspect-ratio: 1;
   overflow: hidden;
-  background: #f4f1e8;
+  background: #ececec;
   border: 3px solid var(--ink);
   box-shadow: 3px 3px 0 var(--shadow);
   cursor: pointer;
@@ -3345,7 +3345,7 @@ html.dark .commsad .comms-promo__item:hover { box-shadow: var(--cut-hover); }
 
 /* ---- 3.2b (same day, off the first render): body copy was 15px grey at 60%
    contrast and the tile category ("ACRYLIC CHARM") was clipped by nowrap ---- */
-:root { --copy: #3d3d39; }
+:root { --copy: #313132; }
 html.dark { --copy: #d4d4d4; }
 .sub, .commsad__blurb, html.dark .commsad__blurb, .commsad__note, html.dark .commsad__note, .update-item, .wall-hint,
 .box p, .price-card > p, .steps, .wont, .free-card p, .sign__line, .shelf__line, .signs__note, .addon-table { color: var(--copy); }
@@ -3531,3 +3531,49 @@ b, strong { font-weight: 700; }
   .footer__bar { font-size: 14px; }
   .footer__bar a { font-size: 15px; margin: 0 6px; line-height: 2; }
 }
+
+/* ==========================================================================
+   (Sep 24 2026, Justin: "scrap the START YOUR ORDER category all comms now done
+   through vgen".) The commissions page is the VGen roster: three cards, then the
+   two YCH scenes in a two up row with their wide art, and five tiles on home.
+   ========================================================================== */
+.price-grid--two { grid-template-columns: repeat(2, 1fr); }
+@media (max-width: 560px) { .price-grid--two { grid-template-columns: 1fr; } }
+.comms-promo__grid--five { grid-template-columns: repeat(5, 1fr); }
+@media (max-width: 900px) { .comms-promo__grid--five { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 460px) { .comms-promo__grid--five { grid-template-columns: repeat(2, 1fr); } }
+
+/* ==========================================================================
+   (Sep 24 2026, Justin: "remove the dotted background".) The halftone dots are
+   out of every ground: the page, the rail, the commissions band and the red
+   gate. The paper grain and the magenta glow stay; they are not dots.
+   ========================================================================== */
+body { background: var(--grain-light) 0 0 / 220px 220px, var(--paper); }
+html.dark body { background: var(--grain-dark) 0 0 / 220px 220px, var(--paper); }
+html.dark .rail { background: var(--grain-dark) 0 0 / 220px 220px, var(--paper); }
+.commsad::before { background: none; }
+.splash, html.dark body.splash { background: var(--red); }
+
+/* ==========================================================================
+   (Sep 24 2026, Justin: "replace the beige color scheme with the gray, white,
+   black of this site design [Cartoon Network, 2013] ... retain the neon pink
+   tho".) Every warm cream and warm grey in this file was swapped hex for hex
+   for a neutral one: the paper is CN's page grey #ececec, panels are white,
+   chrome is mid grey, body copy is CN charcoal #313132, black stays black.
+   The magenta is untouched. The pink wash off the top of the stage is off in
+   the light theme, because it tinted the grey pink; the night theme keeps it.
+   ========================================================================== */
+.stage { background: none; }
+
+/* the light theme's leftover accents follow the night theme: the accent slot
+   is the magenta (price tags keep their own literal yellow, --tag), and the
+   lime flag and the violet second button go white, like CN's white panels */
+:root { --yellow: #ff2ea6; }
+.price-card__order:hover { background: var(--ink); color: #fff; }
+.commsad__flag:not(.is-full) { background: #fff; color: #000; }
+.btn--zzz:not(.btn--zzz--pink) { background: #fff; color: #000; }
+html:not(.dark) .nav-btn--comms:not(.is-full):not(.is-here) { background: #fff; color: #191919; }
+/* the commissions band is a black slab in both themes, so its copy is light in both
+   (in the light theme it inherited the charcoal body copy and vanished) */
+.commsad__blurb, html.dark .commsad__blurb { color: #c4c4c4; }
+.commsad__note, html.dark .commsad__note { color: #9e9e9e; }
