@@ -3589,17 +3589,37 @@ html:not(.dark) .nav-btn--comms:not(.is-full):not(.is-here) { background: #fff; 
 
 /* ==========================================================================
    (Sep 24 2026, Justin: "in light mode opt for the pink to neon blue instead
-   keep neon pink in dark mode".) The light theme's accent is electric blue.
-   #0a8bff was picked at the SAME brightness as the magenta, so every pairing
-   the pink had (black type on a filled button, accent type on the grey page)
-   stays exactly as readable. It is set on body, not :root, so the night theme
+   keep neon pink in dark mode".) The light theme's accent is blue (first #0a8bff,
+   then sky blue the same day, see the two skies note below). It is set on body, not :root, so the night theme
    and the red gate (body.splash) keep their magenta; --cut-hover is rebuilt
    here because a token made from var(--pink) on :root would stay pink.
    ========================================================================== */
 html:not(.dark) body:not(.splash) {
-  --pink: #0a8bff;
-  --yellow: #0a8bff;
-  --mag-deep: #0a4fb3;
-  --cut-hover: 8px 9px 0 #0a8bff;
+  --pink: #38b6ff;
+  --yellow: #38b6ff;
+  --mag-deep: #0a7fc0;
+  --sky-ink: #0a7fc0;
+  --cut-hover: 8px 9px 0 #38b6ff;
 }
-html:not(.dark) .postr p a { color: #4aa8ff; }
+html:not(.dark) .postr p a { color: #7fd0ff; }
+/* (Sep 24 2026, Justin: "neon blue should be more sky blue but [not] too light
+   that its unreadable".) Two skies. FILLS and type on the black slabs use the
+   light sky #38b6ff (black type on it reads 9:1). A light sky is too faint as
+   TYPE on the grey page, so every accent word that sits on grey or white uses
+   the deeper sky #0a7fc0 instead (about 4.4:1 on white). If a new accent word
+   lands on a light surface, add it to this list. */
+html:not(.dark) .tooth__tab .accent,
+html:not(.dark) .sign__title span,
+html:not(.dark) .sign__go,
+html:not(.dark) .brand__who b,
+html:not(.dark) .addon-v--ask,
+html:not(.dark) .steps li::marker,
+html:not(.dark) .wall-year span,
+html:not(.dark) .big404,
+html:not(.dark) a:not([class]),
+html:not(.dark) a:not([class]):hover,
+html:not(.dark) .post__title a:hover,
+html:not(.dark) .footer__top:hover { color: var(--sky-ink); }
+/* the footer links are classless too, but they sit on the black bar: white, sky on hover */
+html:not(.dark) .footer__bar a { color: #fff; }
+html:not(.dark) .footer__bar a:hover { color: var(--pink); }
