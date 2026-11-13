@@ -1,0 +1,62 @@
+{
+ "updated": "2026-11-13",
+ "ga": "G-NRPNK1EVQ2",
+ "tags": {
+  "bsky": "bluesky",
+  "bs": "bluesky",
+  "x": "x",
+  "ig": "instagram",
+  "tt": "tiktok",
+  "yt": "youtube",
+  "fb": "facebook",
+  "th": "threads",
+  "dc": "discord",
+  "rd": "reddit",
+  "em": "email",
+  "qr": "qr"
+ },
+ "links": [
+  {
+   "slug": "club",
+   "url": "https://jiansketch.com/club",
+   "dest": "https://www.patreon.com/jiansketch",
+   "name": "the Sticker Club on Patreon",
+   "goes": "Patreon"
+  },
+  {
+   "slug": "patreon",
+   "url": "https://jiansketch.com/patreon",
+   "dest": "https://www.patreon.com/jiansketch",
+   "name": "Patreon",
+   "goes": "Patreon"
+  },
+  {
+   "slug": "shop",
+   "url": "https://jiansketch.com/shop",
+   "dest": "https://jiansketch.bigcartel.com/",
+   "name": "the shop",
+   "goes": "Shop"
+  },
+  {
+   "slug": "vgen",
+   "url": "https://jiansketch.com/vgen",
+   "dest": "https://vgen.co/jiansketch",
+   "name": "commissions on VGen",
+   "goes": "VGen"
+  },
+  {
+   "slug": "youtube",
+   "url": "https://jiansketch.com/youtube",
+   "dest": "https://www.youtube.com/@jiansketch",
+   "name": "YouTube",
+   "goes": "YouTube"
+  },
+  {
+   "slug": "x",
+   "url": "https://jiansketch.com/x",
+   "dest": "https://x.com/jiansketch",
+   "name": "X",
+   "goes": "X"
+  }
+ ]
+}

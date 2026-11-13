@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>jiansketch · commissions on VGen</title>
+<!-- counted short link (Nov 13 2026), made by tools/make_links.py: one visit in Google Analytics, then on to
+     https://vgen.co/jiansketch. Explained on /privacy. Do not edit by hand, run the script. -->
+<meta name="robots" content="noindex" />
+<meta name="referrer" content="strict-origin-when-cross-origin" />
+<link rel="icon" type="image/png" href="/assets/img/favicon.png" />
+<meta property="og:title" content="jiansketch · commissions on VGen" />
+<meta property="og:description" content="Fast food for your eyes" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://jiansketch.com/vgen" />
+<meta property="og:image" content="https://jiansketch.com/assets/img/og.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="preconnect" href="https://www.googletagmanager.com" />
+<link rel="preconnect" href="https://www.google-analytics.com" />
+<noscript><meta http-equiv="refresh" content="0;url=https://vgen.co/jiansketch" /></noscript>
+<style>
+  html, body { margin: 0; height: 100%; background: #000; color: #fff; }
+  body { display: grid; place-items: center; font: 600 17px/1.4 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  a { color: #ff2ea6; }
+</style>
+<script>
+(function () {
+  var SLUG = "vgen", DEST = "https://vgen.co/jiansketch", GA = "G-NRPNK1EVQ2";
+  var TAGS = {"bsky": "bluesky", "bs": "bluesky", "x": "x", "ig": "instagram", "tt": "tiktok", "yt": "youtube", "fb": "facebook", "th": "threads", "dc": "discord", "rd": "reddit", "em": "email", "qr": "qr"};
+  var q = new URLSearchParams(location.search), ua = navigator.userAgent || "", ref = "";
+  try { ref = document.referrer ? new URL(document.referrer).hostname.replace(/^www\./, "") : ""; } catch (e) {}
+  function endsWith(host, d) { return host === d || host.slice(-(d.length + 1)) === "." + d; }
+  var src = "";
+  q.forEach(function (v, k) { if (!src && !v && TAGS[k]) src = TAGS[k]; });
+  if (!src && TAGS[q.get("src") || ""]) src = TAGS[q.get("src")];
+  if (!src && q.get("utm_source")) src = q.get("utm_source").toLowerCase() === "ig" ? "instagram" : q.get("utm_source").toLowerCase();
+  if (!src) {
+    var apps = [[/Instagram/, "instagram"], [/musical_ly|BytedanceWebview|TikTok|trill_/, "tiktok"], [/FBAN|FBAV|FB_IAB|FBIOS/, "facebook"],
+                [/Barcelona/, "threads"], [/Twitter/, "x"], [/Discord/, "discord"], [/Reddit/, "reddit"], [/Snapchat/, "snapchat"]];
+    for (var i = 0; i < apps.length && !src; i++) if (apps[i][0].test(ua)) src = apps[i][1];
+  }
+  if (!src && ref) {
+    var sites = [["t.co", "x"], ["x.com", "x"], ["twitter.com", "x"], ["instagram.com", "instagram"], ["tiktok.com", "tiktok"],
+                 ["youtube.com", "youtube"], ["youtu.be", "youtube"], ["bsky.app", "bluesky"], ["facebook.com", "facebook"],
+                 ["threads.net", "threads"], ["threads.com", "threads"], ["discord.com", "discord"], ["reddit.com", "reddit"],
+                 ["patreon.com", "patreon"], ["vgen.co", "vgen"], ["jiansketch.com", "site"], ["jiansketch.bigcartel.com", "shop"]];
+    for (var j = 0; j < sites.length && !src; j++) if (endsWith(ref, sites[j][0])) src = sites[j][1];
+    if (!src && /(^|\.)google\./.test(ref)) src = "google";
+    if (!src) src = ref.slice(0, 60);
+  }
+  src = (src || "direct").replace(/[^a-z0-9._-]/gi, "").slice(0, 60) || "direct";
+  var tags = "utm_source=" + encodeURIComponent(src) + "&utm_medium=link&utm_campaign=links&utm_content=" + SLUG;
+  var out = DEST + (DEST.indexOf("?") < 0 ? "?" : "&") + tags, gone = false;
+  function go() { if (!gone) { gone = true; location.replace(out); } }
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = function () { dataLayer.push(arguments); };
+  gtag("js", new Date());
+  var here = "https://jiansketch.com/" + SLUG + "?" + tags;
+  gtag("config", GA, { send_page_view: false, page_location: here });
+  gtag("event", "page_view", { page_location: here, page_title: "link " + SLUG, transport_type: "beacon",
+                               event_callback: go, event_timeout: 1200 });
+  var s = document.createElement("script");
+  s.async = true; s.src = "https://www.googletagmanager.com/gtag/js?id=" + GA; s.onerror = go;
+  document.head.appendChild(s);
+  setTimeout(go, 2000);
+})();
+</script>
+</head>
+<body>
+<p>Opening <a href="https://vgen.co/jiansketch">commissions on VGen</a></p>
+</body>
+</html>
