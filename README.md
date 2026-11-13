@@ -59,6 +59,16 @@ adding. `tools/contact_sheets.py 2026` builds labeled review grids into
 
 The home UPDATES.EXE box shows your 3 newest posts automatically.
 
+## Counted short links (Nov 13 2026)
+
+`club`, `patreon`, `shop`, `vgen`, `youtube` and `x` (`jiansketch.com/club` ...) are the links for the bios. Each
+page counts one visit in Google Analytics (same property as the shop), tagged with the app it was tapped in, then
+opens the real place in about a quarter of a second; the shop also gets the tags, so its Analytics knows which
+profile sent the visitor. The Post Scheduler's **Link clicks** page reads the counts back. `data/links.json` is the
+list it reads. To add or change one, edit `LINKS` in `tools/make_links.py` and run `python tools/make_links.py`.
+Bluesky's app hides where a tap came from, so its links carry a tag: `jiansketch.com/shop?bsky`. Never add a link
+to critpeach.com here.
+
 ## Deploy (GitHub Pages)
 
 1. Create a repo, e.g. `jiansketch/jiansketch.github.io` (or any repo and use
