@@ -17,7 +17,7 @@ It sends that as utm_source, utm_medium=link, utm_campaign=links, utm_content=<s
 the same tags to the destination, so the shop's own Analytics knows which profile sent the person in.
 
 Run it after changing LINKS:  python tools/make_links.py   (writes the pages, data/links.json and the privacy note).
-Safe to run again. Never add a link to critpeach.com here: jiansketch and Crit Peach are never linked.
+Safe to run again.
 """
 import html
 import json
